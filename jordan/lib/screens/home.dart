@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       key: scaffoldKey,
       backgroundColor: Color.fromRGBO(14, 17, 33, 1.0),
       appBar: AppBar(
-        title: Text("Bł. Franciszek Jordan"),
+        title: Text("Salwatowianie App"),
         // backgroundColor: Colors.orange,
       ),
       drawer: Drawer(
@@ -68,31 +68,124 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Container(
-        width: 120,
-        height: 120,
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(15),
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(10),
-          color: Color.fromRGBO(24, 33, 54, 1.0),
-        ),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PrayerPage()),
-            );
-          },
-          child: Hero(
-            tag: 'jordan',
-            child: Image.asset(
-              "assets/Jordan_100px.jpg",
+      body: Row(
+        children: <Widget>[
+          // SDS Prayer Box
+          Container(
+            width: 150,
+            height: 150,
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(15),
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              color: Color.fromRGBO(24, 33, 54, 1.0),
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PrayerPage()),
+                );
+              },
+              child: Hero(
+                tag: 'jordan',
+                child: Image.asset(
+                  "assets/Jordan_100px.jpg",
+                ),
+              ),
             ),
           ),
-        ),
+          // SDS Daily prayers
+          InkWell(
+            child: Container(
+              width: 220,
+              height: 150,
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.all(15),
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10),
+                color: Color.fromRGBO(24, 33, 54, 1.0),
+              ),
+              child: ListView(
+                children: <Widget>[
+                  Text(
+                    'Codzienne modlitwy SDS',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(color: Colors.amber),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ListTile(
+                    title: Text('Rozmyślanie'),
+                    visualDensity:
+                        VisualDensity(vertical: VisualDensity.minimumDensity),
+                    dense: true,
+                    horizontalTitleGap: 0,
+                    leading: Icon(
+                      Icons.check,
+                      color: Colors.greenAccent,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Różaniec'),
+                    visualDensity:
+                        VisualDensity(vertical: VisualDensity.minimumDensity),
+                    dense: true,
+                    horizontalTitleGap: 0,
+                    leading: Icon(
+                      Icons.close,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Brewiarz'),
+                    visualDensity:
+                        VisualDensity(vertical: VisualDensity.minimumDensity),
+                    dense: true,
+                    horizontalTitleGap: 0,
+                    leading: Icon(
+                      Icons.close,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Anioł Pański'),
+                    visualDensity:
+                        VisualDensity(vertical: VisualDensity.minimumDensity),
+                    dense: true,
+                    horizontalTitleGap: 0,
+                    leading: Icon(
+                      Icons.close,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Rachunek Sumienia'),
+                    visualDensity:
+                        VisualDensity(vertical: VisualDensity.minimumDensity),
+                    dense: true,
+                    horizontalTitleGap: 0,
+                    leading: Icon(
+                      Icons.close,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PrayerPage()),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
