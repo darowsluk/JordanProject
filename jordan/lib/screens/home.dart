@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:jordan/widgets/jordan_widget.dart';
 import 'package:jordan/widgets/drawer_widget.dart';
 import 'package:jordan/widgets/prayers_widget.dart';
+import 'package:jordan/widgets/calendarium_widget.dart';
 
 // Custom screens
 import 'package:jordan/screens/prayer.dart';
@@ -46,10 +47,8 @@ class _HomePageState extends State<HomePage> {
           ),
           Row(
             children: <Widget>[
-              // SDS Prayer Box
-              JordanWidget(),
-              // SDS Daily prayers
-              PrayersWidget(),
+              // Calendarium SDS
+              CalendariumWidget(),
             ],
           ),
         ],
