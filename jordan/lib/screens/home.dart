@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
             ));
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.black,
+      backgroundColor: Color.fromRGBO(14, 17, 33, 1.0),
       appBar: AppBar(
         title: Text("Bł. Franciszek Jordan"),
         // backgroundColor: Colors.orange,
@@ -68,23 +68,31 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Center(
-        child: Container(
-          alignment: Alignment.topCenter,
-          child: Image.asset(
-            "lib/screens/assets/Jordan_414px.jpg",
+      body: Container(
+        width: 120,
+        height: 120,
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(15),
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10),
+          color: Color.fromRGBO(24, 33, 54, 1.0),
+        ),
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PrayerPage()),
+            );
+          },
+          child: Hero(
+            tag: 'jordan',
+            child: Image.asset(
+              "assets/Jordan_100px.jpg",
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
-        child: Icon(Icons.menu_book),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PrayerPage()),
-          );
-        },
       ),
     );
   }

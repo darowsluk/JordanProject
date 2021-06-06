@@ -9,14 +9,17 @@ class PrayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black87,
+        // backgroundColor: Colors.black87,
         appBar: AppBar(),
         body: Container(
           child: ListView(
             children: [
               Container(
-                child: Image.asset(
-                  "lib/screens/assets/Jordan_bar.jpg",
+                child: Hero(
+                  tag: 'jordan',
+                  child: Image.asset(
+                    "assets/Jordan_414px.jpg",
+                  ),
                 ),
               ),
               Container(
@@ -27,7 +30,7 @@ class PrayerPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                 ),
               ),
@@ -38,7 +41,7 @@ class PrayerPage extends StatelessWidget {
                       softWrap: true,
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.white70,
+                        // color: Colors.white70,
                       )))
             ],
           ),
