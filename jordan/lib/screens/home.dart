@@ -9,13 +9,13 @@ import 'package:jordan/widgets/prayers_widget.dart';
 import 'package:jordan/widgets/calendarium_widget.dart';
 
 // Custom screens
-import 'package:jordan/screens/prayer.dart';
+import 'package:jordan/screens/prayers_screen.dart';
 
 // Extras
 import 'package:jordan/extras/colors.dart';
 
 class HomePage extends StatefulWidget {
-  // const HomePage({Key key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -58,7 +58,10 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your onPressed code here!
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PrayerPage()),
+          );
         },
         child: const Icon(Icons.library_books),
         backgroundColor: AppColors.primary,

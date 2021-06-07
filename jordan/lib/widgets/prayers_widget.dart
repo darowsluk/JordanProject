@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jordan/screens/prayer.dart';
+import 'package:jordan/screens/jordan_screen.dart';
 // Extras
 import 'package:jordan/extras/colors.dart';
 
@@ -91,12 +91,7 @@ class PrayersWidget extends StatelessWidget {
             ],
           ),
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PrayerPage()),
-          );
-        },
+        onTap: null,
       ),
     );
   }

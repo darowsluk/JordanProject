@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jordan/screens/prayer.dart';
-
+import 'package:jordan/screens/jordan_screen.dart';
+// Custom widgets
+import 'package:jordan/widgets/decoratedBox_widget.dart';
 // Extras
 import 'package:jordan/extras/colors.dart';
 
@@ -9,22 +10,13 @@ class JordanWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 150,
+    return buildDecoradedBoxWidget(
       alignment: Alignment.center,
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10),
-        color: AppColors.foreground,
-      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PrayerPage()),
+            MaterialPageRoute(builder: (context) => JordanPage()),
           );
         },
         child: Hero(

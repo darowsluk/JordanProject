@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// Extras
+import 'package:jordan/extras/colors.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({
@@ -22,38 +24,33 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           DrawerHeader(
             //header of drawer
             decoration: BoxDecoration(
-                // color: Colors.orange,
-                ),
+              color: AppColors.foreground,
+            ),
             child: Text(
               'Options',
               style: TextStyle(
-                // color: Colors.white,
                 fontSize: 24,
               ),
             ),
           ),
           ListTile(
-            //menu item of Drawer
-            leading: Icon(Icons.home),
-            title: Text('Home Page'),
-          ),
-          ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('My Profile'),
+            title: Text('Profil'),
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Account Settings'),
+            title: Text('Ustawienia'),
           ),
           ListTile(
-              onTap: () {
-                if (widget.scaffoldKey.currentState.isDrawerOpen) {
-                  //check if drawer is open
-                  Navigator.pop(context); //context of drawer is different
-                }
-              },
-              leading: Icon(Icons.close),
-              title: Text("Close Drawer"))
+            onTap: () {
+              if (widget.scaffoldKey.currentState.isDrawerOpen) {
+                //check if drawer is open
+                Navigator.pop(context); //context of drawer is different
+              }
+            },
+            leading: Icon(Icons.close),
+            title: Text("Close Drawer"),
+          ),
         ],
       ),
     );
