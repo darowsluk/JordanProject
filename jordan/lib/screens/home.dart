@@ -11,6 +11,9 @@ import 'package:jordan/widgets/calendarium_widget.dart';
 // Custom screens
 import 'package:jordan/screens/prayer.dart';
 
+// Extras
+import 'package:jordan/extras/colors.dart';
+
 class HomePage extends StatefulWidget {
   // const HomePage({Key key}) : super(key: key);
 
@@ -29,10 +32,10 @@ class _HomePageState extends State<HomePage> {
             ));
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color.fromRGBO(14, 17, 33, 1.0),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text("Salwatowianie App"),
-        // backgroundColor: Colors.orange,
+        backgroundColor: AppColors.foreground,
+        title: Text("Modlitewnik Salwatorianina"),
       ),
       drawer: DrawerWidget(scaffoldKey: scaffoldKey),
       body: Column(
@@ -52,6 +55,13 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        child: const Icon(Icons.library_books),
+        backgroundColor: AppColors.primary,
       ),
     );
   }

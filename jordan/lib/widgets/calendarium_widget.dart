@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// Extras
+import 'package:jordan/extras/colors.dart';
 
 class CalendariumWidget extends StatelessWidget {
   const CalendariumWidget({Key key}) : super(key: key);
@@ -8,22 +10,22 @@ class CalendariumWidget extends StatelessWidget {
     return Expanded(
       child: InkWell(
         child: Container(
-          width: 220,
-          height: 220,
+          // width: 220,
+          height: 150,
           alignment: Alignment.topCenter,
           padding: EdgeInsets.all(15),
           margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(10),
-            color: Color.fromRGBO(24, 33, 54, 1.0),
+            color: AppColors.foreground,
           ),
           child: ListView(
             children: <Widget>[
               Text(
                 'Kalendarium SDS',
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.amber),
+                style: TextStyle(color: AppColors.highlightText),
               ),
               SizedBox(
                 height: 10,

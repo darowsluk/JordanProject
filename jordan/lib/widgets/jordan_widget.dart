@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jordan/screens/prayer.dart';
 
+// Extras
+import 'package:jordan/extras/colors.dart';
+
 class JordanWidget extends StatelessWidget {
   const JordanWidget({Key key}) : super(key: key);
 
@@ -15,7 +18,7 @@ class JordanWidget extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(10),
-        color: Color.fromRGBO(24, 33, 54, 1.0),
+        color: AppColors.foreground,
       ),
       child: InkWell(
         onTap: () {

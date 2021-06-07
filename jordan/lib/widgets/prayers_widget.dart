@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jordan/screens/prayer.dart';
+// Extras
+import 'package:jordan/extras/colors.dart';
 
 class PrayersWidget extends StatelessWidget {
   const PrayersWidget({
@@ -24,9 +26,9 @@ class PrayersWidget extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               Text(
-                'Codzienne modlitwy SDS',
+                'Życie duchowe',
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.amber),
+                style: TextStyle(color: AppColors.highlightText),
               ),
               SizedBox(
                 height: 10,

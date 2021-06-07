@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// Extras
+import 'package:jordan/extras/colors.dart';
 
 //////////////////////////////////////////////////////////////////////////
 /// Displays prayer through the intercession of Blessed Francis Jordan ///
@@ -9,8 +11,10 @@ class PrayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Colors.black87,
-        appBar: AppBar(),
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          backgroundColor: AppColors.foreground,
+        ),
         body: Container(
           child: ListView(
             children: [
