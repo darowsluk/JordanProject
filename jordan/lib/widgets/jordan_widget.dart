@@ -10,7 +10,7 @@ class JordanWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildDecoradedBoxWidget(
+    return buildDecoratedBoxWidget(
       alignment: Alignment.center,
       child: InkWell(
         onTap: () {

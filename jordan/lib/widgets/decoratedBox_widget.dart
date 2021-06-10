@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/colors.dart';
 
-Container buildDecoradedBoxWidget(
+Container buildDecoratedBoxWidget(
     {Widget child,
     double height = 150,
     double width = 150,
+    Color color = AppColors.foreground,
     AlignmentGeometry alignment = Alignment.topCenter}) {
   return Container(
     height: height,
@@ -16,7 +17,7 @@ Container buildDecoradedBoxWidget(
     decoration: BoxDecoration(
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(10),
-      color: AppColors.foreground,
+      color: color,
     ),
     child: child,
   );
