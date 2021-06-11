@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jordan/screens/jordan_screen.dart';
 // Custom widgets
 import 'package:jordan/widgets/decoratedBox_widget.dart';
-// Extras
-import 'package:jordan/extras/colors.dart';
 
 class JordanWidget extends StatelessWidget {
   const JordanWidget({Key key}) : super(key: key);

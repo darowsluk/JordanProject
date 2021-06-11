@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-// Custom screens
-import 'package:jordan/screens/display_screen.dart';
 // Custom widgets
-import 'package:jordan/widgets/decoratedBox_widget.dart';
 import 'package:jordan/widgets/prayerTree_widget.dart';
 // Extras
 import 'package:jordan/extras/colors.dart';

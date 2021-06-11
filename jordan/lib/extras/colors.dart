@@ -6,4 +6,5 @@ class AppColors {
   static const Color highlightText = Colors.amber;
   static const Color regularText = Colors.white;
   static const Color primary = Colors.orange;
+  static const Color secondary = Colors.green;
 }

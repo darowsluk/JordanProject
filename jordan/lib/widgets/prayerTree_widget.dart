@@ -7,93 +7,95 @@ import 'package:jordan/extras/colors.dart';
 /// Defines data structure for prayer list items
 class Item {
   Item({
-    this.headerValue,
-    this.expandedValue,
+    this.titleValue,
+    this.subtitleValue,
     this.subItems,
     this.onTapFunction,
+    this.isExpanded = false,
   });
 
-  String expandedValue;
-  String headerValue;
-  var onTapFunction;
+  String titleValue;
+  String subtitleValue;
   List<Item> subItems;
+  var onTapFunction;
+  bool isExpanded;
 }
 
 /// Generates static list of items in the prayer list
 List<Item> generateItems() {
   return [
     Item(
-      headerValue: 'I. MODLITWY CODZIENNE',
-      expandedValue: 'Poranne i wieczorne',
+      titleValue: 'I. MODLITWY CODZIENNE',
+      subtitleValue: 'Poranne i wieczorne',
       onTapFunction: null,
       subItems: [
         Item(
-          expandedValue: 'Modlitwy poranne (wersja 1)',
+          titleValue: 'Modlitwy poranne (wersja 1)',
           onTapFunction: DisplayPrayerPage(),
         ),
         Item(
-          expandedValue: 'Modlitwy poranne (wersja 2)',
+          titleValue: 'Modlitwy poranne (wersja 2)',
           onTapFunction: DisplayPrayerPage(),
         ),
         Item(
-          expandedValue: 'Modlitwy wieczorne (wersja 1)',
+          titleValue: 'Modlitwy wieczorne (wersja 1)',
           onTapFunction: DisplayPrayerPage(),
         ),
         Item(
-          expandedValue: 'Modlitwy wieczorne (wersja 2)',
+          titleValue: 'Modlitwy wieczorne (wersja 2)',
           onTapFunction: DisplayPrayerPage(),
         ),
       ],
     ),
     Item(
-      headerValue: 'II. MIESIĘCZNE ODNOWIENIE DUCHOWE',
-      expandedValue: 'Nabożeństwo słowa Bożego',
+      titleValue: 'II. MIESIĘCZNE ODNOWIENIE DUCHOWE',
+      subtitleValue: 'Nabożeństwo słowa Bożego',
       onTapFunction: null,
       subItems: [
         Item(
-          expandedValue: 'Test1',
-          headerValue: 'Test2',
+          subtitleValue: 'Test1',
+          titleValue: 'Test2',
           onTapFunction: null,
         ),
         Item(
-          expandedValue: 'Test3',
-          headerValue: 'Test2',
-          onTapFunction: null,
-        ),
-      ],
-    ),
-    Item(
-      headerValue: 'III. DROGA KRZYŻOWA',
-      expandedValue: 'Nabożeństwo słowa Bożego',
-      onTapFunction: null,
-      subItems: [
-        Item(
-          expandedValue: 'Test1',
-          headerValue: 'Test2',
+          subtitleValue: 'Test3',
+          titleValue: 'Test2',
           onTapFunction: null,
         ),
       ],
     ),
     Item(
-      headerValue: 'IV. ŚWIĘTA PATRONALNE',
-      expandedValue: 'Nabożeństwo słowa Bożego',
+      titleValue: 'III. DROGA KRZYŻOWA',
+      subtitleValue: 'Nabożeństwo słowa Bożego',
       onTapFunction: null,
       subItems: [
         Item(
-          expandedValue: 'Test1',
-          headerValue: 'Test2',
+          subtitleValue: 'Test1',
+          titleValue: 'Test2',
           onTapFunction: null,
         ),
       ],
     ),
     Item(
-      headerValue: 'V. NABOŻEŃSTWA',
-      expandedValue: 'Nabożeństwo słowa Bożego',
+      titleValue: 'IV. ŚWIĘTA PATRONALNE',
+      subtitleValue: 'Nabożeństwo słowa Bożego',
       onTapFunction: null,
       subItems: [
         Item(
-          expandedValue: 'Test1',
-          headerValue: 'Test2',
+          subtitleValue: 'Test1',
+          titleValue: 'Test2',
+          onTapFunction: null,
+        ),
+      ],
+    ),
+    Item(
+      titleValue: 'V. NABOŻEŃSTWA',
+      subtitleValue: 'Nabożeństwo słowa Bożego',
+      onTapFunction: null,
+      subItems: [
+        Item(
+          subtitleValue: 'Test1',
+          titleValue: 'Test2',
           onTapFunction: null,
         ),
       ],
@@ -110,6 +112,69 @@ class PrayerTreeStatefulWidget extends StatefulWidget {
       _PrayerTreeStatefulWidgetState();
 }
 
+/// VERSION with ExpansionPanelList
+/// This is the private State class that goes with MyStatefulWidget.
+class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
+  final List<Item> _data = generateItems();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        child: _buildPanel(),
+      ),
+    );
+  }
+
+  Widget _buildPanel() {
+    return ExpansionPanelList(
+      expansionCallback: (int index, bool isExpanded) {
+        setState(() {
+          _data[index].isExpanded = !isExpanded;
+        });
+      },
+      children: _data.map<ExpansionPanel>((Item item) {
+        return ExpansionPanel(
+          canTapOnHeader: true,
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(item.titleValue,
+                  style: TextStyle(color: AppColors.highlightText)),
+              subtitle: Text(item.subtitleValue,
+                  style: TextStyle(color: AppColors.regularText)),
+              visualDensity: VisualDensity.comfortable,
+            );
+          },
+          body: Column(
+            children: item.subItems.map(
+              (subItem) {
+                return ListTile(
+                  title: Text(subItem.titleValue),
+                  visualDensity: VisualDensity.compact,
+                  trailing: const Icon(
+                    Icons.arrow_right,
+                    color: AppColors.secondary,
+                  ),
+                  onTap: () => {
+                    if (subItem.onTapFunction != null)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => subItem.onTapFunction)),
+                  },
+                );
+              },
+            ).toList(),
+          ),
+          isExpanded: item.isExpanded,
+        );
+      }).toList(),
+    );
+  }
+}
+
+/*
+/// VERSION with ListView
 /// This is the private State class that goes with PrayerTreeStatefulWidget.
 class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
   final List<Item> _data = generateItems();
@@ -127,7 +192,7 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
           title: Text(item.headerValue,
               style: TextStyle(color: AppColors.highlightText)),
           subtitle: Text(
-            item.expandedValue,
+            item.subtitleValue,
             style: TextStyle(color: AppColors.regularText),
           ),
           children: item.subItems.map((subItem) {
@@ -135,7 +200,7 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
                 child: Text(
-                  subItem.expandedValue,
+                  subItem.subtitleValue,
                 ),
               ),
               minVerticalPadding: 0,
@@ -157,3 +222,4 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
     );
   }
 }
+*/

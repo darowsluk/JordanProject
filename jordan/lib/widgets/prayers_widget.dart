@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jordan/screens/jordan_screen.dart';
 // Extras
 import 'package:jordan/extras/colors.dart';
 
