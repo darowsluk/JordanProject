@@ -19,8 +19,11 @@ class JordanWidget extends StatelessWidget {
         },
         child: Hero(
           tag: 'jordan',
-          child: Image.asset(
-            "assets/Jordan_100px.jpg",
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(
+              "assets/Jordan_100px.jpg",
+            ),
           ),
         ),
       ),

@@ -1,107 +1,10 @@
 import 'package:flutter/material.dart';
-// Screens
-import 'package:jordan/screens/display_screen.dart';
+// Data
+import 'package:jordan/data/prayer_list.dart';
 // Extras
 import 'package:jordan/extras/colors.dart';
 
 /// Defines data structure for prayer list items
-class Item {
-  Item({
-    this.titleValue,
-    this.subtitleValue,
-    this.subItems,
-    this.onTapFunction,
-    this.isExpanded = false,
-  });
-
-  String titleValue;
-  String subtitleValue;
-  List<Item> subItems;
-  var onTapFunction;
-  bool isExpanded;
-}
-
-/// Generates static list of items in the prayer list
-List<Item> generateItems() {
-  return [
-    Item(
-      titleValue: 'I. MODLITWY CODZIENNE',
-      subtitleValue: 'Poranne i wieczorne',
-      onTapFunction: null,
-      subItems: [
-        Item(
-          titleValue: 'Modlitwy poranne (wersja 1)',
-          onTapFunction: DisplayPrayerPage(),
-        ),
-        Item(
-          titleValue: 'Modlitwy poranne (wersja 2)',
-          onTapFunction: DisplayPrayerPage(),
-        ),
-        Item(
-          titleValue: 'Modlitwy wieczorne (wersja 1)',
-          onTapFunction: DisplayPrayerPage(),
-        ),
-        Item(
-          titleValue: 'Modlitwy wieczorne (wersja 2)',
-          onTapFunction: DisplayPrayerPage(),
-        ),
-      ],
-    ),
-    Item(
-      titleValue: 'II. MIESIĘCZNE ODNOWIENIE DUCHOWE',
-      subtitleValue: 'Nabożeństwo słowa Bożego',
-      onTapFunction: null,
-      subItems: [
-        Item(
-          subtitleValue: 'Test1',
-          titleValue: 'Test2',
-          onTapFunction: null,
-        ),
-        Item(
-          subtitleValue: 'Test3',
-          titleValue: 'Test2',
-          onTapFunction: null,
-        ),
-      ],
-    ),
-    Item(
-      titleValue: 'III. DROGA KRZYŻOWA',
-      subtitleValue: 'Nabożeństwo słowa Bożego',
-      onTapFunction: null,
-      subItems: [
-        Item(
-          subtitleValue: 'Test1',
-          titleValue: 'Test2',
-          onTapFunction: null,
-        ),
-      ],
-    ),
-    Item(
-      titleValue: 'IV. ŚWIĘTA PATRONALNE',
-      subtitleValue: 'Nabożeństwo słowa Bożego',
-      onTapFunction: null,
-      subItems: [
-        Item(
-          subtitleValue: 'Test1',
-          titleValue: 'Test2',
-          onTapFunction: null,
-        ),
-      ],
-    ),
-    Item(
-      titleValue: 'V. NABOŻEŃSTWA',
-      subtitleValue: 'Nabożeństwo słowa Bożego',
-      onTapFunction: null,
-      subItems: [
-        Item(
-          subtitleValue: 'Test1',
-          titleValue: 'Test2',
-          onTapFunction: null,
-        ),
-      ],
-    ),
-  ];
-}
 
 /// This is the stateful widget that the main application instantiates.
 class PrayerTreeStatefulWidget extends StatefulWidget {
