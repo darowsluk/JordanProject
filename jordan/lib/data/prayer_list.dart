@@ -1,5 +1,6 @@
 // Screens
 import 'package:jordan/screens/display_screen.dart';
+import 'package:intl/intl.dart';
 
 class Item {
   Item({
@@ -19,6 +20,45 @@ class Item {
   bool enabled;
 }
 
+/// Select texts based on the current day of the week
+String selectOnDay({
+  String day1,
+  String day2,
+  String day3,
+  String day4,
+  String day5,
+  String day6,
+  String day7,
+}) {
+  DateTime date = DateTime.now();
+  String day = DateFormat('EEEE').format(date);
+  switch (day) {
+    case "Sunday":
+      return day1;
+      break;
+    case "Monday":
+      return day2;
+      break;
+    case "Tuesday":
+      return day3;
+      break;
+    case "Wednesday":
+      return day4;
+      break;
+    case "Thursday":
+      return day5;
+      break;
+    case "Friday":
+      return day6;
+      break;
+    case "Saturday":
+      return day7;
+      break;
+    default:
+      return day1;
+  }
+}
+
 /// Generates static list of items in the prayer list
 List<Item> generateItems() {
   return [
@@ -28,6 +68,20 @@ List<Item> generateItems() {
       onTapFunction: null,
       enabled: true,
       subItems: [
+        Item(
+          titleValue: 'Modlitwy o powołania',
+          onTapFunction: DisplayPrayerPage(
+            asset: selectOnDay(
+                day1: "assets/texts/vocations_sunday.html",
+                day2: "assets/texts/vocations_monday.html",
+                day3: "assets/texts/vocations_tuesday.html",
+                day4: "assets/texts/vocations_wednesday.html",
+                day5: "assets/texts/vocations_thursday.html",
+                day6: "assets/texts/vocations_friday.html",
+                day7: "assets/texts/vocations_saturday.html"),
+          ),
+          enabled: true,
+        ),
         Item(
           titleValue: 'Modlitwy poranne (wersja 1)',
           onTapFunction: DisplayPrayerPage(),
@@ -47,12 +101,6 @@ List<Item> generateItems() {
           titleValue: 'Modlitwy wieczorne (wersja 2)',
           onTapFunction: DisplayPrayerPage(),
           enabled: false,
-        ),
-        Item(
-          titleValue: 'Modlitwy o powołania',
-          onTapFunction:
-              DisplayPrayerPage(asset: "assets/texts/vocations.html"),
-          enabled: true,
         ),
       ],
     ),
