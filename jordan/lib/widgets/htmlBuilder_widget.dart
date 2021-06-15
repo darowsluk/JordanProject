@@ -3,8 +3,6 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:jordan/extras/statics.dart';
 
 class BuildHtml extends StatelessWidget {
-  // const BuildHtml({Key key}) : super(key: key);
-
   BuildHtml({
     Key key,
     this.data,

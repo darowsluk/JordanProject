@@ -8,6 +8,7 @@ class Item {
     this.subItems,
     this.onTapFunction,
     this.isExpanded = false,
+    this.enabled = false,
   });
 
   String titleValue;
@@ -15,6 +16,7 @@ class Item {
   List<Item> subItems;
   var onTapFunction;
   bool isExpanded;
+  bool enabled;
 }
 
 /// Generates static list of items in the prayer list
@@ -24,26 +26,33 @@ List<Item> generateItems() {
       titleValue: 'I. MODLITWY CODZIENNE',
       subtitleValue: 'Poranne, wieczorne, w różnych intencjach',
       onTapFunction: null,
+      enabled: true,
       subItems: [
         Item(
           titleValue: 'Modlitwy poranne (wersja 1)',
           onTapFunction: DisplayPrayerPage(),
+          enabled: false,
         ),
         Item(
           titleValue: 'Modlitwy poranne (wersja 2)',
           onTapFunction: DisplayPrayerPage(),
+          enabled: false,
         ),
         Item(
           titleValue: 'Modlitwy wieczorne (wersja 1)',
           onTapFunction: DisplayPrayerPage(),
+          enabled: false,
         ),
         Item(
           titleValue: 'Modlitwy wieczorne (wersja 2)',
           onTapFunction: DisplayPrayerPage(),
+          enabled: false,
         ),
         Item(
           titleValue: 'Modlitwy o powołania',
-          onTapFunction: DisplayPrayerPage(),
+          onTapFunction:
+              DisplayPrayerPage(asset: "assets/texts/vocations.html"),
+          enabled: true,
         ),
       ],
     ),
@@ -51,6 +60,7 @@ List<Item> generateItems() {
       titleValue: 'II. MIESIĘCZNE ODNOWIENIE DUCHOWE',
       subtitleValue: 'Rachunek sumienia, modlitwy rekolekcyjne',
       onTapFunction: null,
+      enabled: true,
       subItems: [
         Item(
           titleValue: 'Modlitwa rekolekcyjna',
@@ -82,6 +92,7 @@ List<Item> generateItems() {
       titleValue: 'III. Z CHRYSTUSEM NA DRODZE KRZYŻOWEJ',
       subtitleValue: 'Nabożeństwa Drogi Krzyżowej',
       onTapFunction: null,
+      enabled: true,
       subItems: [
         Item(
           titleValue: 'Droga Krzyżowa kapłana zakonnika',
@@ -101,6 +112,7 @@ List<Item> generateItems() {
       titleValue: 'IV. ŚWIĘTA PATRONALNE',
       subtitleValue: 'Nowenny i Tridua',
       onTapFunction: null,
+      enabled: true,
       subItems: [
         Item(
           titleValue: 'Nowenna przed Uroczystością Niepokalanego Poczęcia NMP',
@@ -183,6 +195,7 @@ List<Item> generateItems() {
       titleValue: 'V. INNE NABOŻEŃSTWA I MODLITWY',
       subtitleValue: 'Litania, hymny, modlitwy na różne okresy',
       onTapFunction: null,
+      enabled: true,
       subItems: [
         Item(
           titleValue: 'Litania do Boskiego Zbawiciela',

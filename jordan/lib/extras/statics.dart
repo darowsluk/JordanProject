@@ -7,6 +7,7 @@ class AppColors {
   static const Color regularText = Colors.white;
   static const Color primary = Colors.orange;
   static const Color secondary = Colors.green;
+  static const Color disabled = Colors.blueGrey;
 }
 
 class AppTextStyle {

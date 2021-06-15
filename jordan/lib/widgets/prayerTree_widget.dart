@@ -52,12 +52,18 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
             children: item.subItems.map(
               (subItem) {
                 return ListTile(
+                  enabled: subItem.enabled,
                   title: Text(subItem.titleValue),
                   visualDensity: VisualDensity.compact,
-                  trailing: const Icon(
-                    Icons.arrow_right,
-                    color: AppColors.secondary,
-                  ),
+                  trailing: subItem.enabled
+                      ? const Icon(
+                          Icons.arrow_right,
+                          color: AppColors.secondary,
+                        )
+                      : const Icon(
+                          Icons.lock_outline,
+                          color: AppColors.disabled,
+                        ),
                   onTap: () => {
                     if (subItem.onTapFunction != null)
                       Navigator.push(

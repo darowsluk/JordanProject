@@ -5,22 +5,21 @@ import 'package:jordan/widgets/htmlBuilder_widget.dart';
 
 import 'dart:async' show Future;
 
-Future<String> loadAsset(BuildContext context) async {
-  return await DefaultAssetBundle.of(context)
-      .loadString("assets/texts/vocations.html");
+Future<String> loadAsset(BuildContext context, String asset) async {
+  return await DefaultAssetBundle.of(context).loadString(asset);
 }
 
 //////////////////////////////////////////////////////////////////////////
 /// Displays prayer through the intercession of Blessed Francis Jordan ///
 //////////////////////////////////////////////////////////////////////////
-class DisplayPrayerPage extends StatefulWidget {
-  DisplayPrayerPage({Key key}) : super(key: key);
+class DisplayPrayerPage extends StatelessWidget {
+  DisplayPrayerPage({
+    Key key,
+    this.asset,
+  }) : super(key: key);
 
-  @override
-  _DisplayPrayerPageState createState() => _DisplayPrayerPageState();
-}
+  final String asset;
 
-class _DisplayPrayerPageState extends State<DisplayPrayerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +29,7 @@ class _DisplayPrayerPageState extends State<DisplayPrayerPage> {
         backgroundColor: AppColors.foreground,
       ),
       body: FutureBuilder(
-          future: loadAsset(context),
+          future: loadAsset(context, asset),
           initialData: 'Loading text...',
           builder: (BuildContext context, AsyncSnapshot<String> text) {
             return BuildHtml(data: text.data);
