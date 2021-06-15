@@ -22,7 +22,7 @@ class JordanPage extends StatelessWidget {
               child: Hero(
                 tag: 'jordan',
                 child: Image.asset(
-                  "assets/Jordan_414px.jpg",
+                  "assets/images/Jordan_414px.jpg",
                 ),
               ),
             ),

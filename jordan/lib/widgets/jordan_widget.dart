@@ -22,7 +22,7 @@ class JordanWidget extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.asset(
-              "assets/Jordan_100px.jpg",
+              "assets/images/Jordan_100px.jpg",
             ),
           ),
         ),
