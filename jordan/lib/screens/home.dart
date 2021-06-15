@@ -12,7 +12,7 @@ import 'package:jordan/widgets/calendarium_widget.dart';
 import 'package:jordan/screens/prayers_screen.dart';
 
 // Extras
-import 'package:jordan/extras/colors.dart';
+import 'package:jordan/extras/statics.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -38,23 +38,25 @@ class _HomePageState extends State<HomePage> {
         title: Text("Modlitewnik Salwatorianina"),
       ),
       drawer: DrawerWidget(scaffoldKey: scaffoldKey),
-      body: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              // SDS Prayer Box
-              JordanWidget(),
-              // SDS Daily prayers
-              PrayersWidget(),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              // Calendarium SDS
-              CalendariumWidget(),
-            ],
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                // SDS Prayer Box
+                JordanWidget(),
+                // SDS Daily prayers
+                PrayersWidget(),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                // Calendarium SDS
+                CalendariumWidget(),
+              ],
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

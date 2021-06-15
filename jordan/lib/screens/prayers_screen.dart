@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // Custom widgets
 import 'package:jordan/widgets/prayerTree_widget.dart';
 // Extras
-import 'package:jordan/extras/colors.dart';
+import 'package:jordan/extras/statics.dart';
 
 /////////////////////////////////////////////
 /// Displays list of salvatorian prayers  ///

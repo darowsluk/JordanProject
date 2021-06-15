@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jordan/screens/home.dart';
 // Extras
-import 'package:jordan/extras/colors.dart';
+import 'package:jordan/extras/statics.dart';
 
 void main() {
   runApp(JordanApp());

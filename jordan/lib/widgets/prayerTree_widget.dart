@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // Data
 import 'package:jordan/data/prayer_list.dart';
 // Extras
-import 'package:jordan/extras/colors.dart';
+import 'package:jordan/extras/statics.dart';
 
 /// Defines data structure for prayer list items
 

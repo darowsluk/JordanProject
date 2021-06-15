@@ -8,3 +8,7 @@ class AppColors {
   static const Color primary = Colors.orange;
   static const Color secondary = Colors.green;
 }
+
+class AppTextStyle {
+  static const double defaultTextSize = 18;
+}
