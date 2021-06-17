@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jordan/screens/home.dart';
+// Extras
+import 'package:jordan/extras/statics.dart';
 
 void main() {
   runApp(JordanApp());
@@ -21,8 +23,12 @@ class JordanApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
+
         brightness: Brightness.dark,
-        primaryColor: Colors.orange,
+        backgroundColor: Colors.blueAccent,
+        primaryColor: Colors.blueGrey,
+        canvasColor: AppColors.foreground,
+        cardColor: AppColors.foreground,
         // primarySwatch: Colors.orange,
         // canvasColor: Colors.black12, // drawer background
         // textTheme: TextTheme(

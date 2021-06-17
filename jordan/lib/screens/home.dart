@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jordan/screens/prayer.dart';
+
+// Custom widgets
+import 'package:jordan/widgets/jordan_widget.dart';
+import 'package:jordan/widgets/drawer_widget.dart';
+import 'package:jordan/widgets/prayers_widget.dart';
+import 'package:jordan/widgets/calendarium_widget.dart';
+
+// Custom screens
+import 'package:jordan/screens/prayers_screen.dart';
+
+// Extras
+import 'package:jordan/extras/statics.dart';
 
 class HomePage extends StatefulWidget {
-  // const HomePage({Key key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,70 +32,41 @@ class _HomePageState extends State<HomePage> {
             ));
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text("Bł. Franciszek Jordan"),
-        // backgroundColor: Colors.orange,
+        backgroundColor: AppColors.foreground,
+        title: Text("Modlitewnik Salwatorianina"),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+      drawer: DrawerWidget(scaffoldKey: scaffoldKey),
+      body: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
-            DrawerHeader(
-              //header of drawer
-              decoration: BoxDecoration(
-                  // color: Colors.orange,
-                  ),
-              child: Text(
-                'Options',
-                style: TextStyle(
-                  // color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
+            Row(
+              children: <Widget>[
+                // SDS Prayer Box
+                JordanWidget(),
+                // SDS Daily prayers
+                PrayersWidget(),
+              ],
             ),
-            ListTile(
-              //menu item of Drawer
-              leading: Icon(Icons.home),
-              title: Text('Home Page'),
+            Row(
+              children: <Widget>[
+                // Calendarium SDS
+                CalendariumWidget(),
+              ],
             ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('My Profile'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Account Settings'),
-            ),
-            ListTile(
-                onTap: () {
-                  if (scaffoldKey.currentState.isDrawerOpen) {
-                    //check if drawer is open
-                    Navigator.pop(context); //context of drawer is different
-                  }
-                },
-                leading: Icon(Icons.close),
-                title: Text("Close Drawer"))
           ],
         ),
       ),
-      body: Center(
-        child: Container(
-          alignment: Alignment.topCenter,
-          child: Image.asset(
-            "lib/screens/assets/Jordan_414px.jpg",
-          ),
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
-        child: Icon(Icons.menu_book),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PrayerPage()),
           );
         },
+        child: const Icon(Icons.library_books),
+        backgroundColor: AppColors.primary,
       ),
     );
   }
