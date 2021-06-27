@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text("Modlitewnik Salwatorianina"),
+        title: Text(AppStrings.appName),
       ),
       drawer: DrawerWidget(scaffoldKey: scaffoldKey),
       body: SingleChildScrollView(

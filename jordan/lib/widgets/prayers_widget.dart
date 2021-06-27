@@ -12,8 +12,8 @@ class PrayersWidget extends StatelessWidget {
     return Expanded(
       child: InkWell(
         child: Container(
-          width: 220,
-          height: 150,
+          //width: 220,
+          height: 200,
           alignment: Alignment.topCenter,
           padding: EdgeInsets.all(15),
           margin: EdgeInsets.all(10),
