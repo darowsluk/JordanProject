@@ -8,14 +8,14 @@ import 'package:jordan/extras/statics.dart';
 /// Displays prayer through the intercession of Blessed Francis Jordan ///
 //////////////////////////////////////////////////////////////////////////
 class JordanPage extends StatefulWidget {
-  const JordanPage({Key key}) : super(key: key);
+  const JordanPage({Key? key}) : super(key: key);
 
   @override
   _JordanPageState createState() => _JordanPageState();
 }
 
 class _JordanPageState extends State<JordanPage> {
-  bool _displayFront;
+  late bool _displayFront;
 
   @override
   void initState() {
@@ -49,25 +49,35 @@ class _JordanPageState extends State<JordanPage> {
   BoxConstraints _buildCardConstraints() {
     double w = MediaQuery.of(context).size.width * AppSaintCard.cardScale;
     double h = MediaQuery.of(context).size.height * AppSaintCard.cardScale;
-    if (w / h <= AppSaintCard.cardProportions) {
-      // too wide
+    // Check for max picture size
+    if (w > AppSaintCard.maxWidth && h > AppSaintCard.maxHeight) {
+      // max size
       return BoxConstraints.tightFor(
-        width: w,
-        height: w / AppSaintCard.cardProportions,
+        width: AppSaintCard.maxWidth,
+        height: AppSaintCard.maxHeight,
       );
     } else {
-      // too high
-      return BoxConstraints.tightFor(
-        width: h * AppSaintCard.cardProportions,
-        height: h,
-      );
+      // normal size
+      if (w / h <= AppSaintCard.cardProportions) {
+        // too wide
+        return BoxConstraints.tightFor(
+          width: w,
+          height: w / AppSaintCard.cardProportions,
+        );
+      } else {
+        // too high
+        return BoxConstraints.tightFor(
+          width: h * AppSaintCard.cardProportions,
+          height: h,
+        );
+      }
     }
   }
 
   Widget __buildLayout({
-    Key key,
-    Color backgroundColor,
-    Widget displayCard,
+    Key? key,
+    required Color backgroundColor,
+    required Widget displayCard,
   }) {
     return Container(
       key: key,
@@ -139,7 +149,7 @@ class _JordanPageState extends State<JordanPage> {
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 500),
         transitionBuilder: __transitionBuilder,
-        layoutBuilder: (widget, list) => Stack(children: [widget, ...list]),
+        layoutBuilder: (widget, list) => Stack(children: [widget!, ...list]),
         child: _displayFront ? _buildFront() : _buildRear(),
         switchInCurve: Curves.easeInBack,
         switchOutCurve: Curves.easeInBack.flipped,
@@ -153,7 +163,7 @@ class _JordanPageState extends State<JordanPage> {
       animation: rotateAnim,
       child: widget,
       builder: (context, widget) {
-        final isUnder = (ValueKey(_displayFront) != widget.key);
+        final isUnder = (ValueKey(_displayFront) != widget?.key);
         var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
         tilt *= isUnder ? -1.0 : 1.0;
         final value =

@@ -4,7 +4,7 @@ import 'package:jordan/extras/statics.dart';
 
 class PrayersWidget extends StatelessWidget {
   const PrayersWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

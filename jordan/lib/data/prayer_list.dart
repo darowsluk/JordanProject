@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 
 class Item {
   Item({
-    this.titleValue,
-    this.subtitleValue,
+    this.titleValue = "",
+    this.subtitleValue = "",
     this.subItems,
     this.onTapFunction,
     this.isExpanded = false,
@@ -14,7 +14,7 @@ class Item {
 
   String titleValue;
   String subtitleValue;
-  List<Item> subItems;
+  List<Item>? subItems;
   var onTapFunction;
   bool isExpanded;
   bool enabled;
@@ -22,38 +22,31 @@ class Item {
 
 /// Select texts based on the current day of the week
 String selectOnDay({
-  String day1,
-  String day2,
-  String day3,
-  String day4,
-  String day5,
-  String day6,
-  String day7,
+  required String day1,
+  required String day2,
+  required String day3,
+  required String day4,
+  required String day5,
+  required String day6,
+  required String day7,
 }) {
   DateTime date = DateTime.now();
   String day = DateFormat('EEEE').format(date);
   switch (day) {
     case "Sunday":
       return day1;
-      break;
     case "Monday":
       return day2;
-      break;
     case "Tuesday":
       return day3;
-      break;
     case "Wednesday":
       return day4;
-      break;
     case "Thursday":
       return day5;
-      break;
     case "Friday":
       return day6;
-      break;
     case "Saturday":
       return day7;
-      break;
     default:
       return day1;
   }

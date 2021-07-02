@@ -15,7 +15,7 @@ import 'package:jordan/screens/prayers_screen.dart';
 import 'package:jordan/extras/statics.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();

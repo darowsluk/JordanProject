@@ -4,8 +4,8 @@ import 'package:jordan/extras/statics.dart';
 
 class BuildHtml extends StatelessWidget {
   BuildHtml({
-    Key key,
-    this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final String data;

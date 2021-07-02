@@ -4,7 +4,7 @@ import 'package:jordan/screens/jordan_screen.dart';
 import 'package:jordan/extras/statics.dart';
 
 class JordanWidget extends StatelessWidget {
-  const JordanWidget({Key key}) : super(key: key);
+  const JordanWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
