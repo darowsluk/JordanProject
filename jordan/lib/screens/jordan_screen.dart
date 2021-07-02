@@ -29,20 +29,41 @@ class _JordanPageState extends State<JordanPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
+        title: Text('Via Card'),
       ),
-      body: Center(
-        child: Container(
-          //constraints: BoxConstraints.tight(Size.square(200.0)),
-          alignment: Alignment.topCenter,
-          //padding: EdgeInsets.all(16),
-          margin: EdgeInsets.all(32),
-          child: _buildFlipAnimation(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            constraints: _buildCardConstraints(),
+            alignment: Alignment.topCenter,
+            //padding: EdgeInsets.all(16),
+            margin: EdgeInsets.all(32),
+            child: _buildFlipAnimation(),
+          ),
         ),
       ),
     );
   }
 
   /// Helper Functions
+  BoxConstraints _buildCardConstraints() {
+    double w = MediaQuery.of(context).size.width * AppSaintCard.cardScale;
+    double h = MediaQuery.of(context).size.height * AppSaintCard.cardScale;
+    if (w / h <= AppSaintCard.cardProportions) {
+      // too wide
+      return BoxConstraints.tightFor(
+        width: w,
+        height: w / AppSaintCard.cardProportions,
+      );
+    } else {
+      // too high
+      return BoxConstraints.tightFor(
+        width: h * AppSaintCard.cardProportions,
+        height: h,
+      );
+    }
+  }
+
   Widget __buildLayout({
     Key key,
     Color backgroundColor,
@@ -66,6 +87,7 @@ class _JordanPageState extends State<JordanPage> {
         borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
         child: Image.asset(
           "assets/images/Jordan_414px.jpg",
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -75,44 +97,37 @@ class _JordanPageState extends State<JordanPage> {
     return __buildLayout(
       key: ValueKey(false),
       backgroundColor: AppColors.textBackground,
-      displayCard:
-          //ClipRRect(
-          //  borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
-          SizedBox(
-        width: 414,
-        height: 460,
-        child: Container(
-          alignment: Alignment.topCenter,
-          padding: EdgeInsets.all(AppMargins.edgeInsets * 2),
-          child: Column(
-            children: [
-              Text(
-                AppPrayers.jordanPrayerTitle,
-                textAlign: TextAlign.center,
+      displayCard: Container(
+        alignment: Alignment.topCenter,
+        padding: EdgeInsets.all(AppMargins.edgeInsets * 2),
+        child: ListView(
+          children: [
+            Text(
+              AppPrayers.jordanPrayerTitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.darkText,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(AppMargins.edgeInsets / 2),
+            ),
+            Text(AppPrayers.jordanPrayer,
                 style: TextStyle(
                   color: AppColors.darkText,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(AppMargins.edgeInsets / 2),
-              ),
-              Text(AppPrayers.jordanPrayer,
-                  style: TextStyle(
-                    color: AppColors.darkText,
-                    fontSize: 16,
-                  )),
-              // Padding(
-              //   padding: EdgeInsets.all(AppMargins.edgeInsets),
-              // ),
-              // Text(AppPrayers.jordanPrayerEndnote,
-              //     style: TextStyle(
-              //       color: AppColors.darkText,
-              //       fontSize: 12,
-              //     )),
-            ],
-          ),
+                  fontSize: 16,
+                )),
+            Padding(
+              padding: EdgeInsets.all(AppMargins.edgeInsets),
+            ),
+            Text(AppPrayers.jordanPrayerEndnote,
+                style: TextStyle(
+                  color: AppColors.darkText,
+                  fontSize: 12,
+                )),
+          ],
         ),
       ),
     );

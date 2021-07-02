@@ -33,3 +33,8 @@ class AppPrayers {
   static const String jordanPrayerEndnote =
       "Imprimatur: abp Marek Jędraszewski\nKraków, 29 kwietnia 2021 r., nr 1541/2021";
 }
+
+class AppSaintCard {
+  static const double cardProportions = 3.0 / 4.0;
+  static const double cardScale = 0.8;
+}
