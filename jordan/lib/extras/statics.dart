@@ -36,7 +36,8 @@ class AppPrayers {
 
 class AppSaintCard {
   static const double cardProportions = 3.0 / 4.0;
-  static const double cardScale = 0.8;
-  static const double maxWidth = 414;
-  static const double maxHeight = 550;
+  static const double cardScale = 0.9;
+  static const double maxWidth = 600;
+  static const double maxHeight = 800;
+  static const double cardMargins = 32;
 }

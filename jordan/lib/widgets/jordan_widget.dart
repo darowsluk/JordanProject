@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jordan/screens/jordan_screen.dart';
+import 'package:jordan/screens/saint_screen.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
