@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
-//////////////////////////////////////////////////////////////////////////
-/// Displays prayer through the intercession of Blessed Francis Jordan ///
-//////////////////////////////////////////////////////////////////////////
-class JordanPage extends StatefulWidget {
-  const JordanPage({Key? key}) : super(key: key);
+///////////////////////////
+/// Displays Saint Card ///
+///////////////////////////
+class SaintPage extends StatefulWidget {
+  const SaintPage({Key? key}) : super(key: key);
 
   @override
-  _JordanPageState createState() => _JordanPageState();
+  _SaintPageState createState() => _SaintPageState();
 }
 
-class _JordanPageState extends State<JordanPage> {
+class _SaintPageState extends State<SaintPage> {
   late bool _displayFront;
 
   @override
@@ -29,7 +29,7 @@ class _JordanPageState extends State<JordanPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text('Saint Card'),
+        title: Text(AppSaintCard.saintCardTitle),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -44,14 +44,13 @@ class _JordanPageState extends State<JordanPage> {
     );
   }
 
-  /// Helper Functions
+  // Helper Functions
   BoxConstraints _buildCardConstraints(BuildContext context) {
-    print("_buildCardConstraints");
     if (MediaQuery.maybeOf(context) == null) {
-      print("ViaSancti: ERROR: MediaQuery returns null");
       return BoxConstraints.tightFor(
-        width: 400,
-        height: 600,
+        // default saint card size (1/2 size of max)
+        width: (AppSaintCard.maxWidth / 2),
+        height: (AppSaintCard.maxWidth / 2) / AppSaintCard.cardProportions,
       );
     }
     double w =
@@ -88,31 +87,6 @@ class _JordanPageState extends State<JordanPage> {
     }
   }
 
-/*    
-    if (w > AppSaintCard.maxWidth && h > AppSaintCard.maxHeight) {
-      // max size
-      return BoxConstraints.tightFor(
-        width: AppSaintCard.maxWidth,
-        height: AppSaintCard.maxHeight,
-      );
-    } else {
-      // normal size
-      if (w / h <= AppSaintCard.cardProportions) {
-        // too wide
-        return BoxConstraints.tightFor(
-          width: w,
-          height: w / AppSaintCard.cardProportions,
-        );
-      } else {
-        // too high
-        return BoxConstraints.tightFor(
-          width: h * AppSaintCard.cardProportions,
-          height: h,
-        );
-      }
-    }
-    */
-
   Widget __buildLayout({
     required Key key,
     required Widget displayCard,
@@ -133,7 +107,8 @@ class _JordanPageState extends State<JordanPage> {
       displayCard: ClipRRect(
         borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
         child: Image.asset(
-          "assets/images/Jordan_600px.jpg",
+          AppSaintCard.cardAsset,
+          key: Key(AppSaintCard.cardAsset),
           fit: BoxFit.cover,
         ),
       ),
@@ -151,7 +126,8 @@ class _JordanPageState extends State<JordanPage> {
               true, // necessary to size the height of the viewport to the sum of the heights of its children
           children: [
             Text(
-              AppPrayers.jordanPrayerTitle,
+              AppSaintCard.jordanPrayerTitle,
+              key: Key(AppSaintCard.jordanPrayerTitle),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.darkText,
@@ -162,7 +138,7 @@ class _JordanPageState extends State<JordanPage> {
             Padding(
               padding: EdgeInsets.all(AppMargins.edgeInsets / 2),
             ),
-            Text(AppPrayers.jordanPrayer,
+            Text(AppSaintCard.jordanPrayer,
                 style: TextStyle(
                   color: AppColors.darkText,
                   fontSize: 16,
@@ -170,7 +146,7 @@ class _JordanPageState extends State<JordanPage> {
             Padding(
               padding: EdgeInsets.all(AppMargins.edgeInsets),
             ),
-            Text(AppPrayers.jordanPrayerEndnote,
+            Text(AppSaintCard.jordanPrayerEndnote,
                 style: TextStyle(
                   color: AppColors.darkText,
                   fontSize: 12,
@@ -189,8 +165,6 @@ class _JordanPageState extends State<JordanPage> {
         transitionBuilder: __transitionBuilder,
         layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
           return Stack(
-            //fit: StackFit.expand,
-            //clipBehavior: Clip.none,
             children: <Widget>[
               if (currentChild != null) currentChild,
               ...previousChildren,

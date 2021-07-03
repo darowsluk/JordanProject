@@ -15,7 +15,7 @@ class JordanWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => JordanPage(),
+              builder: (context) => SaintPage(),
             ),
           );
         },
