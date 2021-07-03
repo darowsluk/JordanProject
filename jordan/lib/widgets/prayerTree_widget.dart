@@ -8,7 +8,7 @@ import 'package:jordan/extras/statics.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class PrayerTreeStatefulWidget extends StatefulWidget {
-  const PrayerTreeStatefulWidget({Key key}) : super(key: key);
+  const PrayerTreeStatefulWidget({Key? key}) : super(key: key);
 
   @override
   State<PrayerTreeStatefulWidget> createState() =>
@@ -49,7 +49,7 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
             );
           },
           body: Column(
-            children: item.subItems.map(
+            children: item.subItems!.map(
               (subItem) {
                 return ListTile(
                   enabled: subItem.enabled,

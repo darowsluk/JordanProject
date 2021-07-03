@@ -14,26 +14,42 @@ Future<String> loadAsset(BuildContext context, String asset) async {
 //////////////////////////////////////////////////////////////////////////
 class DisplayPrayerPage extends StatelessWidget {
   DisplayPrayerPage({
-    Key key,
+    Key? key,
     this.asset,
   }) : super(key: key);
 
-  final String asset;
+  final String? asset;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text("Modlitwy SDS"),
-        backgroundColor: AppColors.foreground,
-      ),
-      body: FutureBuilder(
-          future: loadAsset(context, asset),
-          initialData: 'Loading text...',
-          builder: (BuildContext context, AsyncSnapshot<String> text) {
-            return BuildHtml(data: text.data);
-          }),
-    );
+    if (asset == null) {
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          title: Text("Modlitwy SDS"),
+          backgroundColor: AppColors.foreground,
+        ),
+        body: Text(""),
+      );
+    } else {
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          title: Text("Modlitwy SDS"),
+          backgroundColor: AppColors.foreground,
+        ),
+        body: FutureBuilder(
+            future: loadAsset(context, asset!),
+            initialData: 'Loading text...',
+            builder: (BuildContext context, AsyncSnapshot<String> text) {
+              if (text.data == null) {
+                AssertionError();
+                return Text("");
+              } else {
+                return BuildHtml(data: text.data!);
+              }
+            }),
+      );
+    }
   }
 }

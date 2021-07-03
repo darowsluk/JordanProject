@@ -4,8 +4,8 @@ import 'package:jordan/extras/statics.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({
-    Key key,
-    @required this.scaffoldKey,
+    Key? key,
+    required this.scaffoldKey,
   }) : super(key: key);
 
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -43,7 +43,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              if (widget.scaffoldKey.currentState.isDrawerOpen) {
+              if (widget.scaffoldKey.currentState == null) {
+              } else if (widget.scaffoldKey.currentState!.isDrawerOpen) {
                 //check if drawer is open
                 Navigator.pop(context); //context of drawer is different
               }

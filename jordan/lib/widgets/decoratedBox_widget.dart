@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jordan/extras/statics.dart';
 
 Container buildDecoratedBoxWidget(
-    {Widget child,
+    {required Widget child,
     double height = 150,
     double width = 150,
     Color color = AppColors.foreground,
