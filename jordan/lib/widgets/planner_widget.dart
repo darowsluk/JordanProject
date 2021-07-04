@@ -12,8 +12,6 @@ class PlannerWidget extends StatelessWidget {
       child: InkWell(
         child: Container(
           constraints: BoxConstraints.expand(),
-          // width: 220,
-          //height: 150,
           alignment: Alignment.topCenter,
           padding: EdgeInsets.all(AppMargins.edgeInsets),
           margin: EdgeInsets.fromLTRB(
@@ -30,7 +28,7 @@ class PlannerWidget extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               Text(
-                'Kalendarium SDS',
+                'Planner',
                 textAlign: TextAlign.start,
                 style: TextStyle(color: AppColors.highlightText),
               ),
@@ -38,61 +36,40 @@ class PlannerWidget extends StatelessWidget {
                 height: 10,
               ),
               ListTile(
-                title: Text('Imieniny ks. Roman Słupek SDS'),
-                trailing: Text('3 III'),
+                title: Text('Rosary'),
+                trailing:
+                    Icon(Icons.circle_outlined, color: Colors.greenAccent),
                 visualDensity:
                     VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
+                //dense: true,
                 horizontalTitleGap: 0,
                 leading: Icon(
-                  Icons.cake,
+                  Icons.add_location_rounded,
                   color: Colors.yellow,
                 ),
               ),
               ListTile(
-                title: Text('Zm. ks. Tadeusz Styczeń SDS'),
-                trailing: Text('13 III'),
+                title: Text('Read Holy Scripture'),
+                trailing:
+                    Icon(Icons.circle_outlined, color: Colors.greenAccent),
                 visualDensity:
                     VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
+                //dense: true,
                 horizontalTitleGap: 0,
                 leading: Icon(
-                  Icons.hourglass_empty,
+                  Icons.add_location_rounded,
                   color: Colors.red,
                 ),
               ),
               ListTile(
-                title: Text('10 rocz. św. ks. Łukasz Darowski SDS'),
+                title: Text('Morning and Evening Prayers'),
+                trailing:
+                    Icon(Icons.circle_outlined, color: Colors.greenAccent),
                 visualDensity:
                     VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
+                //dense: true,
                 horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.timer,
-                  color: Colors.greenAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('8 rocz. św. ks. Paweł Radziejewski SDS'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.timer,
-                  color: Colors.greenAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('12 rocz. św. ks. Maciej Dalibor SDS'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.timer,
-                  color: Colors.greenAccent,
-                ),
+                leading: Icon(Icons.ac_unit, color: Colors.transparent),
               ),
             ],
           ),
