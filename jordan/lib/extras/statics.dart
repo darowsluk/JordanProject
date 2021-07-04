@@ -26,7 +26,7 @@ class AppMargins {
 }
 
 class AppSaintCard {
-  static const String saintCardTitle = "Saint Card";
+  static const String title = "Saint Card";
 
   /// Name of the asset image for saint card
   static const String cardAsset = "assets/images/Jordan_600px.jpg";
@@ -52,4 +52,8 @@ class AppSaintCard {
       "Panie Jezu Chryste, Zbawicielu świata, * przez wstawiennictwo Błogosławionego Franciszka Marii od Krzyża Jordana, * któremu udzieliłeś daru głębokiej i żywej wiary, * niezachwianej nadziei i heroicznej miłości Boga i bliźniego * oraz wielkiej gorliwości o zbawienie dusz, * prosimy Cię, * obdarz nas głęboką wiarą i otwartym sercem, * abyśmy nigdy nie spoczęli w poznawaniu Ciebie i głoszeniu Ewangelii wszystkim narodom. * Udziel nam również łaski, * o którą Cię pokornie prosimy. * Który żyjesz i królujesz na wieki wieków. * Amen.";
   static const String jordanPrayerEndnote =
       "Imprimatur: abp Marek Jędraszewski\nKraków, 29 kwietnia 2021 r., nr 1541/2021";
+}
+
+class AppAddPlan {
+  static const String title = "Add Plan";
 }

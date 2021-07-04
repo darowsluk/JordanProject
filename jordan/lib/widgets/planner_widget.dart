@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/screens/addplan_screen.dart';
 
 class PlannerWidget extends StatelessWidget {
   const PlannerWidget({Key? key}) : super(key: key);
@@ -44,8 +45,9 @@ class PlannerWidget extends StatelessWidget {
                 //dense: true,
                 horizontalTitleGap: 0,
                 leading: Icon(
-                  Icons.add_location_rounded,
-                  color: Colors.yellow,
+                  Icons.circle,
+                  size: 8,
+                  color: Colors.green,
                 ),
               ),
               ListTile(
@@ -57,7 +59,8 @@ class PlannerWidget extends StatelessWidget {
                 //dense: true,
                 horizontalTitleGap: 0,
                 leading: Icon(
-                  Icons.add_location_rounded,
+                  Icons.circle,
+                  size: 8,
                   color: Colors.red,
                 ),
               ),
@@ -69,12 +72,23 @@ class PlannerWidget extends StatelessWidget {
                     VisualDensity(vertical: VisualDensity.minimumDensity),
                 //dense: true,
                 horizontalTitleGap: 0,
-                leading: Icon(Icons.ac_unit, color: Colors.transparent),
+                leading: Icon(
+                  Icons.circle,
+                  size: 8,
+                  color: Colors.yellow,
+                ),
               ),
             ],
           ),
         ),
-        onTap: null,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddPlanPage(),
+            ),
+          );
+        },
       ),
     );
   }
