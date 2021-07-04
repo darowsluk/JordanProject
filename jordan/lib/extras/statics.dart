@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+
+class AppColors {
+  static const Color foreground = const Color.fromRGBO(24, 33, 54, 1.0);
+  static const Color background = const Color.fromRGBO(14, 17, 33, 1.0);
+  static const Color textBackground = const Color.fromRGBO(244, 235, 208, 1.0);
+  static const Color highlightText = Colors.amber;
+  static const Color regularText = Colors.white;
+  static const Color darkText = Colors.black87;
+  static const Color primary = Colors.orange;
+  static const Color secondary = Colors.green;
+  static const Color disabled = Colors.blueGrey;
+}
+
+class AppTextStyle {
+  static const double defaultTextSize = 18;
+}
+
+class AppStrings {
+  static const String appName = "Via Sancti";
+}
+
+class AppMargins {
+  static const double edgeInsets = 16.0;
+  static const double cornerRadius = 16.0;
+}
+
+class AppPrayers {
+  static const String jordanPrayerTitle =
+      "Modlitwa przez wstawiennictwo Bł. Franciszka Marii od Krzyża Jordana";
+  static const String jordanPrayer =
+      "Panie Jezu Chryste, Zbawicielu świata, * przez wstawiennictwo Błogosławionego Franciszka Marii od Krzyża Jordana, * któremu udzieliłeś daru głębokiej i żywej wiary, * niezachwianej nadziei i heroicznej miłości Boga i bliźniego * oraz wielkiej gorliwości o zbawienie dusz, * prosimy Cię, * obdarz nas głęboką wiarą i otwartym sercem, * abyśmy nigdy nie spoczęli w poznawaniu Ciebie i głoszeniu Ewangelii wszystkim narodom. * Udziel nam również łaski, * o którą Cię pokornie prosimy. * Który żyjesz i królujesz na wieki wieków. * Amen.";
+  static const String jordanPrayerEndnote =
+      "Imprimatur: abp Marek Jędraszewski\nKraków, 29 kwietnia 2021 r., nr 1541/2021";
+}
+
+class AppSaintCard {
+  static const double cardProportions = 3.0 / 4.0;
+  static const double cardScale = 0.8;
+  static const double maxWidth = 414;
+  static const double maxHeight = 550;
+}
