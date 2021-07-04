@@ -2,30 +2,35 @@ import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
-class PrayersWidget extends StatelessWidget {
-  const PrayersWidget({
-    Key? key,
-  }) : super(key: key);
+class PlannerWidget extends StatelessWidget {
+  const PlannerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 2,
       child: InkWell(
         child: Container(
-          //width: 220,
-          height: 200,
+          constraints: BoxConstraints.expand(),
+          // width: 220,
+          //height: 150,
           alignment: Alignment.topCenter,
-          padding: EdgeInsets.all(15),
-          margin: EdgeInsets.all(10),
+          padding: EdgeInsets.all(AppMargins.edgeInsets),
+          margin: EdgeInsets.fromLTRB(
+              AppMargins.edgeInsets,
+              0,
+              AppMargins.edgeInsets,
+              AppMargins
+                  .edgeInsets), // make space even between top and bottom row
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(10),
-            color: Color.fromRGBO(24, 33, 54, 1.0),
+            borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
+            color: AppColors.foreground,
           ),
           child: ListView(
             children: <Widget>[
               Text(
-                'Życie duchowe',
+                'Kalendarium SDS',
                 textAlign: TextAlign.start,
                 style: TextStyle(color: AppColors.highlightText),
               ),
@@ -33,58 +38,60 @@ class PrayersWidget extends StatelessWidget {
                 height: 10,
               ),
               ListTile(
-                title: Text('Rozmyślanie'),
+                title: Text('Imieniny ks. Roman Słupek SDS'),
+                trailing: Text('3 III'),
                 visualDensity:
                     VisualDensity(vertical: VisualDensity.minimumDensity),
                 dense: true,
                 horizontalTitleGap: 0,
                 leading: Icon(
-                  Icons.check,
+                  Icons.cake,
+                  color: Colors.yellow,
+                ),
+              ),
+              ListTile(
+                title: Text('Zm. ks. Tadeusz Styczeń SDS'),
+                trailing: Text('13 III'),
+                visualDensity:
+                    VisualDensity(vertical: VisualDensity.minimumDensity),
+                dense: true,
+                horizontalTitleGap: 0,
+                leading: Icon(
+                  Icons.hourglass_empty,
+                  color: Colors.red,
+                ),
+              ),
+              ListTile(
+                title: Text('10 rocz. św. ks. Łukasz Darowski SDS'),
+                visualDensity:
+                    VisualDensity(vertical: VisualDensity.minimumDensity),
+                dense: true,
+                horizontalTitleGap: 0,
+                leading: Icon(
+                  Icons.timer,
                   color: Colors.greenAccent,
                 ),
               ),
               ListTile(
-                title: Text('Różaniec'),
+                title: Text('8 rocz. św. ks. Paweł Radziejewski SDS'),
                 visualDensity:
                     VisualDensity(vertical: VisualDensity.minimumDensity),
                 dense: true,
                 horizontalTitleGap: 0,
                 leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
+                  Icons.timer,
+                  color: Colors.greenAccent,
                 ),
               ),
               ListTile(
-                title: Text('Brewiarz'),
+                title: Text('12 rocz. św. ks. Maciej Dalibor SDS'),
                 visualDensity:
                     VisualDensity(vertical: VisualDensity.minimumDensity),
                 dense: true,
                 horizontalTitleGap: 0,
                 leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('Anioł Pański'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('Rachunek Sumienia'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
+                  Icons.timer,
+                  color: Colors.greenAccent,
                 ),
               ),
             ],

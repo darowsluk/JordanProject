@@ -3,8 +3,8 @@ import 'package:jordan/screens/saint_screen.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
-class JordanWidget extends StatelessWidget {
-  const JordanWidget({Key? key}) : super(key: key);
+class SaintCardWidget extends StatelessWidget {
+  const SaintCardWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

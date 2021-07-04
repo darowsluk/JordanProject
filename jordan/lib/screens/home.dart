@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 // Custom widgets
-import 'package:jordan/widgets/jordan_widget.dart';
+import 'package:jordan/widgets/saintcard_widget.dart';
 import 'package:jordan/widgets/drawer_widget.dart';
-import 'package:jordan/widgets/prayers_widget.dart';
-import 'package:jordan/widgets/calendarium_widget.dart';
+import 'package:jordan/widgets/progress_widget.dart';
+import 'package:jordan/widgets/planner_widget.dart';
 
 // Custom screens
 import 'package:jordan/screens/prayers_screen.dart';
@@ -38,23 +38,20 @@ class _HomePageState extends State<HomePage> {
         title: Text(AppStrings.appName),
       ),
       drawer: DrawerWidget(scaffoldKey: scaffoldKey),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                // SDS Prayer Box
-                JordanWidget(),
-                // SDS Daily prayers
-                PrayersWidget(),
-              ],
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  // Saint Prayer Card
+                  SaintCardWidget(),
+                  // Progress display
+                  ProgressWidget(),
+                ],
+              ),
             ),
-            Row(
-              children: <Widget>[
-                // Calendarium SDS
-                CalendariumWidget(),
-              ],
-            ),
+            PlannerWidget(),
           ],
         ),
       ),
@@ -65,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => PrayerPage()),
           );
         },
-        child: const Icon(Icons.library_books),
+        child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,
       ),
     );
