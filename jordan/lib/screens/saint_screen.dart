@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
-//////////////////////////////////////////////////////////////////////////
-/// Displays prayer through the intercession of Blessed Francis Jordan ///
-//////////////////////////////////////////////////////////////////////////
-class JordanPage extends StatefulWidget {
-  const JordanPage({Key? key}) : super(key: key);
+///////////////////////////
+/// Displays Saint Card ///
+///////////////////////////
+class SaintPage extends StatefulWidget {
+  const SaintPage({Key? key}) : super(key: key);
 
   @override
-  _JordanPageState createState() => _JordanPageState();
+  _SaintPageState createState() => _SaintPageState();
 }
 
-class _JordanPageState extends State<JordanPage> {
+class _SaintPageState extends State<SaintPage> {
   late bool _displayFront;
 
   @override
@@ -29,15 +29,14 @@ class _JordanPageState extends State<JordanPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text('Via Card'),
+        title: Text(AppSaintCard.saintCardTitle),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            constraints: _buildCardConstraints(),
+            constraints: _buildCardConstraints(context),
             alignment: Alignment.topCenter,
-            //padding: EdgeInsets.all(16),
-            margin: EdgeInsets.all(32),
+            margin: EdgeInsets.all(AppSaintCard.cardMargins),
             child: _buildFlipAnimation(),
           ),
         ),
@@ -45,45 +44,58 @@ class _JordanPageState extends State<JordanPage> {
     );
   }
 
-  /// Helper Functions
-  BoxConstraints _buildCardConstraints() {
-    double w = MediaQuery.of(context).size.width * AppSaintCard.cardScale;
-    double h = MediaQuery.of(context).size.height * AppSaintCard.cardScale;
-    // Check for max picture size
-    if (w > AppSaintCard.maxWidth && h > AppSaintCard.maxHeight) {
-      // max size
+  // Helper Functions
+  BoxConstraints _buildCardConstraints(BuildContext context) {
+    if (MediaQuery.maybeOf(context) == null) {
       return BoxConstraints.tightFor(
-        width: AppSaintCard.maxWidth,
-        height: AppSaintCard.maxHeight,
+        // default saint card size (1/2 size of max)
+        width: (AppSaintCard.maxWidth / 2),
+        height: (AppSaintCard.maxWidth / 2) / AppSaintCard.cardProportions,
+      );
+    }
+    double w =
+        (MediaQuery.of(context).size.width - (AppSaintCard.cardMargins * 2)) *
+            AppSaintCard.cardScale;
+    double h =
+        (MediaQuery.of(context).size.height - (AppSaintCard.cardMargins * 2)) *
+            AppSaintCard.cardScale;
+    // Check for max picture size
+    if (w > AppSaintCard.maxWidth && h < AppSaintCard.maxHeight) {
+      // too wide, but height ok
+      return BoxConstraints.tightFor(
+        width: h * AppSaintCard.cardProportions,
+        height: h,
+      );
+    } else if (w < AppSaintCard.maxWidth && h > AppSaintCard.maxHeight) {
+      // too high, but width ok
+      return BoxConstraints.tightFor(
+        width: w,
+        height: w / AppSaintCard.cardProportions,
+      );
+    } else if ((w / h) > AppSaintCard.cardProportions) {
+      // proportions: larger width
+      return BoxConstraints.tightFor(
+        width: h * AppSaintCard.cardProportions,
+        height: h,
       );
     } else {
-      // normal size
-      if (w / h <= AppSaintCard.cardProportions) {
-        // too wide
-        return BoxConstraints.tightFor(
-          width: w,
-          height: w / AppSaintCard.cardProportions,
-        );
-      } else {
-        // too high
-        return BoxConstraints.tightFor(
-          width: h * AppSaintCard.cardProportions,
-          height: h,
-        );
-      }
+      // proportions: larger height
+      return BoxConstraints.tightFor(
+        width: w,
+        height: w / AppSaintCard.cardProportions,
+      );
     }
   }
 
   Widget __buildLayout({
-    Key? key,
-    required Color backgroundColor,
+    required Key key,
     required Widget displayCard,
   }) {
     return Container(
       key: key,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
-        color: backgroundColor,
+        color: AppColors.textBackground,
       ),
       child: displayCard,
     );
@@ -92,11 +104,11 @@ class _JordanPageState extends State<JordanPage> {
   Widget _buildFront() {
     return __buildLayout(
       key: ValueKey(true),
-      backgroundColor: AppColors.textBackground,
       displayCard: ClipRRect(
         borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
         child: Image.asset(
-          "assets/images/Jordan_414px.jpg",
+          AppSaintCard.cardAsset,
+          key: Key(AppSaintCard.cardAsset),
           fit: BoxFit.cover,
         ),
       ),
@@ -106,14 +118,16 @@ class _JordanPageState extends State<JordanPage> {
   Widget _buildRear() {
     return __buildLayout(
       key: ValueKey(false),
-      backgroundColor: AppColors.textBackground,
       displayCard: Container(
         alignment: Alignment.topCenter,
         padding: EdgeInsets.all(AppMargins.edgeInsets * 2),
         child: ListView(
+          shrinkWrap:
+              true, // necessary to size the height of the viewport to the sum of the heights of its children
           children: [
             Text(
-              AppPrayers.jordanPrayerTitle,
+              AppSaintCard.jordanPrayerTitle,
+              key: Key(AppSaintCard.jordanPrayerTitle),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.darkText,
@@ -124,7 +138,7 @@ class _JordanPageState extends State<JordanPage> {
             Padding(
               padding: EdgeInsets.all(AppMargins.edgeInsets / 2),
             ),
-            Text(AppPrayers.jordanPrayer,
+            Text(AppSaintCard.jordanPrayer,
                 style: TextStyle(
                   color: AppColors.darkText,
                   fontSize: 16,
@@ -132,7 +146,7 @@ class _JordanPageState extends State<JordanPage> {
             Padding(
               padding: EdgeInsets.all(AppMargins.edgeInsets),
             ),
-            Text(AppPrayers.jordanPrayerEndnote,
+            Text(AppSaintCard.jordanPrayerEndnote,
                 style: TextStyle(
                   color: AppColors.darkText,
                   fontSize: 12,
@@ -144,12 +158,20 @@ class _JordanPageState extends State<JordanPage> {
   }
 
   Widget _buildFlipAnimation() {
-    return GestureDetector(
+    return InkWell(
       onTap: () => setState(() => _displayFront = !_displayFront),
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 500),
         transitionBuilder: __transitionBuilder,
-        layoutBuilder: (widget, list) => Stack(children: [widget!, ...list]),
+        layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+          return Stack(
+            children: <Widget>[
+              if (currentChild != null) currentChild,
+              ...previousChildren,
+            ],
+          );
+        },
+        //layoutBuilder: (currentChild, previousChildren) => Stack(children: [currentChild!, ...previousChildren]),
         child: _displayFront ? _buildFront() : _buildRear(),
         switchInCurve: Curves.easeInBack,
         switchOutCurve: Curves.easeInBack.flipped,
