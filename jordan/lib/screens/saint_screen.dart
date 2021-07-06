@@ -29,7 +29,7 @@ class _SaintPageState extends State<SaintPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text(AppSaintCard.saintCardTitle),
+        title: Text(AppSaintCard.title),
       ),
       body: SingleChildScrollView(
         child: Center(
