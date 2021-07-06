@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/screens/home.dart';
+import 'package:jordan/services/storageManager.dart';
 
 class AddPlanPage extends StatefulWidget {
   const AddPlanPage({Key? key}) : super(key: key);
@@ -10,14 +12,14 @@ class AddPlanPage extends StatefulWidget {
 }
 
 class _AddPlanPageState extends State<AddPlanPage> {
-  late bool _displayFront;
   late TextEditingController _controller;
+  late StorageManager _storageManager; // singleton
 
   @override
   void initState() {
     super.initState();
-    _displayFront = true;
     _controller = TextEditingController();
+    _storageManager = StorageManager();
   }
 
   @override
@@ -46,21 +48,55 @@ class _AddPlanPageState extends State<AddPlanPage> {
               style: TextStyle(color: AppColors.highlightText),
             ),
             SizedBox(
-              height: 16,
+              height: AppMargins.separation,
             ),
+            for (var item in _storageManager.getList())
+              TextField(
+                decoration: InputDecoration(
+                  hintText: item.getName(),
+                  border: InputBorder.none,
+                  prefixIcon: Icon(
+                    Icons.circle,
+                    size: 8,
+                    color: Colors.green,
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _storageManager.removeItem(item.getName());
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
+                    icon: Icon(Icons.minimize_rounded),
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
             TextField(
               controller: _controller,
+              autofocus: true,
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
                 //labelText: 'Add item',
                 suffixIcon: IconButton(
-                  onPressed: null,
-                  icon: Icon(Icons.add),
+                  onPressed: () => _addItem(context, _controller.text),
+                  icon: Icon(Icons.add_rounded),
                   color: AppColors.primary,
                 ),
               ),
-            )
+              onSubmitted: (text) => _addItem(context, text),
+            ),
           ]),
         )));
+  }
+
+  // Helper functions
+  void _addItem(BuildContext _context, String item) {
+    _storageManager.addItem(item);
+    Navigator.push(
+      _context,
+      MaterialPageRoute(builder: (_context) => HomePage()),
+    );
   }
 }

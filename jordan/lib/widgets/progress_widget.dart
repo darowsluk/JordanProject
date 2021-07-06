@@ -30,67 +30,12 @@ class ProgressWidget extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               Text(
-                'Życie duchowe',
+                'Progress',
                 textAlign: TextAlign.start,
                 style: TextStyle(color: AppColors.highlightText),
               ),
               SizedBox(
-                height: 10,
-              ),
-              ListTile(
-                title: Text('Rozmyślanie'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.check,
-                  color: Colors.greenAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('Różaniec'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('Brewiarz'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('Anioł Pański'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
-                ),
-              ),
-              ListTile(
-                title: Text('Rachunek Sumienia'),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.close,
-                  color: Colors.redAccent,
-                ),
+                height: AppMargins.separation,
               ),
             ],
           ),

@@ -22,7 +22,8 @@ class AppStrings {
 
 class AppMargins {
   static const double edgeInsets = 16.0;
-  static const double cornerRadius = 16.0;
+  static const double cornerRadius = 4.0;
+  static const double separation = 16.0;
 }
 
 class AppSaintCard {

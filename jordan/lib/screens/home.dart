@@ -9,8 +9,8 @@ import 'package:jordan/widgets/progress_widget.dart';
 import 'package:jordan/widgets/planner_widget.dart';
 
 // Custom screens
-import 'package:jordan/screens/prayers_screen.dart';
-
+//import 'package:jordan/screens/prayers_screen.dart';
+import 'package:jordan/screens/addplan_screen.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
@@ -59,12 +59,15 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PrayerPage()),
+            MaterialPageRoute(builder: (context) => AddPlanPage()),
           );
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,
+        elevation: 8,
       ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 }
