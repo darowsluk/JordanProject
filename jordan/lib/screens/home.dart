@@ -9,9 +9,6 @@ import 'package:jordan/widgets/drawer_widget.dart';
 import 'package:jordan/widgets/progress_widget.dart';
 import 'package:jordan/widgets/planner_widget.dart';
 
-// Custom screens
-//import 'package:jordan/screens/prayers_screen.dart';
-import 'package:jordan/screens/addplan_screen.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
@@ -58,10 +55,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddPlanPage()),
-          );
+          Navigator.pushNamed(context, '/addplan');
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,

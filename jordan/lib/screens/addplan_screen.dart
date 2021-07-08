@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_task.dart';
-import 'package:jordan/screens/home.dart';
 import 'package:nanoid/nanoid.dart';
 
 class AddPlanPage extends StatefulWidget {
@@ -107,20 +106,14 @@ class _AddPlanPageState extends State<AddPlanPage> {
       }
     }
     ViaStorage.updateCalendarFromProfile();
-    Navigator.push(
-      _context,
-      MaterialPageRoute(builder: (_context) => HomePage()),
-    );
+    Navigator.pop(_context);
   }
 
   void _removeTaskReturn(BuildContext _context, String uid) {
     ViaStorage.deleteViaTask(uid: uid);
     ViaStorage.deleteProfileTask(uid: uid);
     ViaStorage.updateCalendarFromProfile(); // is it needed?
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage()),
-    );
+    Navigator.pop(_context);
   }
 
   List<ViaTask> _getViaDay() {
