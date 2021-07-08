@@ -58,3 +58,13 @@ class AppSaintCard {
 class AppAddPlan {
   static const String title = "Add Plan";
 }
+
+class AppHiveStorage {
+  static const String storageVersion =
+      "v1.0.0"; // todo: automatic versioning of storage datastructure
+  static const String boxViaProfile = "viaprofile";
+  static const String boxViaCalendar = "viacalendar";
+  static const String boxViaOptions = "viaoptions";
+  static const String calendarDefaultName = "My Spiritual Calendar";
+  static const String profileDefaultName = "My Spiritual Profile";
+}

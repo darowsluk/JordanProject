@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 
 // Custom widgets
 import 'package:jordan/widgets/saintcard_widget.dart';
@@ -69,5 +70,11 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
     );
+  }
+
+  @override
+  void dispose() {
+    Hive.close(); // important to close all open Hives
+    super.dispose();
   }
 }

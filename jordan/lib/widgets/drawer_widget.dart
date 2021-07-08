@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/models/storage.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({
@@ -46,11 +47,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               if (widget.scaffoldKey.currentState == null) {
               } else if (widget.scaffoldKey.currentState!.isDrawerOpen) {
                 //check if drawer is open
-                Navigator.pop(context); //context of drawer is different
+                ViaStorage.deleteAllBoxes();
+                Navigator.pop(context);
               }
             },
-            leading: Icon(Icons.close),
-            title: Text("Close Drawer"),
+            leading: Icon(Icons.delete_forever_rounded),
+            title: Text("Delete all data"),
           ),
         ],
       ),
