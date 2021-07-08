@@ -76,7 +76,6 @@ class JordanApp extends StatelessWidget {
         // ),
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.

@@ -258,13 +258,14 @@ class ViaStorage {
   }
 
   static toggleDoneViaTask({required String uid}) {
+    ViaCalendar calendar = createViaCalendar();
     ViaDay day = readViaDay();
     var index =
         day.viaDay.indexWhere((element) => element.uid.compareTo(uid) == 0);
     if (index != -1) {
       // toggle
       day.viaDay.elementAt(index).done = !day.viaDay.elementAt(index).done;
-      day.save();
+      calendar.save();
     } else {
       assert(true, "toggleDoneViaTask(): via task uid not found");
     }

@@ -36,11 +36,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('Profil'),
+            title: Text('Profile'),
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Ustawienia'),
+            title: Text('Settings'),
           ),
           ListTile(
             onTap: () {
