@@ -1,9 +1,48 @@
+import 'package:jordan/screens/addplan_screen.dart';
+import 'package:jordan/screens/settings_screen.dart';
+import 'package:jordan/screens/saint_screen.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:jordan/models/storage.dart';
+import 'package:jordan/models/via_calendar.dart';
+import 'package:jordan/models/via_profile.dart';
+import 'package:jordan/models/via_profileTask.dart';
 import 'package:jordan/screens/home.dart';
+
+// Hive
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:jordan/models/via_task.dart';
+import 'package:jordan/models/via_options.dart';
+import 'package:jordan/models/via_day.dart';
+
 // Extras
 import 'package:jordan/extras/statics.dart';
 
-void main() {
+void main() async {
+  // necessary for hive initialization
+  WidgetsFlutterBinding.ensureInitialized();
+
+  var dir = await getApplicationDocumentsDirectory();
+  Hive
+    ..init(dir.path)
+    ..registerAdapter(ViaTaskAdapter())
+    ..registerAdapter(ViaDayAdapter())
+    ..registerAdapter(ViaCalendarAdapter());
+  await Hive.openBox<ViaCalendar>(AppHiveStorage.boxViaCalendar);
+
+  Hive
+    /*..init(dir.path)*/
+    ..registerAdapter(ViaProfileTaskAdapter())
+    ..registerAdapter(ViaProfileAdapter());
+  await Hive.openBox<ViaProfile>(AppHiveStorage.boxViaProfile);
+
+  Hive.registerAdapter(ViaOptionsAdapter());
+  await Hive.openBox<ViaOptions>(AppHiveStorage.boxViaOptions);
+
+  // initialize current calendar day from profile (if necessary)
+  ViaStorage.createDayFromProfile();
+
   runApp(JordanApp());
 }
 
@@ -38,7 +77,15 @@ class JordanApp extends StatelessWidget {
         // ),
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      initialRoute: AppNavigator.home,
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        AppNavigator.home: (context) => HomePage(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        AppNavigator.saint: (context) => SaintPage(),
+        AppNavigator.addplan: (context) => AddPlanPage(),
+        AppNavigator.settings: (context) => SettingsPage(),
+      },
     );
   }
 }

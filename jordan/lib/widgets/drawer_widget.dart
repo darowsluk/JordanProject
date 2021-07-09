@@ -27,7 +27,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               color: AppColors.foreground,
             ),
             child: Text(
-              'Options',
+              'Drawer',
               style: TextStyle(
                 fontSize: 24,
               ),
@@ -35,22 +35,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('Profil'),
+            title: Text('Profile'),
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Ustawienia'),
-          ),
-          ListTile(
+            title: Text('Settings'),
             onTap: () {
-              if (widget.scaffoldKey.currentState == null) {
-              } else if (widget.scaffoldKey.currentState!.isDrawerOpen) {
-                //check if drawer is open
-                Navigator.pop(context); //context of drawer is different
-              }
+              Navigator.pushNamed(context, AppNavigator.settings);
             },
-            leading: Icon(Icons.close),
-            title: Text("Close Drawer"),
           ),
         ],
       ),

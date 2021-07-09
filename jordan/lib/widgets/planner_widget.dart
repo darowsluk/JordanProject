@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/screens/addplan_screen.dart';
-import 'package:jordan/services/storageManager.dart';
+import 'package:jordan/models/storage.dart';
+//import 'package:jordan/screens/addplan_screen.dart';
 
 class PlannerWidget extends StatefulWidget {
   const PlannerWidget({Key? key}) : super(key: key);
@@ -12,17 +13,15 @@ class PlannerWidget extends StatefulWidget {
 }
 
 class _PlannerWidgetState extends State<PlannerWidget> {
-  late StorageManager _storageManager; // singleton
-
   @override
   void initState() {
     super.initState();
-    _storageManager = StorageManager();
   }
 
-  void _toggleDone(String itemName) {
+  void _toggleDone(String uid) {
     setState(() {
-      _storageManager.editToggleDone(itemName);
+      // forces widget to update - hopefully? :)
+      ViaStorage.toggleDoneViaTask(uid: uid);
     });
   }
 
@@ -48,22 +47,24 @@ class _PlannerWidgetState extends State<PlannerWidget> {
         child: ListView(
           children: <Widget>[
             Text(
-              'Planner',
+              // show current day as title
+              DateFormat("EEEE - MMMM d, ''yy")
+                  .format(ViaStorage.createViaDay().date),
               textAlign: TextAlign.start,
               style: TextStyle(color: AppColors.highlightText),
             ),
             SizedBox(
               height: AppMargins.separation,
             ),
-            for (var item in _storageManager.getList())
+            for (var task in ViaStorage.readViaDay().viaDay)
               ListTile(
-                title: Text(item.getName()),
+                title: Text(task.name),
                 trailing: IconButton(
-                  icon: item.getDone()
+                  icon: task.done
                       ? (Icon(Icons.check_circle_outline_outlined))
                       : (Icon(Icons.circle_outlined)),
                   color: Colors.greenAccent,
-                  onPressed: () => _toggleDone(item.getName()),
+                  onPressed: () => _toggleDone(task.uid),
                 ),
                 visualDensity:
                     VisualDensity(vertical: VisualDensity.minimumDensity),

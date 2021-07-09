@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/screens/home.dart';
-import 'package:jordan/services/storageManager.dart';
+import 'package:jordan/models/storage.dart';
+import 'package:jordan/models/via_task.dart';
+import 'package:nanoid/nanoid.dart';
 
 class AddPlanPage extends StatefulWidget {
   const AddPlanPage({Key? key}) : super(key: key);
@@ -13,13 +14,11 @@ class AddPlanPage extends StatefulWidget {
 
 class _AddPlanPageState extends State<AddPlanPage> {
   late TextEditingController _controller;
-  late StorageManager _storageManager; // singleton
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _storageManager = StorageManager();
   }
 
   @override
@@ -50,10 +49,10 @@ class _AddPlanPageState extends State<AddPlanPage> {
             SizedBox(
               height: AppMargins.separation,
             ),
-            for (var item in _storageManager.getList())
+            for (var task in _getViaDay())
               TextField(
                 decoration: InputDecoration(
-                  hintText: item.getName(),
+                  hintText: task.name,
                   border: InputBorder.none,
                   prefixIcon: Icon(
                     Icons.circle,
@@ -62,11 +61,7 @@ class _AddPlanPageState extends State<AddPlanPage> {
                   ),
                   suffixIcon: IconButton(
                     onPressed: () {
-                      _storageManager.removeItem(item.getName());
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
+                      _removeTaskReturn(context, task.uid);
                     },
                     icon: Icon(Icons.minimize_rounded),
                     color: AppColors.primary,
@@ -80,23 +75,48 @@ class _AddPlanPageState extends State<AddPlanPage> {
                 border: UnderlineInputBorder(),
                 //labelText: 'Add item',
                 suffixIcon: IconButton(
-                  onPressed: () => _addItem(context, _controller.text),
+                  onPressed: () =>
+                      _addTaskToProfileReturn(context, _controller.text),
                   icon: Icon(Icons.add_rounded),
                   color: AppColors.primary,
                 ),
               ),
-              onSubmitted: (text) => _addItem(context, text),
+              onSubmitted: (text) => _addTaskToProfileReturn(context, text),
             ),
           ]),
         )));
   }
 
   // Helper functions
-  void _addItem(BuildContext _context, String item) {
-    _storageManager.addItem(item);
-    Navigator.push(
-      _context,
-      MaterialPageRoute(builder: (_context) => HomePage()),
-    );
+  void _addTaskToProfileReturn(BuildContext _context, String name) {
+    String uid = nanoid();
+    String appendedName = name;
+    int appendIndex = 1;
+    bool finished = false;
+    while (!finished) {
+      try {
+        ViaStorage.createProfileTask(uid: uid, name: appendedName);
+        finished = true;
+      } on FormatException {
+        // append number to the name and try again
+        appendedName = name + " ($appendIndex)";
+        appendIndex++;
+      } on ArgumentError {
+        rethrow; // bad error
+      }
+    }
+    ViaStorage.updateCalendarFromProfile();
+    Navigator.pop(_context);
+  }
+
+  void _removeTaskReturn(BuildContext _context, String uid) {
+    ViaStorage.deleteProfileTask(uid: uid);
+    ViaStorage.deleteViaTask(uid: uid);
+    //ViaStorage.updateCalendarFromProfile(); // is it needed?
+    Navigator.pop(_context);
+  }
+
+  List<ViaTask> _getViaDay() {
+    return ViaStorage.readViaDay().viaDay;
   }
 }

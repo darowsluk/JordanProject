@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 
 // Custom widgets
 import 'package:jordan/widgets/saintcard_widget.dart';
@@ -8,9 +9,6 @@ import 'package:jordan/widgets/drawer_widget.dart';
 import 'package:jordan/widgets/progress_widget.dart';
 import 'package:jordan/widgets/planner_widget.dart';
 
-// Custom screens
-//import 'package:jordan/screens/prayers_screen.dart';
-import 'package:jordan/screens/addplan_screen.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
@@ -57,10 +55,9 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddPlanPage()),
-          );
+          // Navigate to new page, but refresh contents after return
+          Navigator.pushNamed(context, AppNavigator.addplan)
+              .then((value) => setState(() {}));
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,
@@ -69,5 +66,11 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
     );
+  }
+
+  @override
+  void dispose() {
+    Hive.close(); // important to close all open Hives
+    super.dispose();
   }
 }

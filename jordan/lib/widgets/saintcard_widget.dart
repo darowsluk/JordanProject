@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jordan/screens/saint_screen.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
@@ -12,12 +11,7 @@ class SaintCardWidget extends StatelessWidget {
       margin: EdgeInsets.all(AppMargins.edgeInsets),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SaintPage(),
-            ),
-          );
+          Navigator.pushNamed(context, '/saint');
         },
         child: //Hero(
             //tag: 'jordan',

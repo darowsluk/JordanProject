@@ -17,7 +17,25 @@ class AppTextStyle {
 }
 
 class AppStrings {
+  /// "Via Sancti"
   static const String appName = "Via Sancti";
+
+  /// "Settings"
+  static const String titleSettings = "Settings";
+}
+
+class AppNavigator {
+  /// "/"
+  static const String home = '/';
+
+  /// "/saint"
+  static const String saint = '/saint';
+
+  /// "/addplan"
+  static const String addplan = '/addplan';
+
+  /// "/settings"
+  static const String settings = '/settings';
 }
 
 class AppMargins {
@@ -57,4 +75,14 @@ class AppSaintCard {
 
 class AppAddPlan {
   static const String title = "Add Plan";
+}
+
+class AppHiveStorage {
+  static const String storageVersion =
+      "v1.0.0"; // todo: automatic versioning of storage datastructure
+  static const String boxViaProfile = "viaprofile";
+  static const String boxViaCalendar = "viacalendar";
+  static const String boxViaOptions = "viaoptions";
+  static const String calendarDefaultName = "My Spiritual Calendar";
+  static const String profileDefaultName = "My Spiritual Profile";
 }
