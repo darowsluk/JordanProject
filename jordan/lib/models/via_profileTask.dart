@@ -24,7 +24,7 @@ class ViaProfileTask extends HiveObject {
   @HiveField(4)
   late bool untilDone;
 
-  /// 0:never, 1:daily, 2:weekly, 3:monthly, 4:annually
+  /// 0:once, 1:daily, 2:weekly, 3:monthly, 4:annually
   @HiveField(5)
   late int frequency;
 

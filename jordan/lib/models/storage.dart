@@ -75,7 +75,7 @@ class ViaStorage {
           break;
         case Frequency.Daily:
           // create new task or update existing one (dirty flag?)
-          createViaTask(uid: task.uid, name: task.name);
+          createViaTask(uid: task.uid, name: task.name, repeat: "daily");
           break;
         case Frequency.Weekly:
           break;
@@ -148,6 +148,8 @@ class ViaStorage {
     required String uid,
     required String name,
     DateTime? date,
+    String link = "",
+    String repeat = "daily",
   }) {
     ViaCalendar calendar = createViaCalendar();
     ViaDay day;
@@ -179,7 +181,12 @@ class ViaStorage {
         throw FormatException("FormatException: duplicate name ($name)");
       } else {
         // everything ok, create a new via task
-        task = ViaTask(uid: uid, name: name);
+        task = ViaTask(
+          uid: uid,
+          name: name,
+          repeat: repeat,
+          link: link,
+        );
         day.viaDay.add(task);
         calendar.viaCalendar.add(day);
         calendar.save();
@@ -192,6 +199,8 @@ class ViaStorage {
   static bool createProfileTask({
     required String uid,
     required String name,
+    String link = "",
+    int frequency = 1,
   }) {
     ViaProfile profile = createViaProfile();
     ViaProfileTask task;

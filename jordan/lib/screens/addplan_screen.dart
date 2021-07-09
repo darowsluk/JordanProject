@@ -42,60 +42,151 @@ class _AddPlanPageState extends State<AddPlanPage> {
           ),
           child: ListView(children: <Widget>[
             Text(
-              'Planner',
+              'Mój plan wakacyjny',
               textAlign: TextAlign.start,
               style: TextStyle(color: AppColors.highlightText),
             ),
             SizedBox(
               height: AppMargins.separation,
             ),
-            for (var task in _getViaDay())
-              TextField(
-                decoration: InputDecoration(
-                  hintText: task.name,
-                  border: InputBorder.none,
-                  prefixIcon: Icon(
-                    Icons.circle,
-                    size: 8,
-                    color: Colors.green,
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _removeTaskReturn(context, task.uid);
-                    },
-                    icon: Icon(Icons.minimize_rounded),
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
+            generateItemsList(),
             TextField(
               controller: _controller,
-              autofocus: true,
+              //autofocus: true,
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
                 //labelText: 'Add item',
                 suffixIcon: IconButton(
-                  onPressed: () =>
-                      _addTaskToProfileReturn(context, _controller.text),
+                  onPressed: () => setState(() {
+                    _controller.clear();
+                    _addTaskToProfile(context, _controller.text);
+                  }),
                   icon: Icon(Icons.add_rounded),
                   color: AppColors.primary,
                 ),
               ),
-              onSubmitted: (text) => _addTaskToProfileReturn(context, text),
+              onSubmitted: (text) => setState(() {
+                _controller.clear();
+                _addTaskToProfile(context, text);
+              }),
             ),
           ]),
         )));
   }
 
+  ListView generateItemsList() {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _getViaDay().length,
+      itemBuilder: (context, index) {
+        return Dismissible(
+          key: Key(_getViaDay()[index].uid),
+          background: slideRightBackground(),
+          secondaryBackground: slideLeftBackground(),
+          direction: DismissDirection.endToStart,
+          confirmDismiss: (DismissDirection direction) async {
+            if (AppOptions.confirmDelete) {
+              return true;
+            } else {
+              return await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Delete Confirmation"),
+                    content: const Text(
+                        "Are you sure you want to delete this item?"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("Cancel"),
+                        onPressed: () {
+                          Navigator.pop(context, false);
+                        },
+                      ),
+                      TextButton(
+                        child: Text("Delete"),
+                        onPressed: () {
+                          // delete the current profile task
+                          Navigator.pop(context, true);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+          onDismissed: (DismissDirection direction) {
+            if (direction == DismissDirection.startToEnd) {
+              print("Add to favorite");
+            } else {
+              print('Removing task ${_getViaDay()[index].name}');
+              setState(() {
+                // delete the current profile task
+                _removeTask(context, _getViaDay()[index].uid);
+              });
+            }
+          },
+          child: InkWell(
+            child: ListTile(
+              title: Text('${_getViaDay()[index].name}'),
+              subtitle: Text('${_getViaDay()[index].repeat}'),
+              leading: Icon(Icons.circle, size: 8, color: Colors.green),
+              //trailing: Icon(Icons.minimize_rounded, color: AppColors.primary),
+            ),
+            onTap: () {
+              print("${_getViaDay()[index].name} clicked");
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget slideRightBackground() {
+    // not called, because "direction: DismissDirection.endToStart"
+    // but needed to avoid exceptions
+    return Text("");
+  }
+
+  Widget slideLeftBackground() {
+    return Container(
+      color: Colors.red,
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            Text(
+              " Delete",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.right,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerRight,
+      ),
+    );
+  }
+
   // Helper functions
-  void _addTaskToProfileReturn(BuildContext _context, String name) {
+  void _addTaskToProfile(BuildContext _context, String name) {
     String uid = nanoid();
     String appendedName = name;
     int appendIndex = 1;
     bool finished = false;
     while (!finished) {
       try {
-        ViaStorage.createProfileTask(uid: uid, name: appendedName);
+        ViaStorage.createProfileTask(
+            uid: uid, name: appendedName, frequency: 1 /* daily */);
         finished = true;
       } on FormatException {
         // append number to the name and try again
@@ -106,14 +197,11 @@ class _AddPlanPageState extends State<AddPlanPage> {
       }
     }
     ViaStorage.updateCalendarFromProfile();
-    Navigator.pop(_context);
   }
 
-  void _removeTaskReturn(BuildContext _context, String uid) {
+  void _removeTask(BuildContext _context, String uid) {
     ViaStorage.deleteProfileTask(uid: uid);
     ViaStorage.deleteViaTask(uid: uid);
-    //ViaStorage.updateCalendarFromProfile(); // is it needed?
-    Navigator.pop(_context);
   }
 
   List<ViaTask> _getViaDay() {

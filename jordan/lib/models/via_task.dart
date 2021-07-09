@@ -25,11 +25,13 @@ class ViaTask extends HiveObject {
   ViaTask({
     required String uid,
     String? name,
+    String? link,
+    String? repeat,
   }) {
     this.uid = uid;
     this.name = name ?? "";
     this.done = false;
-    this.link = "";
-    this.repeat = "";
+    this.link = link ?? "";
+    this.repeat = repeat ?? "";
   }
 }

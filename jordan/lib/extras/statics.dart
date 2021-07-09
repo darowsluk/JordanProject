@@ -74,7 +74,7 @@ class AppSaintCard {
 }
 
 class AppAddPlan {
-  static const String title = "Add Plan";
+  static const String title = "Plan Creator";
 }
 
 class AppHiveStorage {
@@ -85,4 +85,8 @@ class AppHiveStorage {
   static const String boxViaOptions = "viaoptions";
   static const String calendarDefaultName = "My Spiritual Calendar";
   static const String profileDefaultName = "My Spiritual Profile";
+}
+
+class AppOptions {
+  static const bool confirmDelete = true;
 }
