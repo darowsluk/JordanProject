@@ -241,14 +241,16 @@ class ViaStorage {
   static updateViaTask({required String name}) {}
 
   static deleteViaTask({required String uid}) {
+    ViaCalendar calendar = createViaCalendar();
     ViaDay day = readViaDay();
-    day.viaDay.removeWhere((element) => element.uid == uid);
-    day.save();
+    day.viaDay.removeWhere((element) => element.uid.compareTo(uid) == 0);
+    calendar.save();
   }
 
   static deleteProfileTask({required String uid}) {
     ViaProfile profile = createViaProfile();
-    profile.profileTasks.removeWhere((element) => element.uid == uid);
+    profile.profileTasks
+        .removeWhere((element) => element.uid.compareTo(uid) == 0);
     profile.save();
   }
 

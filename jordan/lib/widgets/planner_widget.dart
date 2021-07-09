@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
@@ -46,7 +47,9 @@ class _PlannerWidgetState extends State<PlannerWidget> {
         child: ListView(
           children: <Widget>[
             Text(
-              'Planner',
+              // show current day as title
+              DateFormat("EEEE - MMMM d, ''yy")
+                  .format(ViaStorage.createViaDay().date),
               textAlign: TextAlign.start,
               style: TextStyle(color: AppColors.highlightText),
             ),

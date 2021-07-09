@@ -55,7 +55,9 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AppNavigator.addplan);
+          // Navigate to new page, but refresh contents after return
+          Navigator.pushNamed(context, AppNavigator.addplan)
+              .then((value) => setState(() {}));
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,

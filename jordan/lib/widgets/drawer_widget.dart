@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/models/storage.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({

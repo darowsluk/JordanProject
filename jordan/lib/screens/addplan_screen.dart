@@ -110,9 +110,9 @@ class _AddPlanPageState extends State<AddPlanPage> {
   }
 
   void _removeTaskReturn(BuildContext _context, String uid) {
-    ViaStorage.deleteViaTask(uid: uid);
     ViaStorage.deleteProfileTask(uid: uid);
-    ViaStorage.updateCalendarFromProfile(); // is it needed?
+    ViaStorage.deleteViaTask(uid: uid);
+    //ViaStorage.updateCalendarFromProfile(); // is it needed?
     Navigator.pop(_context);
   }
 
