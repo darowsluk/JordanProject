@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
+import 'package:jordan/models/via_profileTask.dart';
 import 'package:jordan/models/via_task.dart';
 import 'package:nanoid/nanoid.dart';
 
@@ -24,63 +25,93 @@ class _AddPlanPageState extends State<AddPlanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppBar(
-          backgroundColor: AppColors.foreground,
-          title: Text(AppAddPlan.title),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.foreground,
+        title: Text(AppAddPlan.title),
+      ),
+      body: SafeArea(
+          child: Container(
+        constraints: BoxConstraints.expand(),
+        alignment: Alignment.topCenter,
+        padding: EdgeInsets.all(AppMargins.edgeInsets),
+        margin: EdgeInsets.all(AppMargins.edgeInsets),
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
+          color: AppColors.foreground,
         ),
-        body: SafeArea(
-            child: Container(
-          constraints: BoxConstraints.expand(),
-          alignment: Alignment.topCenter,
-          padding: EdgeInsets.all(AppMargins.edgeInsets),
-          margin: EdgeInsets.all(AppMargins.edgeInsets),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
-            color: AppColors.foreground,
-          ),
-          child: ListView(children: <Widget>[
-            Text(
-              'Mój plan wakacyjny',
-              textAlign: TextAlign.start,
-              style: TextStyle(color: AppColors.highlightText),
-            ),
-            SizedBox(
-              height: AppMargins.separation,
-            ),
-            generateItemsList(),
-            TextField(
-              controller: _controller,
-              //autofocus: true,
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                //labelText: 'Add item',
-                suffixIcon: IconButton(
-                  onPressed: () => setState(() {
-                    _controller.clear();
-                    _addTaskToProfile(context, _controller.text);
-                  }),
-                  icon: Icon(Icons.add_rounded),
-                  color: AppColors.primary,
-                ),
-              ),
-              onSubmitted: (text) => setState(() {
-                _controller.clear();
-                _addTaskToProfile(context, text);
-              }),
-            ),
-          ]),
-        )));
+        child: generateItemsList(),
+      )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Navigate to new page, but refresh contents after return
+          // Navigator.pushNamed(context, AppNavigator.addplan)
+          //     .then((value) => setState(() {}));
+          _show(context);
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: AppColors.primary,
+        elevation: 8,
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
+    );
   }
 
-  ListView generateItemsList() {
-    return ListView.builder(
+  void _show(BuildContext ctx) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      elevation: 5,
+      context: ctx,
+      builder: (ctx) => Padding(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(labelText: 'title'),
+              controller: _controller,
+              //autofocus: true,
+              onSubmitted: (text) => setState(() {
+                _controller.clear();
+                _addTaskToProfile(ctx, text);
+              }),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            ElevatedButton(
+                onPressed: () => setState(() {
+                      _controller.clear();
+                      _addTaskToProfile(ctx, _controller.text);
+                    }),
+                child: Text('Submit'))
+          ],
+        ),
+      ),
+    );
+  }
+
+  ReorderableListView generateItemsList() {
+    return ReorderableListView.builder(
+      header: Text(
+        'Mój plan wakacyjny',
+        textAlign: TextAlign.start,
+        style: TextStyle(color: AppColors.highlightText),
+      ),
+      onReorder: (int oldIndex, int newIndex) => {
+        setState(() {
+          _reorderTaskProfile(oldIndex, newIndex);
+        })
+      },
       shrinkWrap: true,
-      itemCount: _getViaDay().length,
+      itemCount: _getProfileTasks().length,
       itemBuilder: (context, index) {
         return Dismissible(
-          key: Key(_getViaDay()[index].uid),
+          key: Key(_getProfileTasks()[index].uid),
           background: slideRightBackground(),
           secondaryBackground: slideLeftBackground(),
           direction: DismissDirection.endToStart,
@@ -119,22 +150,23 @@ class _AddPlanPageState extends State<AddPlanPage> {
             if (direction == DismissDirection.startToEnd) {
               print("Add to favorite");
             } else {
-              print('Removing task ${_getViaDay()[index].name}');
+              print('Removing task ${_getProfileTasks()[index].name}');
               setState(() {
                 // delete the current profile task
-                _removeTask(context, _getViaDay()[index].uid);
+                _removeTask(context, _getProfileTasks()[index].uid);
               });
             }
           },
           child: InkWell(
             child: ListTile(
-              title: Text('${_getViaDay()[index].name}'),
-              subtitle: Text('${_getViaDay()[index].repeat}'),
+              enableFeedback: true,
+              title: Text('${_getProfileTasks()[index].name}'),
+              subtitle: Text('daily'), // TODO: do proper parsing
               leading: Icon(Icons.circle, size: 8, color: Colors.green),
               //trailing: Icon(Icons.minimize_rounded, color: AppColors.primary),
             ),
             onTap: () {
-              print("${_getViaDay()[index].name} clicked");
+              print("${_getProfileTasks()[index].name} clicked");
             },
           ),
         );
@@ -199,12 +231,22 @@ class _AddPlanPageState extends State<AddPlanPage> {
     ViaStorage.updateCalendarFromProfile();
   }
 
+  void _reorderTaskProfile(int oldIndex, int newIndex) {
+    if (ViaStorage.reorderTaskProfile(oldIndex, newIndex)) {
+      // worked
+    } else {
+      // some error
+      assert(true, "_reorderTaskProfile()");
+    }
+    ViaStorage.updateCalendarFromProfile();
+  }
+
   void _removeTask(BuildContext _context, String uid) {
     ViaStorage.deleteProfileTask(uid: uid);
     ViaStorage.deleteViaTask(uid: uid);
   }
 
-  List<ViaTask> _getViaDay() {
-    return ViaStorage.readViaDay().viaDay;
+  List<ViaProfileTask> _getProfileTasks() {
+    return ViaStorage.readProfileTasks();
   }
 }

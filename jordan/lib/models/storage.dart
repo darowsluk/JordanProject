@@ -90,6 +90,23 @@ class ViaStorage {
     return;
   }
 
+  static bool reorderTaskProfile(int oldIndex, int newIndex) {
+    ViaProfile profile = createViaProfile();
+    ViaProfileTask temp;
+
+    if (newIndex > oldIndex) {
+      newIndex--;
+      temp = profile.profileTasks.removeAt(oldIndex);
+      profile.profileTasks.insert(newIndex, temp);
+    } else {
+      temp = profile.profileTasks.removeAt(oldIndex);
+      profile.profileTasks.insert(newIndex, temp);
+    }
+
+    profile.save();
+    return true;
+  }
+
   /// CRUD interface for via storage:
   /// (true = success and false = failure)
   static ViaCalendar createViaCalendar() {
@@ -226,6 +243,11 @@ class ViaStorage {
         return true;
       }
     }
+  }
+
+  static List<ViaProfileTask> readProfileTasks() {
+    ViaProfile profile = createViaProfile();
+    return profile.profileTasks;
   }
 
   static ViaDay readViaDay({DateTime? date}) {
