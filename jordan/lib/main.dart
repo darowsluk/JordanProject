@@ -1,4 +1,5 @@
 import 'package:jordan/screens/addplan_screen.dart';
+import 'package:jordan/screens/settings_screen.dart';
 import 'package:jordan/screens/saint_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
@@ -76,13 +77,14 @@ class JordanApp extends StatelessWidget {
         // ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: AppNavigator.home,
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => HomePage(),
+        AppNavigator.home: (context) => HomePage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/saint': (context) => SaintPage(),
-        '/addplan': (context) => AddPlanPage(),
+        AppNavigator.saint: (context) => SaintPage(),
+        AppNavigator.addplan: (context) => AddPlanPage(),
+        AppNavigator.settings: (context) => SettingsPage(),
       },
     );
   }

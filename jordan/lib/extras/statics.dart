@@ -17,7 +17,25 @@ class AppTextStyle {
 }
 
 class AppStrings {
+  /// "Via Sancti"
   static const String appName = "Via Sancti";
+
+  /// "Settings"
+  static const String titleSettings = "Settings";
+}
+
+class AppNavigator {
+  /// "/"
+  static const String home = '/';
+
+  /// "/saint"
+  static const String saint = '/saint';
+
+  /// "/addplan"
+  static const String addplan = '/addplan';
+
+  /// "/settings"
+  static const String settings = '/settings';
 }
 
 class AppMargins {

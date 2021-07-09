@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/addplan');
+          Navigator.pushNamed(context, AppNavigator.addplan);
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,

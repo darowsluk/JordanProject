@@ -28,7 +28,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               color: AppColors.foreground,
             ),
             child: Text(
-              'Options',
+              'Drawer',
               style: TextStyle(
                 fontSize: 24,
               ),
@@ -41,18 +41,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
-          ),
-          ListTile(
             onTap: () {
-              if (widget.scaffoldKey.currentState == null) {
-              } else if (widget.scaffoldKey.currentState!.isDrawerOpen) {
-                //check if drawer is open
-                ViaStorage.deleteAllBoxes();
-                Navigator.pop(context);
-              }
+              Navigator.pushNamed(context, AppNavigator.settings);
             },
-            leading: Icon(Icons.delete_forever_rounded),
-            title: Text("Delete all data"),
           ),
         ],
       ),
