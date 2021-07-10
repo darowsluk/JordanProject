@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:jordan/screens/plan_screen.dart';
 
 // Custom widgets
 import 'package:jordan/widgets/saintcard_widget.dart';
@@ -48,10 +50,12 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: InkWell(
                       child: ProgressWidget(),
-                      onTap: () {
+                      onTap: () async {
                         // Navigate to new page, but refresh contents after return
-                        Navigator.pushNamed(context, AppNavigator.plan)
-                            .then((value) => setState(() {}));
+                        bool refresh = await Get.to(() => PlanPage()) ?? false;
+                        if (refresh) {
+                          setState(() {});
+                        }
                       },
                     ),
                   ),

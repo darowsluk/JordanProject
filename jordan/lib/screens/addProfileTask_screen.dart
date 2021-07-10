@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
-import 'package:jordan/models/via_profileTask.dart';
 import 'package:nanoid/nanoid.dart';
 
 class AddProfileTaskPage extends StatefulWidget {
@@ -47,7 +47,9 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                 children: [
                   IconButton(
                     // Close form without saving
-                    onPressed: () => {Navigator.pop(context)},
+                    onPressed: () => {
+                      Get.back(result: false) // no need to refresh
+                    },
                     icon: Icon(Icons.close_rounded),
                   ),
                   ElevatedButton(
@@ -60,7 +62,7 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                           () {
                             _controller.clear();
                             _addTaskToProfile(context, _formData.name);
-                            Navigator.pop(context);
+                            Get.back(result: true); // refresh upon return
                           },
                         );
                       }
@@ -94,7 +96,7 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                       _controller.clear();
                       _addTaskToProfile(context, text);
                     });
-                    Navigator.pop(context);
+                    Get.back(result: true); // refresh upon return
                   }
                 },
               ),

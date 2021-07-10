@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
@@ -55,7 +56,7 @@ class SettingsPage extends StatelessWidget {
             TextButton(
               child: Text("Cancel"),
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
             TextButton(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/screens/settings_screen.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({
@@ -41,7 +43,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             leading: Icon(Icons.settings),
             title: Text('Settings'),
             onTap: () {
-              Navigator.pushNamed(context, AppNavigator.settings);
+              Get.to(() => SettingsPage());
             },
           ),
         ],

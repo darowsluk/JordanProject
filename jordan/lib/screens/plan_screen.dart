@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profileTask.dart';
-import 'package:nanoid/nanoid.dart';
+import 'package:jordan/screens/addProfileTask_screen.dart';
 
 class PlanPage extends StatefulWidget {
   const PlanPage({Key? key}) : super(key: key);
@@ -36,10 +37,12 @@ class _PlanPageState extends State<PlanPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // Navigate to new page, but refresh contents after return
-          Navigator.pushNamed(context, AppNavigator.addProfileTask)
-              .then((value) => setState(() {}));
+          bool refresh = await Get.to(() => AddProfileTaskPage()) ?? false;
+          if (refresh) {
+            setState(() {});
+          }
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,
@@ -84,14 +87,14 @@ class _PlanPageState extends State<PlanPage> {
                       TextButton(
                         child: Text("Cancel"),
                         onPressed: () {
-                          Navigator.pop(context, false);
+                          Get.back(result: false);
                         },
                       ),
                       TextButton(
                         child: Text("Delete"),
                         onPressed: () {
                           // delete the current profile task
-                          Navigator.pop(context, true);
+                          Get.back(result: true);
                         },
                       ),
                     ],
