@@ -75,7 +75,7 @@ class ViaStorage {
           break;
         case Frequency.Daily:
           // create new task or update existing one (dirty flag?)
-          createViaTask(uid: task.uid, name: task.name);
+          createViaTask(uid: task.uid, name: task.name, repeat: "daily");
           break;
         case Frequency.Weekly:
           break;
@@ -88,6 +88,66 @@ class ViaStorage {
       }
     }
     return;
+  }
+
+  static bool reorderTaskProfile(
+      {required int oldIndex, required int newIndex}) {
+    ViaProfile profile = createViaProfile();
+    ViaProfileTask temp;
+
+    // CAUTION: this algorithm is taking into account bad ReorderableListView code
+    // TODO: must create a thorough test to flag when flutter will fix its bug and break our algorithm
+    if (newIndex > oldIndex) {
+      newIndex--; // this fixes flutter bug
+      temp = profile.profileTasks.removeAt(oldIndex);
+      profile.profileTasks.insert(newIndex, temp);
+    } else {
+      temp = profile.profileTasks.removeAt(oldIndex);
+      profile.profileTasks.insert(newIndex, temp);
+    }
+    profile.save();
+    return true;
+  }
+
+  static bool reorderViaTasks({required int oldIndex, required int newIndex}) {
+    ViaCalendar calendar = createViaCalendar();
+    ViaDay day = createViaDay();
+    ViaTask temp;
+
+    temp = day.viaDay.removeAt(oldIndex);
+    day.viaDay.insert(newIndex, temp);
+
+    calendar.save();
+    return true;
+  }
+
+  /// Reorder List<ViaTask> based on Profile tasks swapped indexes
+  static bool reorderViaTasksOnProfile(
+      {required int oldProfileIndex, required int newProfileIndex}) {
+    ViaProfile profile = createViaProfile();
+    ViaDay day = createViaDay();
+    String oldProfileUID, newProfileUID;
+    int oldViaIndex;
+    int newViaIndex;
+
+    // get reordered profile uids
+    // CAUTION: this algorithm is taking into account bad ReorderableListView code
+    // TODO: must create a thorough test to flag when flutter will fix its bug and break our algorithm
+    if (newProfileIndex > oldProfileIndex) {
+      newProfileIndex--; // this fixes flutter bug
+    }
+    oldProfileUID = profile.profileTasks.elementAt(oldProfileIndex).uid;
+    newProfileUID = profile.profileTasks.elementAt(newProfileIndex).uid;
+    // find corresponding ViaTask indexes
+    oldViaIndex = day.viaDay
+        .indexWhere((element) => element.uid.compareTo(oldProfileUID) == 0);
+    newViaIndex = day.viaDay
+        .indexWhere((element) => element.uid.compareTo(newProfileUID) == 0);
+    if (oldViaIndex == -1 || newViaIndex == -1) {
+      return false;
+    } else {
+      return reorderViaTasks(oldIndex: oldViaIndex, newIndex: newViaIndex);
+    }
   }
 
   /// CRUD interface for via storage:
@@ -148,6 +208,8 @@ class ViaStorage {
     required String uid,
     required String name,
     DateTime? date,
+    String link = "",
+    String repeat = "daily",
   }) {
     ViaCalendar calendar = createViaCalendar();
     ViaDay day;
@@ -179,7 +241,12 @@ class ViaStorage {
         throw FormatException("FormatException: duplicate name ($name)");
       } else {
         // everything ok, create a new via task
-        task = ViaTask(uid: uid, name: name);
+        task = ViaTask(
+          uid: uid,
+          name: name,
+          repeat: repeat,
+          link: link,
+        );
         day.viaDay.add(task);
         calendar.viaCalendar.add(day);
         calendar.save();
@@ -192,6 +259,8 @@ class ViaStorage {
   static bool createProfileTask({
     required String uid,
     required String name,
+    String link = "",
+    int frequency = 1,
   }) {
     ViaProfile profile = createViaProfile();
     ViaProfileTask task;
@@ -217,6 +286,11 @@ class ViaStorage {
         return true;
       }
     }
+  }
+
+  static List<ViaProfileTask> readProfileTasks() {
+    ViaProfile profile = createViaProfile();
+    return profile.profileTasks;
   }
 
   static ViaDay readViaDay({DateTime? date}) {
