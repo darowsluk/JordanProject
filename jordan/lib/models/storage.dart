@@ -90,21 +90,64 @@ class ViaStorage {
     return;
   }
 
-  static bool reorderTaskProfile(int oldIndex, int newIndex) {
+  static bool reorderTaskProfile(
+      {required int oldIndex, required int newIndex}) {
     ViaProfile profile = createViaProfile();
     ViaProfileTask temp;
 
+    // CAUTION: this algorithm is taking into account bad ReorderableListView code
+    // TODO: must create a thorough test to flag when flutter will fix its bug and break our algorithm
     if (newIndex > oldIndex) {
-      newIndex--;
+      newIndex--; // this fixes flutter bug
       temp = profile.profileTasks.removeAt(oldIndex);
       profile.profileTasks.insert(newIndex, temp);
     } else {
       temp = profile.profileTasks.removeAt(oldIndex);
       profile.profileTasks.insert(newIndex, temp);
     }
-
     profile.save();
     return true;
+  }
+
+  static bool reorderViaTasks({required int oldIndex, required int newIndex}) {
+    ViaCalendar calendar = createViaCalendar();
+    ViaDay day = createViaDay();
+    ViaTask temp;
+
+    temp = day.viaDay.removeAt(oldIndex);
+    day.viaDay.insert(newIndex, temp);
+
+    calendar.save();
+    return true;
+  }
+
+  /// Reorder List<ViaTask> based on Profile tasks swapped indexes
+  static bool reorderViaTasksOnProfile(
+      {required int oldProfileIndex, required int newProfileIndex}) {
+    ViaProfile profile = createViaProfile();
+    ViaDay day = createViaDay();
+    String oldProfileUID, newProfileUID;
+    int oldViaIndex;
+    int newViaIndex;
+
+    // get reordered profile uids
+    // CAUTION: this algorithm is taking into account bad ReorderableListView code
+    // TODO: must create a thorough test to flag when flutter will fix its bug and break our algorithm
+    if (newProfileIndex > oldProfileIndex) {
+      newProfileIndex--; // this fixes flutter bug
+    }
+    oldProfileUID = profile.profileTasks.elementAt(oldProfileIndex).uid;
+    newProfileUID = profile.profileTasks.elementAt(newProfileIndex).uid;
+    // find corresponding ViaTask indexes
+    oldViaIndex = day.viaDay
+        .indexWhere((element) => element.uid.compareTo(oldProfileUID) == 0);
+    newViaIndex = day.viaDay
+        .indexWhere((element) => element.uid.compareTo(newProfileUID) == 0);
+    if (oldViaIndex == -1 || newViaIndex == -1) {
+      return false;
+    } else {
+      return reorderViaTasks(oldIndex: oldViaIndex, newIndex: newViaIndex);
+    }
   }
 
   /// CRUD interface for via storage:

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profileTask.dart';
-import 'package:jordan/models/via_task.dart';
 import 'package:nanoid/nanoid.dart';
 
 class AddPlanPage extends StatefulWidget {
@@ -31,18 +30,19 @@ class _AddPlanPageState extends State<AddPlanPage> {
         title: Text(AppAddPlan.title),
       ),
       body: SafeArea(
-          child: Container(
-        constraints: BoxConstraints.expand(),
-        alignment: Alignment.topCenter,
-        padding: EdgeInsets.all(AppMargins.edgeInsets),
-        margin: EdgeInsets.all(AppMargins.edgeInsets),
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
-          color: AppColors.foreground,
+        child: Container(
+          constraints: BoxConstraints.expand(),
+          alignment: Alignment.topCenter,
+          padding: EdgeInsets.all(AppMargins.edgeInsets),
+          margin: EdgeInsets.all(AppMargins.edgeInsets),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
+            color: AppColors.foreground,
+          ),
+          child: generateItemsList(),
         ),
-        child: generateItemsList(),
-      )),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigate to new page, but refresh contents after return
@@ -232,7 +232,10 @@ class _AddPlanPageState extends State<AddPlanPage> {
   }
 
   void _reorderTaskProfile(int oldIndex, int newIndex) {
-    if (ViaStorage.reorderTaskProfile(oldIndex, newIndex)) {
+    // First try to reorder via task list using profile uids
+    ViaStorage.reorderViaTasksOnProfile(
+        oldProfileIndex: oldIndex, newProfileIndex: newIndex);
+    if (ViaStorage.reorderTaskProfile(oldIndex: oldIndex, newIndex: newIndex)) {
       // worked
     } else {
       // some error

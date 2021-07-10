@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
+import 'package:jordan/models/via_task.dart';
 //import 'package:jordan/screens/addplan_screen.dart';
 
 class PlannerWidget extends StatefulWidget {
@@ -44,41 +44,55 @@ class _PlannerWidgetState extends State<PlannerWidget> {
           borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
           color: AppColors.foreground,
         ),
-        child: ListView(
-          children: <Widget>[
-            Text(
-              // show current day as title
-              DateFormat("EEEE - MMMM d, ''yy")
-                  .format(ViaStorage.createViaDay().date),
-              textAlign: TextAlign.start,
-              style: TextStyle(color: AppColors.highlightText),
-            ),
-            SizedBox(
-              height: AppMargins.separation,
-            ),
-            for (var task in ViaStorage.readViaDay().viaDay)
-              ListTile(
-                title: Text(task.name),
-                trailing: IconButton(
-                  icon: task.done
-                      ? (Icon(Icons.check_circle_outline_outlined))
-                      : (Icon(Icons.circle_outlined)),
-                  color: Colors.greenAccent,
-                  onPressed: () => _toggleDone(task.uid),
-                ),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                //dense: true,
-                horizontalTitleGap: 0,
-                leading: Icon(
-                  Icons.circle,
-                  size: 8,
-                  color: Colors.green,
-                ),
-              ),
-          ],
-        ),
+        child: generateItemsList(),
       ),
     );
   }
+
+//        child: Column(
+// children: <Widget>[
+//             Text(
+//               // show current day as title
+//               DateFormat("EEEE - MMMM d, ''yy")
+//                   .format(ViaStorage.createViaDay().date),
+//               textAlign: TextAlign.start,
+//               style: TextStyle(color: AppColors.highlightText),
+//             ),
+//             generateItemsList(),
+//           ],
+
+  ListView generateItemsList() {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: _getViaTasks().length,
+      itemBuilder: (context, index) {
+        return InkWell(
+          child: ListTile(
+            enableFeedback: true,
+            title: Text('${_getViaTasks()[index].name}'),
+            //subtitle: Text('daily'), // TODO: do proper parsing
+            leading: Icon(Icons.circle, size: 8, color: Colors.green),
+            trailing: IconButton(
+              icon: _getViaTasks()[index].done
+                  ? (Icon(Icons.check_circle_outline_outlined))
+                  : (Icon(Icons.circle_outlined)),
+              color: Colors.greenAccent,
+              onPressed: () => _toggleDone(_getViaTasks()[index].uid),
+            ),
+            visualDensity:
+                VisualDensity(vertical: VisualDensity.minimumDensity),
+            //dense: true,
+            horizontalTitleGap: 0,
+          ),
+          onTap: () {
+            print("${_getViaTasks()[index].name} clicked");
+          },
+        );
+      },
+    );
+  }
+}
+
+List<ViaTask> _getViaTasks() {
+  return ViaStorage.readViaDay().viaDay;
 }
