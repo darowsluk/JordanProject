@@ -13,14 +13,6 @@ class PlanPage extends StatefulWidget {
 }
 
 class _PlanPageState extends State<PlanPage> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,52 +38,14 @@ class _PlanPageState extends State<PlanPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigate to new page, but refresh contents after return
-          // Navigator.pushNamed(context, AppNavigator.plan)
-          //     .then((value) => setState(() {}));
-          _show(context);
+          Navigator.pushNamed(context, AppNavigator.addProfileTask)
+              .then((value) => setState(() {}));
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,
         elevation: 8,
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
-    );
-  }
-
-  void _show(BuildContext ctx) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      elevation: 5,
-      context: ctx,
-      builder: (ctx) => Padding(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(labelText: 'title'),
-              controller: _controller,
-              //autofocus: true,
-              onSubmitted: (text) => setState(() {
-                _controller.clear();
-                _addTaskToProfile(ctx, text);
-              }),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            ElevatedButton(
-                onPressed: () => setState(() {
-                      _controller.clear();
-                      _addTaskToProfile(ctx, _controller.text);
-                    }),
-                child: Text('Submit'))
-          ],
-        ),
-      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 
@@ -210,27 +164,6 @@ class _PlanPageState extends State<PlanPage> {
   }
 
   // Helper functions
-  void _addTaskToProfile(BuildContext _context, String name) {
-    String uid = nanoid();
-    String appendedName = name;
-    int appendIndex = 1;
-    bool finished = false;
-    while (!finished) {
-      try {
-        ViaStorage.createProfileTask(
-            uid: uid, name: appendedName, frequency: 1 /* daily */);
-        finished = true;
-      } on FormatException {
-        // append number to the name and try again
-        appendedName = name + " ($appendIndex)";
-        appendIndex++;
-      } on ArgumentError {
-        rethrow; // bad error
-      }
-    }
-    ViaStorage.updateCalendarFromProfile();
-  }
-
   void _reorderTaskProfile(int oldIndex, int newIndex) {
     // First try to reorder via task list using profile uids
     ViaStorage.reorderViaTasksOnProfile(

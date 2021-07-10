@@ -1,3 +1,4 @@
+import 'package:jordan/screens/addProfileTask_screen.dart';
 import 'package:jordan/screens/plan_screen.dart';
 import 'package:jordan/screens/settings_screen.dart';
 import 'package:jordan/screens/saint_screen.dart';
@@ -75,6 +76,11 @@ class JordanApp extends StatelessWidget {
         //   headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
         //   bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         // ),
+
+        // This makes the visual density adapt to the platform that you run
+        // the app on. For desktop platforms, the controls will be smaller and
+        // closer together (more dense) than on mobile platforms.
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: AppNavigator.home,
@@ -84,6 +90,7 @@ class JordanApp extends StatelessWidget {
         // When navigating to the "/second" route, build the SecondScreen widget.
         AppNavigator.saint: (context) => SaintPage(),
         AppNavigator.plan: (context) => PlanPage(),
+        AppNavigator.addProfileTask: (context) => AddProfileTaskPage(),
         AppNavigator.settings: (context) => SettingsPage(),
       },
     );

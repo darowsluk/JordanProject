@@ -34,6 +34,9 @@ class AppNavigator {
   /// "/plan"
   static const String plan = '/plan';
 
+  /// "/addProfileTask"
+  static const String addProfileTask = '/addProfileTask';
+
   /// "/settings"
   static const String settings = '/settings';
 }
