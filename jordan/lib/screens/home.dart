@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                       child: ProgressWidget(),
                       onTap: () {
                         // Navigate to new page, but refresh contents after return
-                        Navigator.pushNamed(context, AppNavigator.addplan)
+                        Navigator.pushNamed(context, AppNavigator.plan)
                             .then((value) => setState(() {}));
                       },
                     ),

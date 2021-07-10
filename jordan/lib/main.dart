@@ -1,4 +1,4 @@
-import 'package:jordan/screens/addplan_screen.dart';
+import 'package:jordan/screens/plan_screen.dart';
 import 'package:jordan/screens/settings_screen.dart';
 import 'package:jordan/screens/saint_screen.dart';
 import 'package:path_provider/path_provider.dart';
@@ -83,7 +83,7 @@ class JordanApp extends StatelessWidget {
         AppNavigator.home: (context) => HomePage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         AppNavigator.saint: (context) => SaintPage(),
-        AppNavigator.addplan: (context) => AddPlanPage(),
+        AppNavigator.plan: (context) => PlanPage(),
         AppNavigator.settings: (context) => SettingsPage(),
       },
     );

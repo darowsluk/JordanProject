@@ -31,8 +31,8 @@ class AppNavigator {
   /// "/saint"
   static const String saint = '/saint';
 
-  /// "/addplan"
-  static const String addplan = '/addplan';
+  /// "/plan"
+  static const String plan = '/plan';
 
   /// "/settings"
   static const String settings = '/settings';
@@ -73,8 +73,8 @@ class AppSaintCard {
       "Imprimatur: abp Marek Jędraszewski\nKraków, 29 kwietnia 2021 r., nr 1541/2021";
 }
 
-class AppAddPlan {
-  static const String title = "Plan Creator";
+class AppPlan {
+  static const String title = "Spiritual Plan";
 }
 
 class AppHiveStorage {

@@ -5,14 +5,14 @@ import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profileTask.dart';
 import 'package:nanoid/nanoid.dart';
 
-class AddPlanPage extends StatefulWidget {
-  const AddPlanPage({Key? key}) : super(key: key);
+class PlanPage extends StatefulWidget {
+  const PlanPage({Key? key}) : super(key: key);
 
   @override
-  _AddPlanPageState createState() => _AddPlanPageState();
+  _PlanPageState createState() => _PlanPageState();
 }
 
-class _AddPlanPageState extends State<AddPlanPage> {
+class _PlanPageState extends State<PlanPage> {
   late TextEditingController _controller;
 
   @override
@@ -27,7 +27,7 @@ class _AddPlanPageState extends State<AddPlanPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text(AppAddPlan.title),
+        title: Text(AppPlan.title),
       ),
       body: SafeArea(
         child: Container(
@@ -46,7 +46,7 @@ class _AddPlanPageState extends State<AddPlanPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigate to new page, but refresh contents after return
-          // Navigator.pushNamed(context, AppNavigator.addplan)
+          // Navigator.pushNamed(context, AppNavigator.plan)
           //     .then((value) => setState(() {}));
           _show(context);
         },

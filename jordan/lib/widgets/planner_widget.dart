@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_task.dart';
-//import 'package:jordan/screens/addplan_screen.dart';
+//import 'package:jordan/screens/plan_screen.dart';
 
 class PlannerWidget extends StatefulWidget {
   const PlannerWidget({Key? key}) : super(key: key);
