@@ -118,6 +118,10 @@ class _PlanPageState extends State<PlanPage> {
               subtitle: Text('daily'), // TODO: do proper parsing
               leading: Icon(Icons.circle, size: 8, color: Colors.green),
               //trailing: Icon(Icons.minimize_rounded, color: AppColors.primary),
+              visualDensity:
+                  VisualDensity(vertical: VisualDensity.minimumDensity),
+              //dense: true,
+              horizontalTitleGap: 0,
             ),
             onTap: () {
               print("${_getProfileTasks()[index].name} clicked");

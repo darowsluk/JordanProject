@@ -20,7 +20,7 @@ class ViaProfileTask extends HiveObject {
   @HiveField(3)
   late int priority;
 
-  /// persist until marked done (only for recurring tasks)
+  /// persist until marked done
   @HiveField(4)
   late bool untilDone;
 

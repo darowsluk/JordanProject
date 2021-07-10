@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
+import 'package:jordan/models/via_profileTask.dart';
 import 'package:nanoid/nanoid.dart';
 
 class AddProfileTaskPage extends StatefulWidget {
@@ -97,6 +98,17 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                   }
                 },
               ),
+              SizedBox(height: AppMargins.separation),
+              ListTile(
+                leading: Icon(Icons.repeat),
+                title: Text("Repeatable"),
+                trailing: Text(_formData.frequencyToString()),
+              ),
+              ListTile(
+                leading: Icon(Icons.link),
+                title: Text("Link"),
+                trailing: Text(_formData.linkToString()),
+              ),
             ],
           ),
         ),
@@ -130,4 +142,32 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
 // Helper Form data class
 class AddProfileTaskData {
   String name = "";
+  String link = "";
+  bool untilDone = false;
+  int frequency = 1; // daily
+
+  String linkToString() {
+    if (link.isEmpty) {
+      return "none";
+    } else {
+      return link;
+    }
+  }
+
+  String frequencyToString() {
+    switch (frequency) {
+      case 0:
+        return "once";
+      case 1:
+        return "daily";
+      case 2:
+        return "weekly";
+      case 3:
+        return "monthly";
+      case 4:
+        return "annually";
+      default:
+        return "daily";
+    }
+  }
 }
