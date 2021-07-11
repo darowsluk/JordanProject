@@ -7,14 +7,14 @@ import 'package:jordan/extras/statics.dart';
 /////////////////////////////////////////////
 /// Displays list of salvatorian prayers  ///
 /////////////////////////////////////////////
-class PrayerPage extends StatefulWidget {
-  const PrayerPage({Key? key}) : super(key: key);
+class PrayersPage extends StatefulWidget {
+  const PrayersPage({Key? key}) : super(key: key);
 
   @override
-  _PrayerPageState createState() => _PrayerPageState();
+  _PrayersPageState createState() => _PrayersPageState();
 }
 
-class _PrayerPageState extends State<PrayerPage> {
+class _PrayersPageState extends State<PrayersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -47,10 +47,11 @@ class ViaProfileTask extends HiveObject {
   ViaProfileTask({
     required String uid,
     String? name,
+    String? link,
   }) {
     this.uid = uid;
     this.name = name ?? "";
-    this.link = "";
+    this.link = link ?? "";
     this.priority = 0;
     this.untilDone = false;
     this.frequency = 1; // daily

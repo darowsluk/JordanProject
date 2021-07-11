@@ -1,5 +1,4 @@
 // Screens
-import 'package:jordan/screens/display_screen.dart';
 import 'package:intl/intl.dart';
 
 class Item {
@@ -7,7 +6,7 @@ class Item {
     this.titleValue = "",
     this.subtitleValue = "",
     this.subItems,
-    this.onTapFunction,
+    this.link = "",
     this.isExpanded = false,
     this.enabled = false,
   });
@@ -15,7 +14,7 @@ class Item {
   String titleValue;
   String subtitleValue;
   List<Item>? subItems;
-  var onTapFunction;
+  String link;
   bool isExpanded;
   bool enabled;
 }
@@ -58,41 +57,46 @@ List<Item> generateItems() {
     Item(
       titleValue: 'I. MODLITWY CODZIENNE',
       subtitleValue: 'Poranne, wieczorne, w różnych intencjach',
-      onTapFunction: null,
+      link: "",
       enabled: true,
       subItems: [
+        // Item(
+        //   titleValue: 'Modlitwy o powołania',
+        //   link: DisplayPrayerPage(
+        //     asset: selectOnDay(
+        //         day1: "assets/texts/vocations_sunday.html",
+        //         day2: "assets/texts/vocations_monday.html",
+        //         day3: "assets/texts/vocations_tuesday.html",
+        //         day4: "assets/texts/vocations_wednesday.html",
+        //         day5: "assets/texts/vocations_thursday.html",
+        //         day6: "assets/texts/vocations_friday.html",
+        //         day7: "assets/texts/vocations_saturday.html"),
+        //   ),
+        //   enabled: true,
+        // ),
         Item(
           titleValue: 'Modlitwy o powołania',
-          onTapFunction: DisplayPrayerPage(
-            asset: selectOnDay(
-                day1: "assets/texts/vocations_sunday.html",
-                day2: "assets/texts/vocations_monday.html",
-                day3: "assets/texts/vocations_tuesday.html",
-                day4: "assets/texts/vocations_wednesday.html",
-                day5: "assets/texts/vocations_thursday.html",
-                day6: "assets/texts/vocations_friday.html",
-                day7: "assets/texts/vocations_saturday.html"),
-          ),
+          link: "assets/texts/vocations_sunday.html",
           enabled: true,
         ),
         Item(
           titleValue: 'Modlitwy poranne (wersja 1)',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
           enabled: false,
         ),
         Item(
           titleValue: 'Modlitwy poranne (wersja 2)',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
           enabled: false,
         ),
         Item(
           titleValue: 'Modlitwy wieczorne (wersja 1)',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
           enabled: false,
         ),
         Item(
           titleValue: 'Modlitwy wieczorne (wersja 2)',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
           enabled: false,
         ),
       ],
@@ -100,183 +104,183 @@ List<Item> generateItems() {
     Item(
       titleValue: 'II. MIESIĘCZNE ODNOWIENIE DUCHOWE',
       subtitleValue: 'Rachunek sumienia, modlitwy rekolekcyjne',
-      onTapFunction: null,
+      link: "",
       enabled: true,
       subItems: [
         Item(
           titleValue: 'Modlitwa rekolekcyjna',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Miesięczny rachunek sumienia',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Odnowienie ślubów zakonnych',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Przygotowanie na śmierć',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwa o dobrą śmierć',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Nowicjat duchowy',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
       ],
     ),
     Item(
       titleValue: 'III. Z CHRYSTUSEM NA DRODZE KRZYŻOWEJ',
       subtitleValue: 'Nabożeństwa Drogi Krzyżowej',
-      onTapFunction: null,
+      link: "",
       enabled: true,
       subItems: [
         Item(
           titleValue: 'Droga Krzyżowa kapłana zakonnika',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Droga Krzyżowa zakonnika',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Medytacja o cierpieniach Zbawiciela',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
       ],
     ),
     Item(
       titleValue: 'IV. ŚWIĘTA PATRONALNE',
       subtitleValue: 'Nowenny i Tridua',
-      onTapFunction: null,
+      link: "",
       enabled: true,
       subItems: [
         Item(
           titleValue: 'Nowenna przed Uroczystością Niepokalanego Poczęcia NMP',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Nowenna przed Uroczystością Narodzenia Pańskiego',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Nowenna przed Uroczystością św. Józefa',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Nowenna przed Uroczystością NMP Matki Zbawiciela',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem NMP Królowej Apostołów',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue:
               'Triduum przed Świętem św. Archaniołów Michała, Gabriela i Rafała',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Marka, Ewangelisty',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Apostołów Filipa i Jakuba',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Macieja, Apostoła',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Apostołów Piotra i Pawła',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Tomasza, Apostoła',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Jakuba, Apostoła',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Bartłomieja, Apostoła',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue:
               'Triduum przed Świętem św. Mateusza, Apostoła i Ewangelisty',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Łukasza, Ewangelisty',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue:
               'Triduum przed Świętem św. Apostołów Szymona i Judy Tadeusza',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Andrzeja, Apostoła',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Triduum przed Świętem św. Jana, Apostoła i Ewangelisty',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
       ],
     ),
     Item(
       titleValue: 'V. INNE NABOŻEŃSTWA I MODLITWY',
       subtitleValue: 'Litania, hymny, modlitwy na różne okresy',
-      onTapFunction: null,
+      link: "",
       enabled: true,
       subItems: [
         Item(
           titleValue: 'Litania do Boskiego Zbawiciela',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Hymny',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy do Boga Trójjedynego',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy ku czci NMP',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy do św. Józefa',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy w intencji Kościoła',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy o świętość życia chrześcijańskiego',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy w chorobie i cierpieniu',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy o pokój w duszach i w świecie',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
         Item(
           titleValue: 'Modlitwy za zmarłych',
-          onTapFunction: DisplayPrayerPage(),
+          link: "",
         ),
       ],
     ),
