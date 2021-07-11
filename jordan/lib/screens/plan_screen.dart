@@ -48,7 +48,7 @@ class _PlanPageState extends State<PlanPage> {
           // ).then((val) {
           //   setState(() {});
           // });
-          await Get.to(() => AddProfileTaskPage())?.then((val) {
+          await Get.to(() => AddProfileTaskPage(), arguments: "")?.then((val) {
             setState(() {});
           });
         },
@@ -135,7 +135,9 @@ class _PlanPageState extends State<PlanPage> {
               horizontalTitleGap: 0,
             ),
             onTap: () {
-              print("${_getProfileTasks()[index].name} clicked");
+              // pass profile task uid to edit
+              Get.to(() => AddProfileTaskPage(),
+                  arguments: _getProfileTasks()[index].uid);
             },
           ),
         );
