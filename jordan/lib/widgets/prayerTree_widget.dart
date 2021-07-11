@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // Data
 import 'package:jordan/data/prayer_list.dart';
 // Extras
@@ -66,10 +67,7 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
                         ),
                   onTap: () => {
                     if (subItem.onTapFunction != null)
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => subItem.onTapFunction)),
+                      Get.to(() => subItem.onTapFunction),
                   },
                 );
               },

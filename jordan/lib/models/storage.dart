@@ -255,10 +255,36 @@ class ViaStorage {
     }
   }
 
+  /// Find profile task and return its index
+  static int findProfileTaskIndex({
+    required String uid,
+  }) {
+    ViaProfile profile = createViaProfile();
+    return profile.profileTasks
+        .indexWhere((element) => element.uid.compareTo(uid) == 0);
+  }
+
+  /// Return Profile Task at index
+  static ViaProfileTask getProfileTask({required int index}) {
+    ViaProfile profile = createViaProfile();
+    return profile.profileTasks.elementAt(index);
+  }
+
+  /// Check duplicate
+  static bool isProfileTask({required String name}) {
+    ViaProfile profile = createViaProfile();
+    if (profile.profileTasks
+            .indexWhere((element) => element.name.compareTo(name) == 0) ==
+        -1)
+      return false;
+    else
+      return true;
+  }
+
   /// Create a new profile task and save to profile
   static bool createProfileTask({
     required String uid,
-    required String name,
+    String name = "",
     String link = "",
     int frequency = 1,
   }) {

@@ -24,23 +24,6 @@ class AppStrings {
   static const String titleSettings = "Settings";
 }
 
-class AppNavigator {
-  /// "/"
-  static const String home = '/';
-
-  /// "/saint"
-  static const String saint = '/saint';
-
-  /// "/plan"
-  static const String plan = '/plan';
-
-  /// "/addProfileTask"
-  static const String addProfileTask = '/addProfileTask';
-
-  /// "/settings"
-  static const String settings = '/settings';
-}
-
 class AppMargins {
   static const double edgeInsets = 16.0;
   static const double cornerRadius = 4.0;
