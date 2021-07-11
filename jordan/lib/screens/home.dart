@@ -51,14 +51,6 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                         child: ProgressWidget(),
                         onTap: () async {
-                          // Navigate to new page, but refresh contents after return
-                          // old style:
-                          // await Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => PlanPage()),
-                          // ).then((val) {
-                          //   setState(() {});
-                          // });
                           await Get.to(() => PlanPage())?.then((val) {
                             setState(() {});
                           });
