@@ -29,16 +29,19 @@ void main() async {
   // necessary for hive initialization
   WidgetsFlutterBinding.ensureInitialized();
 
-  var dir = await getApplicationDocumentsDirectory();
+  if (GetPlatform.isWeb) {
+    //Hive.init();
+  } else {
+    var dir = await getApplicationDocumentsDirectory();
+    Hive..init(dir.path);
+  }
   Hive
-    ..init(dir.path)
     ..registerAdapter(ViaTaskAdapter())
     ..registerAdapter(ViaDayAdapter())
     ..registerAdapter(ViaCalendarAdapter());
   await Hive.openBox<ViaCalendar>(AppHiveStorage.boxViaCalendar);
 
   Hive
-    /*..init(dir.path)*/
     ..registerAdapter(ViaProfileTaskAdapter())
     ..registerAdapter(ViaProfileAdapter());
   await Hive.openBox<ViaProfile>(AppHiveStorage.boxViaProfile);
