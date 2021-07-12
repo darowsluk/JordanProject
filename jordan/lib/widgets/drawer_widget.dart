@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/screens/settings_screen.dart';
+import 'package:jordan/services/transMessages.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({
@@ -29,7 +30,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               color: AppColors.foreground,
             ),
             child: Text(
-              'Drawer',
+              '',
               style: TextStyle(
                 fontSize: 24,
               ),
@@ -37,11 +38,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('Profile'),
+            title: Text(TrStrings.trProfileTitle.tr),
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            title: Text(TrStrings.trSettingsTitle.tr),
             onTap: () {
               Get.to(() => SettingsPage());
             },

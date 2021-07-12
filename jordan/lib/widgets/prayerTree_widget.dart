@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:jordan/data/prayer_list.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/screens/display_screen.dart';
+import 'package:jordan/plugins/pluginPrayer_screen.dart';
 import 'package:jordan/widgets/planner_widget.dart';
 
 /// Defines data structure for prayer list items
@@ -67,7 +67,7 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
                         ),
                   onTap: () => {
                     if (subItem.link.isNotEmpty)
-                      Get.to(() => DisplayPrayerPage(),
+                      Get.to(() => PluginPrayerPage(),
                               arguments: Arguments(subItem.link, true))
                           ?.then((value) {
                         if (value != null) {

@@ -4,7 +4,8 @@ import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profile.dart';
 import 'package:jordan/models/via_profileTask.dart';
-import 'package:jordan/screens/prayers_screen.dart';
+import 'package:jordan/plugins/pluginContainer_screen.dart';
+import 'package:jordan/services/transMessages.dart';
 import 'package:jordan/widgets/planner_widget.dart';
 import 'package:nanoid/nanoid.dart';
 
@@ -119,7 +120,7 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                     onPressed: () {
                       _saveForm();
                     },
-                    child: const Text('Submit'),
+                    child: Text(TrStrings.trSubmit.tr),
                   ),
                 ],
               ),
@@ -127,12 +128,12 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                 controller: _controller,
                 autofocus: true,
                 style: TextStyle(fontSize: 36),
-                decoration: const InputDecoration(
-                  hintText: 'Spiritual task',
+                decoration: InputDecoration(
+                  hintText: TrStrings.trProfileTask.tr,
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter text';
+                    return TrStrings.trProfileTaskValidator.tr;
                   }
                   return null;
                 },
@@ -149,16 +150,15 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
               ListTile(
                 leading: Icon(Icons.repeat),
                 title: Text("Repeatable"),
-                trailing: Text("daily"),
-                // _profileTaskForm.frequency
-                //   .toString()), // TODO: parse it and make human readable
+                trailing:
+                    Text("daily"), // TODO: parse it and make human readable
               ),
               ListTile(
                 leading: Icon(Icons.link),
-                title: Text("Link"),
+                title: Text("Link"), // TODO: make it more human readable
                 trailing: _getLinkDisplay(_formLink),
                 onTap: () async {
-                  await Get.to(() => PrayersPage(),
+                  await Get.to(() => PluginContainerPage(),
                           arguments: Arguments(_formLink, true))
                       ?.then((val) {
                     if (val != null) {
@@ -172,7 +172,6 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                     }
                   });
                 },
-                // _profileTaskForm.link), // TODO: make it more human readable
               ),
             ],
           ),

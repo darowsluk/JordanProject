@@ -5,6 +5,7 @@ import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profileTask.dart';
 import 'package:jordan/screens/addProfileTask_screen.dart';
+import 'package:jordan/services/transMessages.dart';
 
 class PlanPage extends StatefulWidget {
   const PlanPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _PlanPageState extends State<PlanPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text(AppPlan.title),
+        title: Text(TrStrings.trPlanTitle.tr),
       ),
       body: SafeArea(
         child: Container(
@@ -53,7 +54,7 @@ class _PlanPageState extends State<PlanPage> {
   ReorderableListView generateItemsList() {
     return ReorderableListView.builder(
       header: Text(
-        'Mój plan wakacyjny',
+        TrStrings.trPlanSubtitle.tr,
         textAlign: TextAlign.start,
         style: TextStyle(color: AppColors.highlightText),
       ),
@@ -78,18 +79,17 @@ class _PlanPageState extends State<PlanPage> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text("Delete Confirmation"),
-                    content: const Text(
-                        "Are you sure you want to delete this item?"),
+                    title: Text(TrStrings.trDeleteConfirmation.tr),
+                    content: Text(TrStrings.trDeleteConfirmationNote.tr),
                     actions: <Widget>[
                       TextButton(
-                        child: Text("Cancel"),
+                        child: Text(TrStrings.trCancel.tr),
                         onPressed: () {
                           Get.back(result: false);
                         },
                       ),
                       TextButton(
-                        child: Text("Delete"),
+                        child: Text(TrStrings.trDelete.tr),
                         onPressed: () {
                           // delete the current profile task
                           Get.back(result: true);
@@ -153,7 +153,7 @@ class _PlanPageState extends State<PlanPage> {
               color: Colors.white,
             ),
             Text(
-              " Delete",
+              TrStrings.trDelete.tr,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,

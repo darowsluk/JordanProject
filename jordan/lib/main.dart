@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jordan/screens/home.dart';
+import 'package:jordan/services/transMessages.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:jordan/models/storage.dart';
@@ -49,7 +50,10 @@ class JordanApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Jordan SDS',
+      translations: TransMessages(),
+      locale: Get.deviceLocale, //("pl", "PL"),
+      fallbackLocale: Locale("en", "US"),
+      title: 'appTitle'.tr,
       theme: ThemeData(
         // This is the theme of your application.
         //
