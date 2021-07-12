@@ -27,7 +27,7 @@ class ProgressWidget extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           Text(
-            '"Mój plan wakacyjny"',
+            '"Mój plan wakacyjny"', // TODO: replace with the progress display
             textAlign: TextAlign.start,
             style: TextStyle(color: AppColors.highlightText),
           ),

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jordan/screens/plan_screen.dart';
+import 'package:jordan/services/transMessages.dart';
 
 // Custom widgets
 import 'package:jordan/widgets/saintcard_widget.dart';
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text(AppStrings.appName),
+        title: Text(TrStrings.trAppName.tr),
       ),
       drawer: DrawerWidget(scaffoldKey: scaffoldKey),
       body: SafeArea(

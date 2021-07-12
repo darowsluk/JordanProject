@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_task.dart';
-import 'package:jordan/screens/display_screen.dart';
+import 'package:jordan/plugins/pluginPrayer_screen.dart';
 //import 'package:jordan/screens/plan_screen.dart';
 
 class PlannerWidget extends StatefulWidget {
@@ -95,7 +95,7 @@ class _PlannerWidgetState extends State<PlannerWidget> {
           onTap: () {
             String temp = _getViaTasks()[index].link;
             if (temp.isNotEmpty) {
-              Get.to(() => DisplayPrayerPage(),
+              Get.to(() => PluginPrayerPage(),
                   arguments: Arguments(_getViaTasks()[index].link, false));
             } else {
               print("${_getViaTasks()[index].name} clicked");

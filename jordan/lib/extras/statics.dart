@@ -17,14 +17,6 @@ class AppTextStyle {
   static const double defaultTextSize = 18;
 }
 
-class AppStrings {
-  /// "Via Sancti"
-  static const String appName = "Via Sancti";
-
-  /// "Settings"
-  static const String titleSettings = "Settings";
-}
-
 class AppMargins {
   static const double edgeInsets = 16.0;
   static const double cornerRadius = 4.0;
@@ -32,8 +24,6 @@ class AppMargins {
 }
 
 class AppSaintCard {
-  static const String title = "Saint Card";
-
   /// Name of the asset image for saint card
   static const String cardAsset = "assets/images/Jordan_600px.jpg";
 
@@ -60,13 +50,9 @@ class AppSaintCard {
       "Imprimatur: abp Marek Jędraszewski\nKraków, 29 kwietnia 2021 r., nr 1541/2021";
 }
 
-class AppPlan {
-  static const String title = "Spiritual Plan";
-}
-
 class AppHiveStorage {
   static const String storageVersion =
-      "v1.0.0"; // todo: automatic versioning of storage datastructure
+      "v1.0.0"; // TODO: automatic versioning of storage datastructure
   static const String boxViaProfile = "viaprofile";
   static const String boxViaCalendar = "viacalendar";
   static const String boxViaOptions = "viaoptions";

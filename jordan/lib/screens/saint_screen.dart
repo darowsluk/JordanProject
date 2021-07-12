@@ -1,8 +1,9 @@
 import 'dart:math';
-
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/services/transMessages.dart';
 
 ///////////////////////////
 /// Displays Saint Card ///
@@ -29,7 +30,7 @@ class _SaintPageState extends State<SaintPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.foreground,
-        title: Text(AppSaintCard.title),
+        title: Text(TrStrings.trSaintTitle.tr),
       ),
       body: SingleChildScrollView(
         child: Center(

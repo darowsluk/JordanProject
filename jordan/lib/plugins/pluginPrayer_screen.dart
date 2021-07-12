@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/services/transMessages.dart';
 import 'package:jordan/widgets/htmlBuilder_widget.dart';
 
 import 'dart:async' show Future;
@@ -12,19 +13,17 @@ Future<String> loadAsset(BuildContext context, String asset) async {
   return await DefaultAssetBundle.of(context).loadString(asset);
 }
 
-//////////////////////////////////////////////////////////////////////////
-/// Displays prayer through the intercession of Blessed Francis Jordan ///
-//////////////////////////////////////////////////////////////////////////
-class DisplayPrayerPage extends StatefulWidget {
-  DisplayPrayerPage({
+/// Displays prayer plugin with passed link
+class PluginPrayerPage extends StatefulWidget {
+  PluginPrayerPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  _DisplayPrayerPageState createState() => _DisplayPrayerPageState();
+  _PluginPrayerPageState createState() => _PluginPrayerPageState();
 }
 
-class _DisplayPrayerPageState extends State<DisplayPrayerPage> {
+class _PluginPrayerPageState extends State<PluginPrayerPage> {
   late final Arguments _args;
 
   @override
@@ -39,7 +38,7 @@ class _DisplayPrayerPageState extends State<DisplayPrayerPage> {
       return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
-          title: Text("Modlitwy SDS"),
+          title: Text(TrStrings.trPluginPrayersTitle.tr),
           backgroundColor: AppColors.foreground,
         ),
         body: Text(""),
@@ -48,7 +47,7 @@ class _DisplayPrayerPageState extends State<DisplayPrayerPage> {
       return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
-          title: Text("Modlitwy SDS"),
+          title: Text(TrStrings.trPluginPrayersTitle.tr),
           backgroundColor: AppColors.foreground,
         ),
         body: FutureBuilder(

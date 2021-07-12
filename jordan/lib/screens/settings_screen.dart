@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
+import 'package:jordan/services/transMessages.dart';
 
 /// Displays options screen from drawer
 class SettingsPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
-          title: Text(AppStrings.titleSettings),
+          title: Text(TrStrings.trSettingsTitle.tr),
           backgroundColor: AppColors.foreground,
         ),
         body: SafeArea(
@@ -26,11 +27,11 @@ class SettingsPage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               SizedBox(height: AppMargins.separation),
-              Text("Developer options (BETA):"),
+              Text(TrStrings.trSettingsDeveloperTitle.tr),
               Divider(),
               ListTile(
                 leading: Icon(Icons.delete_forever_rounded),
-                title: Text("Delete all data"),
+                title: Text(TrStrings.trSettingsDeleteAll.tr),
                 onTap: () {
                   _showDialog(context);
                 },
@@ -49,18 +50,18 @@ class SettingsPage extends StatelessWidget {
       useRootNavigator: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Caution!"),
-          content: Text("All saved data will be deleted.\nApp will exit!"),
+          title: Text(TrStrings.trCaution.tr),
+          content: Text(TrStrings.trDeleteCautionNote.tr),
           elevation: 24,
           actions: <Widget>[
             TextButton(
-              child: Text("Cancel"),
+              child: Text(TrStrings.trCancel.tr),
               onPressed: () {
                 Get.back();
               },
             ),
             TextButton(
-              child: Text("Understand"),
+              child: Text(TrStrings.trUnderstand.tr),
               onPressed: () {
                 // deletes and closes all boxes
                 ViaStorage.deleteAllBoxes();

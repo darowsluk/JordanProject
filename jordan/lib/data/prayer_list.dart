@@ -62,7 +62,7 @@ List<Item> generateItems() {
       subItems: [
         // Item(
         //   titleValue: 'Modlitwy o powołania',
-        //   link: DisplayPrayerPage(
+        //   link: PluginPrayerPage(
         //     asset: selectOnDay(
         //         day1: "assets/texts/vocations_sunday.html",
         //         day2: "assets/texts/vocations_monday.html",
