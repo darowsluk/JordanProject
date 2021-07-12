@@ -4,6 +4,8 @@ import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profile.dart';
 import 'package:jordan/models/via_profileTask.dart';
+import 'package:jordan/screens/prayers_screen.dart';
+import 'package:jordan/widgets/planner_widget.dart';
 import 'package:nanoid/nanoid.dart';
 
 class AddProfileTaskPage extends StatefulWidget {
@@ -81,6 +83,8 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
               frequency: _formFrequency,
             ); // TODO: add all form fields
           }
+          _saveProfile();
+          ViaStorage.updateCalendarFromProfile();
         });
       }
       Get.back(result: true); // refresh upon return
@@ -152,7 +156,22 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
               ListTile(
                 leading: Icon(Icons.link),
                 title: Text("Link"),
-                trailing: Text("none"),
+                trailing: _getLinkDisplay(_formLink),
+                onTap: () async {
+                  await Get.to(() => PrayersPage(),
+                          arguments: Arguments(_formLink, true))
+                      ?.then((val) {
+                    if (val != null) {
+                      String temp = val as String;
+                      if (temp.isNotEmpty) {
+                        // new link has been passed
+                        setState(() {
+                          _formLink = temp;
+                        });
+                      }
+                    }
+                  });
+                },
                 // _profileTaskForm.link), // TODO: make it more human readable
               ),
             ],
@@ -185,7 +204,6 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
         rethrow; // bad error
       }
     }
-    ViaStorage.updateCalendarFromProfile();
   }
 
   void _editTaskToProfile({
@@ -218,48 +236,21 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
       assert(
           true, "_editTaskToProfile(): profile task not found with uid: $uid");
     }
-    ViaStorage.updateCalendarFromProfile();
-  }
-}
-
-/// Local form copy of the ProfileTask datastructure
-/// This is safer than working on real ProfileTask, because "system back" will not leave us with half-baked data saved on hive
-class ProfileTaskForm {
-  late String uid;
-  late String name;
-  late String link;
-  late int priority;
-  late bool untilDone;
-  late int frequency;
-  late int repeatWeekday;
-  late int repeatDayOfMonth;
-  late int repeatDateDay;
-  late int repeatDateMonth;
-
-  ProfileTaskForm({
-    required String uid,
-  }) {
-    copyDataFromProfileTask(profileUID: uid);
   }
 
-  void copyDataToProfileTask() {}
-  void copyDataFromProfileTask({required String profileUID}) {
-    // find matching Profile task
+  void _saveProfile() {
     ViaProfile profile = ViaStorage.createViaProfile();
-    int index = profile.profileTasks
-        .indexWhere((element) => element.uid.compareTo(profileUID) == 0);
-    if (index != -1) {
-      // copy data
-      this.uid = profileUID;
-      this.name = "";
-      this.link = "";
-      this.priority = 0;
-      this.untilDone = false;
-      this.frequency = 1; // daily
-      this.repeatWeekday = 0;
-      this.repeatDayOfMonth = 0;
-      this.repeatDateDay = 0;
-      this.repeatDateMonth = 0;
+    profile.save();
+  }
+
+  _getLinkDisplay(String formLink) {
+    if (formLink.isEmpty) {
+      return Text("none");
+    } else {
+      return Text(
+        "static",
+        style: TextStyle(color: AppColors.primary),
+      );
     }
   }
 }

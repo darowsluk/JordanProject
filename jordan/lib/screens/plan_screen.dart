@@ -38,16 +38,6 @@ class _PlanPageState extends State<PlanPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // Navigate to new page, but refresh contents after return
-          // old style:
-          // await Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => AddProfileTaskPage(),
-          //   ),
-          // ).then((val) {
-          //   setState(() {});
-          // });
           await Get.to(() => AddProfileTaskPage(), arguments: "")?.then((val) {
             setState(() {});
           });

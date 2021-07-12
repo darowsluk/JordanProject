@@ -65,27 +65,31 @@ class ViaStorage {
     ViaProfile profile = createViaProfile();
 
     for (var task in profile.profileTasks) {
-      switch (Frequency.values[task.frequency]) {
-        case Frequency.Never:
-          if (task.untilDone) {
-            createViaTask(uid: task.uid, name: task.name);
-          } else {
-            // TODO: safe to delete task from profile as done (maybe keep as history)
-          }
-          break;
-        case Frequency.Daily:
-          // create new task or update existing one (dirty flag?)
-          createViaTask(uid: task.uid, name: task.name, repeat: "daily");
-          break;
-        case Frequency.Weekly:
-          break;
-        case Frequency.Monthly:
-          break;
-        case Frequency.Annually:
-          break;
-        default:
-        // fall-through for future updates
-      }
+      createViaTask(
+          uid: task.uid, name: task.name, link: task.link, repeat: "daily");
+      //         uid: task.uid, name: task.name, link: task.link, repeat: "daily");
+      // switch (Frequency.values[task.frequency]) {
+      //   case Frequency.Never:
+      //     if (task.untilDone) {
+      //       createViaTask(uid: task.uid, name: task.name, link: task.link);
+      //     } else {
+      //       // TODO: safe to delete task from profile as done (maybe keep as history)
+      //     }
+      //     break;
+      //   case Frequency.Daily:
+      //     // create new task or update existing one (dirty flag?)
+      //     createViaTask(
+      //         uid: task.uid, name: task.name, link: task.link, repeat: "daily");
+      //     break;
+      //   case Frequency.Weekly:
+      //     break;
+      //   case Frequency.Monthly:
+      //     break;
+      //   case Frequency.Annually:
+      //     break;
+      //   default:
+      //   // fall-through for future updates
+      // }
     }
     return;
   }
@@ -229,8 +233,14 @@ class ViaStorage {
     var index =
         day.viaDay.indexWhere((element) => element.uid.compareTo(uid) == 0);
     if (index != -1) {
-      // existing task uid - task already exists, so skip
-      // throw ArgumentError("ArgumentError: duplicate task uid ($uid)");
+      // editing existing task
+      task = day.viaDay.elementAt(index);
+      task.name = name;
+      task.link = link;
+      task.repeat = repeat;
+      //day.viaDay.add(task);
+      //calendar.viaCalendar.add(day);
+      calendar.save();
       return true;
     } else {
       // check for duplicate task name
@@ -306,7 +316,7 @@ class ViaStorage {
         throw FormatException("FormatException: duplicate name ($name)");
       } else {
         // everything ok, create new profile task
-        task = ViaProfileTask(uid: uid, name: name);
+        task = ViaProfileTask(uid: uid, name: name, link: link);
         profile.profileTasks.add(task);
         profile.save();
         return true;

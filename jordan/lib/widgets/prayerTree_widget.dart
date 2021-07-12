@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:jordan/data/prayer_list.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/screens/display_screen.dart';
+import 'package:jordan/widgets/planner_widget.dart';
 
 /// Defines data structure for prayer list items
-
-/// This is the stateful widget that the main application instantiates.
 class PrayerTreeStatefulWidget extends StatefulWidget {
   const PrayerTreeStatefulWidget({Key? key}) : super(key: key);
 
@@ -66,8 +66,19 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
                           color: AppColors.disabled,
                         ),
                   onTap: () => {
-                    if (subItem.onTapFunction != null)
-                      Get.to(() => subItem.onTapFunction),
+                    if (subItem.link.isNotEmpty)
+                      Get.to(() => DisplayPrayerPage(),
+                              arguments: Arguments(subItem.link, true))
+                          ?.then((value) {
+                        if (value != null) {
+                          String temp = value as String;
+                          if (temp.isNotEmpty) {
+                            // pass link back to the add profile page
+                            Get.back(result: temp);
+                          }
+                        }
+                      }),
+                    // Get.to(() => subItem.onTapFunction),
                   },
                 );
               },

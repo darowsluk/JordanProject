@@ -4,6 +4,7 @@ class AppColors {
   static const Color foreground = const Color.fromRGBO(24, 33, 54, 1.0);
   static const Color background = const Color.fromRGBO(14, 17, 33, 1.0);
   static const Color textBackground = const Color.fromRGBO(244, 235, 208, 1.0);
+  static const Color normalText = Colors.white70;
   static const Color highlightText = Colors.amber;
   static const Color regularText = Colors.white;
   static const Color darkText = Colors.black87;

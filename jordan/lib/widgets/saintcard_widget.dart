@@ -15,17 +15,13 @@ class SaintCardWidget extends StatelessWidget {
         onTap: () {
           Get.to(() => SaintPage());
         },
-        child: //Hero(
-            //tag: 'jordan',
-            //child:
-            ClipRRect(
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
           child: Image.asset(
             "assets/images/Jordan_150px.jpg",
           ),
         ),
       ),
-      //),
     );
   }
 }

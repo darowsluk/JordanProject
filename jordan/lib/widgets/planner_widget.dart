@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_task.dart';
+import 'package:jordan/screens/display_screen.dart';
 //import 'package:jordan/screens/plan_screen.dart';
 
 class PlannerWidget extends StatefulWidget {
@@ -69,7 +71,13 @@ class _PlannerWidgetState extends State<PlannerWidget> {
         return InkWell(
           child: ListTile(
             enableFeedback: true,
-            title: Text('${_getViaTasks()[index].name}'),
+            title: Text(
+              '${_getViaTasks()[index].name}',
+              style: TextStyle(
+                  color: _getViaTasks()[index].link.isNotEmpty
+                      ? AppColors.highlightText
+                      : AppColors.normalText),
+            ),
             //subtitle: Text('daily'), // TODO: do proper parsing
             leading: Icon(Icons.circle, size: 8, color: Colors.green),
             trailing: IconButton(
@@ -85,7 +93,13 @@ class _PlannerWidgetState extends State<PlannerWidget> {
             horizontalTitleGap: 0,
           ),
           onTap: () {
-            print("${_getViaTasks()[index].name} clicked");
+            String temp = _getViaTasks()[index].link;
+            if (temp.isNotEmpty) {
+              Get.to(() => DisplayPrayerPage(),
+                  arguments: Arguments(_getViaTasks()[index].link, false));
+            } else {
+              print("${_getViaTasks()[index].name} clicked");
+            }
           },
         );
       },
@@ -95,4 +109,11 @@ class _PlannerWidgetState extends State<PlannerWidget> {
 
 List<ViaTask> _getViaTasks() {
   return ViaStorage.readViaDay().viaDay;
+}
+
+/// Arguments(String link, bool show)
+class Arguments {
+  String link;
+  bool show;
+  Arguments(this.link, this.show);
 }
