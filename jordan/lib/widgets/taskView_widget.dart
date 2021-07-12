@@ -7,14 +7,14 @@ import 'package:jordan/models/via_task.dart';
 import 'package:jordan/plugins/pluginPrayer_screen.dart';
 //import 'package:jordan/screens/plan_screen.dart';
 
-class PlannerWidget extends StatefulWidget {
-  const PlannerWidget({Key? key}) : super(key: key);
+class TaskViewWidget extends StatefulWidget {
+  const TaskViewWidget({Key? key}) : super(key: key);
 
   @override
-  _PlannerWidgetState createState() => _PlannerWidgetState();
+  _TaskViewWidgetState createState() => _TaskViewWidgetState();
 }
 
-class _PlannerWidgetState extends State<PlannerWidget> {
+class _TaskViewWidgetState extends State<TaskViewWidget> {
   @override
   void initState() {
     super.initState();
@@ -93,10 +93,12 @@ class _PlannerWidgetState extends State<PlannerWidget> {
             horizontalTitleGap: 0,
           ),
           onTap: () {
-            String temp = _getViaTasks()[index].link;
-            if (temp.isNotEmpty) {
+            String tempLink = _getViaTasks()[index].link;
+            // open on link if available
+            if (tempLink.isNotEmpty) {
               Get.to(() => PluginPrayerPage(),
-                  arguments: Arguments(_getViaTasks()[index].link, false));
+                  arguments: Arguments(tempLink, false));
+              // no data returned
             } else {
               print("${_getViaTasks()[index].name} clicked");
             }

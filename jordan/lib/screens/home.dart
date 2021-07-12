@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:jordan/screens/plan_screen.dart';
+import 'package:jordan/screens/profile_screen.dart';
 import 'package:jordan/services/transMessages.dart';
 
 // Custom widgets
 import 'package:jordan/widgets/saintcard_widget.dart';
 import 'package:jordan/widgets/drawer_widget.dart';
 import 'package:jordan/widgets/progress_widget.dart';
-import 'package:jordan/widgets/planner_widget.dart';
+import 'package:jordan/widgets/taskView_widget.dart';
 
 // Extras
 import 'package:jordan/extras/statics.dart';
@@ -52,15 +52,15 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                         child: ProgressWidget(),
                         onTap: () async {
-                          await Get.to(() => PlanPage())?.then((val) {
-                            setState(() {});
-                          });
+                          // todo
+                          await Get.to(() => ProfilePage());
+                          setState(() {});
                         }),
                   ),
                 ],
               ),
             ),
-            PlannerWidget(),
+            TaskViewWidget(),
           ],
         ),
       ),
