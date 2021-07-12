@@ -51,9 +51,9 @@ class JordanApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       translations: TransMessages(),
-      locale: Get.deviceLocale, //("pl", "PL"),
+      locale: Get.deviceLocale, // Locale("pl", "PL"),
       fallbackLocale: Locale("en", "US"),
-      title: 'appTitle'.tr,
+      title: TrStrings.trAppName.tr,
       theme: ThemeData(
         // This is the theme of your application.
         //
