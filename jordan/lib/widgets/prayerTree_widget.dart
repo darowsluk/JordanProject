@@ -67,7 +67,7 @@ class _PrayerTreeStatefulWidgetState extends State<PrayerTreeStatefulWidget> {
                         ),
                   onTap: () async {
                     if (subItem.link.isNotEmpty) {
-                      var val = await Get.to(() => PluginPrayerPage(),
+                      var val = await Get.toNamed(AppRoutes.pluginPrayer,
                           arguments: Arguments(subItem.link, true));
                       if (val != null) {
                         String temp = val as String;

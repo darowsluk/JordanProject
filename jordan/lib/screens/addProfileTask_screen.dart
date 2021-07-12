@@ -158,7 +158,7 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                   title: Text("Link"), // TODO: make it more human readable
                   trailing: _getLinkDisplay(_formLink),
                   onTap: () async {
-                    var val = await Get.to(() => PluginContainerPage(),
+                    var val = await Get.toNamed(AppRoutes.pluginContainer,
                         arguments: Arguments(_formLink, true));
                     if (val != null) {
                       String temp = val as String;

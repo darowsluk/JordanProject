@@ -13,7 +13,7 @@ class SaintCardWidget extends StatelessWidget {
       margin: EdgeInsets.all(AppMargins.edgeInsets),
       child: InkWell(
         onTap: () {
-          Get.to(() => SaintPage());
+          Get.toNamed(AppRoutes.saint);
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppMargins.cornerRadius),

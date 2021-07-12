@@ -7,14 +7,14 @@ import 'package:jordan/models/via_profileTask.dart';
 import 'package:jordan/screens/addProfileTask_screen.dart';
 import 'package:jordan/services/transMessages.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class PlanPage extends StatefulWidget {
+  const PlanPage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _PlanPageState createState() => _PlanPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _PlanPageState extends State<PlanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
       floatingActionButton: FloatingActionButton(
         // add new profile task
         onPressed: () async {
-          var val = await Get.to(() => AddProfileTaskPage(), arguments: "");
+          var val = await Get.toNamed(AppRoutes.addProfileTask, arguments: "");
           if (val != null) {
             bool temp = val as bool;
             if (temp) {
@@ -131,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             onTap: () async {
               // pass profile task uid to edit
-              var val = await Get.to(() => AddProfileTaskPage(),
+              var val = await Get.toNamed(AppRoutes.addProfileTask,
                   arguments: _getProfileTasks()[index].uid);
               if (val != null) {
                 bool temp = val as bool;

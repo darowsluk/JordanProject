@@ -44,7 +44,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             leading: Icon(Icons.settings),
             title: Text(TrStrings.trSettingsTitle.tr),
             onTap: () {
-              Get.to(() => SettingsPage());
+              Get.toNamed(AppRoutes.settings);
             },
           ),
         ],

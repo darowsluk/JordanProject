@@ -63,3 +63,14 @@ class AppHiveStorage {
 class AppOptions {
   static const bool confirmDelete = true;
 }
+
+class AppRoutes {
+  /// home = "/"
+  static const String home = "/";
+  static const String saint = "/saint";
+  static const String plan = "/plan";
+  static const String settings = "/settings";
+  static const String addProfileTask = "/addProfileTask";
+  static const String pluginContainer = "/pluginContainer";
+  static const String pluginPrayer = "/pluginPrayer";
+}

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:jordan/screens/profile_screen.dart';
+import 'package:jordan/screens/plan_screen.dart';
 import 'package:jordan/services/transMessages.dart';
 
 // Custom widgets
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                         child: ProgressWidget(),
                         onTap: () async {
                           // todo
-                          await Get.to(() => ProfilePage());
+                          await Get.toNamed(AppRoutes.plan);
                           setState(() {});
                         }),
                   ),

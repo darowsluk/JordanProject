@@ -96,7 +96,7 @@ class _TaskViewWidgetState extends State<TaskViewWidget> {
             String tempLink = _getViaTasks()[index].link;
             // open on link if available
             if (tempLink.isNotEmpty) {
-              Get.to(() => PluginPrayerPage(),
+              Get.toNamed(AppRoutes.pluginPrayer,
                   arguments: Arguments(tempLink, false));
               // no data returned
             } else {
