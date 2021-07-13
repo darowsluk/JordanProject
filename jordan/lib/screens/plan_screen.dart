@@ -38,10 +38,15 @@ class _PlanPageState extends State<PlanPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        // add new profile task
         onPressed: () async {
-          await Get.to(() => AddProfileTaskPage(), arguments: "")?.then((val) {
-            setState(() {});
-          });
+          var val = await Get.toNamed(AppRoutes.addProfileTask, arguments: "");
+          if (val != null) {
+            bool temp = val as bool;
+            if (temp) {
+              setState(() {});
+            }
+          }
         },
         child: const Icon(Icons.add),
         backgroundColor: AppColors.primary,
@@ -124,10 +129,16 @@ class _PlanPageState extends State<PlanPage> {
               //dense: true,
               horizontalTitleGap: 0,
             ),
-            onTap: () {
+            onTap: () async {
               // pass profile task uid to edit
-              Get.to(() => AddProfileTaskPage(),
+              var val = await Get.toNamed(AppRoutes.addProfileTask,
                   arguments: _getProfileTasks()[index].uid);
+              if (val != null) {
+                bool temp = val as bool;
+                if (temp) {
+                  setState(() {});
+                }
+              }
             },
           ),
         );

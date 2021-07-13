@@ -6,7 +6,7 @@ import 'package:jordan/models/via_profile.dart';
 import 'package:jordan/models/via_profileTask.dart';
 import 'package:jordan/plugins/pluginContainer_screen.dart';
 import 'package:jordan/services/transMessages.dart';
-import 'package:jordan/widgets/planner_widget.dart';
+import 'package:jordan/widgets/taskView_widget.dart';
 import 'package:nanoid/nanoid.dart';
 
 class AddProfileTaskPage extends StatefulWidget {
@@ -154,13 +154,12 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                     Text("daily"), // TODO: parse it and make human readable
               ),
               ListTile(
-                leading: Icon(Icons.link),
-                title: Text("Link"), // TODO: make it more human readable
-                trailing: _getLinkDisplay(_formLink),
-                onTap: () async {
-                  await Get.to(() => PluginContainerPage(),
-                          arguments: Arguments(_formLink, true))
-                      ?.then((val) {
+                  leading: Icon(Icons.link),
+                  title: Text("Link"), // TODO: make it more human readable
+                  trailing: _getLinkDisplay(_formLink),
+                  onTap: () async {
+                    var val = await Get.toNamed(AppRoutes.pluginContainer,
+                        arguments: Arguments(_formLink, true));
                     if (val != null) {
                       String temp = val as String;
                       if (temp.isNotEmpty) {
@@ -170,9 +169,7 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                         });
                       }
                     }
-                  });
-                },
-              ),
+                  }),
             ],
           ),
         ),

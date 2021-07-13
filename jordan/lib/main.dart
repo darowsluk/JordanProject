@@ -1,5 +1,10 @@
 import 'package:get/get.dart';
+import 'package:jordan/plugins/pluginContainer_screen.dart';
+import 'package:jordan/plugins/pluginPrayer_screen.dart';
+import 'package:jordan/screens/addProfileTask_screen.dart';
 import 'package:jordan/screens/home.dart';
+import 'package:jordan/screens/saint_screen.dart';
+import 'package:jordan/screens/settings_screen.dart';
 import 'package:jordan/services/transMessages.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
@@ -18,20 +23,25 @@ import 'package:jordan/models/via_day.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
+import 'screens/plan_screen.dart';
+
 void main() async {
   // necessary for hive initialization
   WidgetsFlutterBinding.ensureInitialized();
 
-  var dir = await getApplicationDocumentsDirectory();
+  if (GetPlatform.isWeb) {
+    //Hive.init();
+  } else {
+    var dir = await getApplicationDocumentsDirectory();
+    Hive..init(dir.path);
+  }
   Hive
-    ..init(dir.path)
     ..registerAdapter(ViaTaskAdapter())
     ..registerAdapter(ViaDayAdapter())
     ..registerAdapter(ViaCalendarAdapter());
   await Hive.openBox<ViaCalendar>(AppHiveStorage.boxViaCalendar);
 
   Hive
-    /*..init(dir.path)*/
     ..registerAdapter(ViaProfileTaskAdapter())
     ..registerAdapter(ViaProfileAdapter());
   await Hive.openBox<ViaProfile>(AppHiveStorage.boxViaProfile);
@@ -84,7 +94,18 @@ class JordanApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      initialRoute: AppRoutes.home,
+      getPages: [
+        GetPage(name: AppRoutes.home, page: () => HomePage()),
+        GetPage(name: AppRoutes.saint, page: () => SaintPage()),
+        GetPage(name: AppRoutes.plan, page: () => PlanPage()),
+        GetPage(name: AppRoutes.settings, page: () => SettingsPage()),
+        GetPage(
+            name: AppRoutes.addProfileTask, page: () => AddProfileTaskPage()),
+        GetPage(
+            name: AppRoutes.pluginContainer, page: () => PluginContainerPage()),
+        GetPage(name: AppRoutes.pluginPrayer, page: () => PluginPrayerPage()),
+      ],
     );
   }
 }

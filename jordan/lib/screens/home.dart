@@ -10,7 +10,7 @@ import 'package:jordan/services/transMessages.dart';
 import 'package:jordan/widgets/saintcard_widget.dart';
 import 'package:jordan/widgets/drawer_widget.dart';
 import 'package:jordan/widgets/progress_widget.dart';
-import 'package:jordan/widgets/planner_widget.dart';
+import 'package:jordan/widgets/taskView_widget.dart';
 
 // Extras
 import 'package:jordan/extras/statics.dart';
@@ -52,15 +52,15 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                         child: ProgressWidget(),
                         onTap: () async {
-                          await Get.to(() => PlanPage())?.then((val) {
-                            setState(() {});
-                          });
+                          // todo
+                          await Get.toNamed(AppRoutes.plan);
+                          setState(() {});
                         }),
                   ),
                 ],
               ),
             ),
-            PlannerWidget(),
+            TaskViewWidget(),
           ],
         ),
       ),
