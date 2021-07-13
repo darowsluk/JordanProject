@@ -11,6 +11,7 @@ class AppColors {
   static const Color primary = Colors.orange;
   static const Color secondary = Colors.green;
   static const Color disabled = Colors.blueGrey;
+  static const Color graphPrimary = const Color.fromRGBO(27, 170, 246, 1.0);
 }
 
 class AppTextStyle {

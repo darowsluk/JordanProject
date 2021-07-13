@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/models/storage.dart';
+import 'package:jordan/models/via_day.dart';
+import 'package:jordan/models/via_task.dart';
+import 'package:jordan/screens/home.dart';
 
 class ProgressWidget extends StatelessWidget {
   const ProgressWidget({
@@ -24,18 +29,54 @@ class ProgressWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
         color: AppColors.foreground,
       ),
-      child: ListView(
-        children: <Widget>[
-          Text(
-            '"Mój plan wakacyjny"', // TODO: replace with the progress display
-            textAlign: TextAlign.start,
-            style: TextStyle(color: AppColors.highlightText),
+      child: Center(
+        child: Obx(
+          () => CustomPaint(
+            size: Size(3000, 2000), // overkill just to be safe: TODO: fix later
+            painter: LinePainter().obs.value,
           ),
-          SizedBox(
-            height: AppMargins.separation,
-          ),
-        ],
+        ),
       ),
     );
+  }
+}
+
+class LinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Offset start, end;
+    var paint = Paint()
+      ..color = AppColors.graphPrimary
+      ..strokeWidth = 4;
+
+    // 0. Force update by calling Rx function
+    Get.find<HomeController>().getToggleTask();
+
+    // 1. Get all current tasks
+    ViaDay day = ViaStorage.readViaDay();
+    // 2. For each task draw a line
+    final double widthOffset = size.width / day.viaDay.length;
+    double xOffset = 0;
+
+    for (ViaTask task in day.viaDay) {
+      start = Offset(xOffset, size.height);
+
+      if (task.done) {
+        end = Offset(xOffset, 0);
+      } else {
+        end = Offset(xOffset, size.height - 10);
+      }
+      canvas.drawLine(start, end, paint);
+      xOffset += widthOffset; // move to the next line
+      if (xOffset >= size.width) {
+        // end of viewing area
+        break;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }

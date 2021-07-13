@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_task.dart';
-import 'package:jordan/plugins/pluginPrayer_screen.dart';
-//import 'package:jordan/screens/plan_screen.dart';
+import 'package:jordan/screens/home.dart';
 
 class TaskViewWidget extends StatefulWidget {
   const TaskViewWidget({Key? key}) : super(key: key);
@@ -21,6 +20,9 @@ class _TaskViewWidgetState extends State<TaskViewWidget> {
   }
 
   void _toggleDone(String uid) {
+    // use Rx function to update toggle change. This should automatically update widget that uses it in progress.
+    Get.find<HomeController>().toggleTask();
+
     setState(() {
       // forces widget to update - hopefully? :)
       ViaStorage.toggleDoneViaTask(uid: uid);
