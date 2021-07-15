@@ -5,6 +5,7 @@ class AppColors {
   static const Color background = const Color.fromRGBO(14, 17, 33, 1.0);
   static const Color textBackground = const Color.fromRGBO(244, 235, 208, 1.0);
   static const Color normalText = Colors.white70;
+  static const Color backgroundText = Colors.white30;
   static const Color highlightText = Colors.amber;
   static const Color regularText = Colors.white;
   static const Color darkText = Colors.black87;
@@ -20,6 +21,8 @@ class AppTextStyle {
 
 class AppMargins {
   static const double edgeInsets = 16.0;
+
+  /// cornerRadius = 4.0
   static const double cornerRadius = 4.0;
   static const double separation = 16.0;
 }
@@ -71,6 +74,7 @@ class AppRoutes {
   static const String saint = "/saint";
   static const String plan = "/plan";
   static const String settings = "/settings";
+  static const String select = "/select";
   static const String addProfileTask = "/addProfileTask";
   static const String pluginContainer = "/pluginContainer";
   static const String pluginPrayer = "/pluginPrayer";

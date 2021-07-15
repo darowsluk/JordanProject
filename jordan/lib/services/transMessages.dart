@@ -21,6 +21,9 @@ class TrStrings {
   static const String trSettingsDeveloperTitle = "DeveloperOptions";
   static const String trSettingsDeleteAll = "DeleteAll";
 
+  // SelectPage
+  static const String trSelectTitle = "Select";
+
   // SaintPage
   static const String trSaintTitle = "SaintCard";
 
@@ -55,6 +58,7 @@ class TransMessages extends Translations {
           TrStrings.trSettingsTitle: 'Settings',
           TrStrings.trSettingsDeveloperTitle: 'Developer options (ALPHA):',
           TrStrings.trSettingsDeleteAll: 'Delete all data',
+          TrStrings.trSelectTitle: 'Select',
           TrStrings.trSaintTitle: 'Saint Card',
           TrStrings.trPlanTitle: 'Spiritual Plan',
           TrStrings.trPlanSubtitle: "My Spiritual Routine",
@@ -78,6 +82,7 @@ class TransMessages extends Translations {
           TrStrings.trSettingsTitle: 'Ustawienia',
           TrStrings.trSettingsDeveloperTitle: 'Opcje programistów (ALPHA):',
           TrStrings.trSettingsDeleteAll: 'Usuń wszystkie dane',
+          TrStrings.trSelectTitle: 'Wybierz',
           TrStrings.trSaintTitle: 'Święty Obrazek',
           TrStrings.trPlanTitle: 'Plan Świętości',
           TrStrings.trPlanSubtitle: "Mój duchowy porządek",
