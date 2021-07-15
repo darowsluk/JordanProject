@@ -16,10 +16,12 @@ class AppColors {
 }
 
 class AppTextStyle {
+  /// defaultTextSize = 18
   static const double defaultTextSize = 18;
 }
 
 class AppMargins {
+  /// edgeInsets = 16
   static const double edgeInsets = 16.0;
 
   /// cornerRadius = 4.0
@@ -75,6 +77,7 @@ class AppRoutes {
   static const String plan = "/plan";
   static const String settings = "/settings";
   static const String select = "/select";
+  static const String selectWays = "/selectWays";
   static const String addProfileTask = "/addProfileTask";
   static const String pluginContainer = "/pluginContainer";
   static const String pluginPrayer = "/pluginPrayer";

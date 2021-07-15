@@ -38,46 +38,49 @@ class SelectPage extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          "Ćwiczenia zostaną dodane do Twojego planu duchowego",
+                          "Wybrane ćwiczenia zostaną dodane do Twojego planu duchowego",
                           style: TextStyle(color: AppColors.normalText),
                         ),
                         SizedBox(
-                          height: 16,
+                          height: 32,
                         )
                       ],
                     )),
                 Card(
                   clipBehavior: Clip.antiAlias,
-                  child: Stack(
-                    fit: StackFit.passthrough,
-                    children: [
-                      ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(AppMargins.cornerRadius),
-                        child: Image.asset(
-                          "assets/images/Jordan_bar.jpg",
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: AppMargins.separation,
-                        left: AppMargins.separation / 2,
-                        child: Container(
-                          padding: EdgeInsets.all(AppMargins.edgeInsets / 4),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius:
-                                BorderRadius.circular(AppMargins.cornerRadius),
-                            //color: AppColors.disabled,
-                          ),
-                          child: Text(
-                            "Drogi Salwatoriańskie",
-                            style: TextStyle(
-                                fontSize: AppTextStyle.defaultTextSize),
+                  child: InkWell(
+                    onTap: () => Get.toNamed(AppRoutes.selectWays),
+                    child: Stack(
+                      fit: StackFit.passthrough,
+                      children: [
+                        ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(AppMargins.cornerRadius),
+                          child: Image.asset(
+                            "assets/images/Jordan_bar.jpg",
+                            fit: BoxFit.fitWidth,
                           ),
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          bottom: AppMargins.separation,
+                          left: AppMargins.separation / 2,
+                          child: Container(
+                            padding: EdgeInsets.all(AppMargins.edgeInsets / 4),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(
+                                  AppMargins.cornerRadius),
+                              //color: AppColors.disabled,
+                            ),
+                            child: Text(
+                              "Drogi Salwatoriańskie",
+                              style: TextStyle(
+                                  fontSize: AppTextStyle.defaultTextSize),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Card(

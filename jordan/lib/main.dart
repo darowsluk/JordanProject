@@ -4,6 +4,7 @@ import 'package:jordan/plugins/pluginPrayer_screen.dart';
 import 'package:jordan/screens/addProfileTask_screen.dart';
 import 'package:jordan/screens/home.dart';
 import 'package:jordan/screens/saint_screen.dart';
+import 'package:jordan/screens/selectWays_screen.dart';
 import 'package:jordan/screens/select_screen.dart';
 import 'package:jordan/screens/settings_screen.dart';
 import 'package:jordan/services/transMessages.dart';
@@ -102,6 +103,7 @@ class JordanApp extends StatelessWidget {
         GetPage(name: AppRoutes.plan, page: () => PlanPage()),
         GetPage(name: AppRoutes.settings, page: () => SettingsPage()),
         GetPage(name: AppRoutes.select, page: () => SelectPage()),
+        GetPage(name: AppRoutes.selectWays, page: () => SelectWaysPage()),
         GetPage(
             name: AppRoutes.addProfileTask, page: () => AddProfileTaskPage()),
         GetPage(
