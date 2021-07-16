@@ -6,7 +6,8 @@ import 'package:jordan/services/transMessages.dart';
 
 class SelectWaysPage extends StatelessWidget {
   SelectWaysPage({Key? key}) : super(key: key);
-  final double maxWidth = 400;
+  final double maxWidth = Get.width * 0.75; // show next card on the right
+  final double iconSize = 24.0;
 
   final itemList = generateSelectWayItems();
 
@@ -23,7 +24,8 @@ class SelectWaysPage extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Container(
             constraints: BoxConstraints.expand(),
-            padding: EdgeInsets.symmetric(vertical: AppMargins.edgeInsets),
+            padding: EdgeInsets.fromLTRB(AppMargins.edgeInsets,
+                AppMargins.edgeInsets, 0, AppMargins.edgeInsets),
             color: AppColors.background,
             child: generateSelectWaysItemsList(),
           ),
@@ -36,10 +38,10 @@ class SelectWaysPage extends StatelessWidget {
     return ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: itemList.length,
-        padding: EdgeInsets.symmetric(horizontal: AppMargins.edgeInsets),
+        padding: EdgeInsets.fromLTRB(0, 0, AppMargins.edgeInsets, 0),
         itemBuilder: (context, index) {
           return Card(
-            margin: EdgeInsets.symmetric(horizontal: AppMargins.edgeInsets / 2),
+            //margin: EdgeInsets.symmetric(horizontal: AppMargins.edgeInsets / 2),
             child: SizedBox(
               width: maxWidth,
               child: Column(
@@ -88,7 +90,7 @@ class SelectWaysPage extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(
-                        width: 300, // TODO: calculate
+                        width: maxWidth - (iconSize * 4),
                         child: Divider(
                           indent: AppMargins.edgeInsets * 2,
                           endIndent: AppMargins.edgeInsets,
@@ -96,21 +98,49 @@ class SelectWaysPage extends StatelessWidget {
                       ),
                       RawMaterialButton(
                         onPressed: () {},
-                        elevation: 2.0,
                         fillColor: AppColors.primary,
                         child: Icon(
                           Icons.check,
                           color: AppColors.darkText,
-                          size: 20.0,
+                          size: iconSize,
                         ),
                         padding: EdgeInsets.all(AppMargins.edgeInsets),
                         shape: CircleBorder(),
                       )
                     ],
                   ),
+                  SizedBox(height: AppMargins.edgeInsets / 2),
+                  Flexible(child: generateListProfileTasks(cardIndex: index)),
                 ],
               ),
             ),
+          );
+        });
+  }
+
+  Widget generateListProfileTasks({required int cardIndex}) {
+    return ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemCount: itemList[cardIndex].listProfileTasks.length,
+        padding: EdgeInsets.fromLTRB(0, 0, AppMargins.edgeInsets, 0),
+        itemBuilder: (context, taskIndex) {
+          return ListTile(
+            dense: true,
+            //visualDensity: VisualDensity.compact,
+            leading: Text(
+              "${taskIndex + 1}",
+              style: TextStyle(color: AppColors.normalText),
+            ),
+            title: Text(
+              "${itemList[cardIndex].listProfileTasks[taskIndex].name}",
+              style: TextStyle(color: AppColors.normalText),
+            ),
+            subtitle: Text(
+              "${itemList[cardIndex].listProfileTasks[taskIndex].link}",
+              style: TextStyle(color: AppColors.backgroundText),
+            ), // TODO: fix later - change link to some function showing reccurance
+            //trailing: Text("codziennie"),
           );
         });
   }
