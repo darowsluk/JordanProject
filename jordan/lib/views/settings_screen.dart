@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:jordan/controllers/options_controller.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
@@ -12,20 +13,34 @@ class SettingsPage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  final OptionsController _optionsController = Get.put(OptionsController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppBar(
-          title: Text(TrStrings.trSettingsTitle.tr),
-          backgroundColor: AppColors.foreground,
-        ),
-        body: SafeArea(
-            child: Container(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: Text(TrStrings.trSettingsTitle.tr),
+        backgroundColor: AppColors.foreground,
+      ),
+      body: SafeArea(
+        child: Container(
           alignment: Alignment.topCenter,
           padding: EdgeInsets.all(AppMargins.edgeInsets),
           child: ListView(
             children: <Widget>[
+              SizedBox(height: AppMargins.separation),
+              Obx(
+                () => ListTile(
+                  title: Text("Safety switch"),
+                  subtitle: Text("ask before deleting data"),
+                  trailing: Switch(
+                      value: _optionsController.getSafetySwitch(),
+                      onChanged: (bool newValue) => {
+                            _optionsController.toggleSafetySwitch(),
+                          }),
+                ),
+              ),
               SizedBox(height: AppMargins.separation),
               Text(TrStrings.trSettingsDeveloperTitle.tr),
               Divider(),
@@ -38,7 +53,9 @@ class SettingsPage extends StatelessWidget {
               ),
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 
   /// Helper function

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jordan/controllers/options_controller.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
@@ -14,6 +15,8 @@ class PlanPage extends StatefulWidget {
 }
 
 class _PlanPageState extends State<PlanPage> {
+  final OptionsController _optionsController = Get.put(OptionsController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +79,7 @@ class _PlanPageState extends State<PlanPage> {
           secondaryBackground: slideLeftBackground(),
           direction: DismissDirection.endToStart,
           confirmDismiss: (DismissDirection direction) async {
-            if (AppOptions.confirmDelete) {
-              return true;
-            } else {
+            if (_optionsController.getSafetySwitch()) {
               return await showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -103,6 +104,8 @@ class _PlanPageState extends State<PlanPage> {
                   );
                 },
               );
+            } else {
+              return true;
             }
           },
           onDismissed: (DismissDirection direction) {
