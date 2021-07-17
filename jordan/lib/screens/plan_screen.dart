@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profileTask.dart';
-import 'package:jordan/screens/addProfileTask_screen.dart';
 import 'package:jordan/services/transMessages.dart';
 
 class PlanPage extends StatefulWidget {

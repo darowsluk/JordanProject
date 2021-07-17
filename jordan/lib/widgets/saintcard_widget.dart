@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/screens/saint_screen.dart';
 
 class SaintCardWidget extends StatelessWidget {
   const SaintCardWidget({Key? key}) : super(key: key);
@@ -13,7 +12,7 @@ class SaintCardWidget extends StatelessWidget {
       margin: EdgeInsets.all(AppMargins.edgeInsets),
       child: InkWell(
         onTap: () {
-          Get.toNamed(AppRoutes.saint);
+          Get.toNamed(AppRoutes.select);
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
