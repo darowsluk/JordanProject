@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:jordan/screens/saint_screen.dart';
+import 'package:jordan/views/saint_screen.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 

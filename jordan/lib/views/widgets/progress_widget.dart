@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jordan/controllers/task_controller.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_day.dart';
 import 'package:jordan/models/via_task.dart';
-import 'package:jordan/screens/home.dart';
 
 class ProgressWidget extends StatelessWidget {
   const ProgressWidget({
@@ -50,7 +50,7 @@ class LinePainter extends CustomPainter {
       ..strokeWidth = 4;
 
     // 0. Force update by calling Rx function
-    Get.find<HomeController>().getToggleTask();
+    Get.find<TasksController>().getToggleTask();
 
     // 1. Get all current tasks
     ViaDay day = ViaStorage.readViaDay();

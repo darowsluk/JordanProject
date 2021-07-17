@@ -3,13 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:jordan/controllers/task_controller.dart';
 import 'package:jordan/services/transMessages.dart';
 
 // Custom widgets
-import 'package:jordan/widgets/saintcard_widget.dart';
-import 'package:jordan/widgets/drawer_widget.dart';
-import 'package:jordan/widgets/progress_widget.dart';
-import 'package:jordan/widgets/taskView_widget.dart';
+import 'package:jordan/views/widgets/saintcard_widget.dart';
+import 'package:jordan/views/widgets/drawer_widget.dart';
+import 'package:jordan/views/widgets/progress_widget.dart';
+import 'package:jordan/views/widgets/taskView_widget.dart';
 
 // Extras
 import 'package:jordan/extras/statics.dart';
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   // Create instance of Controller
-  HomeController _homeController = Get.put(HomeController());
+  TasksController _homeController = Get.put(TasksController());
 
   @override
   Widget build(BuildContext context) {
@@ -73,17 +74,5 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     Hive.close(); // important to close all open Hives
     super.dispose();
-  }
-}
-
-class HomeController extends GetxController {
-  var _toggleTask = false.obs;
-
-  void toggleTask() {
-    _toggleTask.value = !_toggleTask.value;
-  }
-
-  bool getToggleTask() {
-    return _toggleTask.value;
   }
 }

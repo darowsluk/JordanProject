@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jordan/controllers/task_controller.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_task.dart';
-import 'package:jordan/screens/home.dart';
+import 'package:jordan/views/home.dart';
 
 class TaskViewWidget extends StatefulWidget {
   const TaskViewWidget({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _TaskViewWidgetState extends State<TaskViewWidget> {
 
   void _toggleDone(String uid) {
     // use Rx function to update toggle change. This should automatically update widget that uses it in progress.
-    Get.find<HomeController>().toggleTask();
+    Get.find<TasksController>().toggleTask();
 
     setState(() {
       // forces widget to update - hopefully? :)

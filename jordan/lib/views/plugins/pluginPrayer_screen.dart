@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/services/transMessages.dart';
-import 'package:jordan/widgets/htmlBuilder_widget.dart';
+import 'package:jordan/views/widgets/htmlBuilder_widget.dart';
 
 import 'dart:async' show Future;
 
-import 'package:jordan/widgets/taskView_widget.dart';
+import 'package:jordan/views/widgets/taskView_widget.dart';
 
 Future<String> loadAsset(BuildContext context, String asset) async {
   return await DefaultAssetBundle.of(context).loadString(asset);

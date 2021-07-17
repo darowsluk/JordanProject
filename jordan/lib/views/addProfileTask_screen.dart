@@ -4,9 +4,9 @@ import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/storage.dart';
 import 'package:jordan/models/via_profile.dart';
 import 'package:jordan/models/via_profileTask.dart';
-import 'package:jordan/plugins/pluginContainer_screen.dart';
+import 'package:jordan/views/plugins/pluginContainer_screen.dart';
 import 'package:jordan/services/transMessages.dart';
-import 'package:jordan/widgets/taskView_widget.dart';
+import 'package:jordan/views/widgets/taskView_widget.dart';
 import 'package:nanoid/nanoid.dart';
 
 class AddProfileTaskPage extends StatefulWidget {

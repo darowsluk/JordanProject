@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:jordan/plugins/pluginContainer_screen.dart';
-import 'package:jordan/plugins/pluginPrayer_screen.dart';
-import 'package:jordan/screens/addProfileTask_screen.dart';
-import 'package:jordan/screens/home.dart';
-import 'package:jordan/screens/saint_screen.dart';
-import 'package:jordan/screens/selectWays_screen.dart';
-import 'package:jordan/screens/select_screen.dart';
-import 'package:jordan/screens/settings_screen.dart';
+import 'package:jordan/views/plugins/pluginContainer_screen.dart';
+import 'package:jordan/views/plugins/pluginPrayer_screen.dart';
+import 'package:jordan/views/addProfileTask_screen.dart';
+import 'package:jordan/views/home.dart';
+import 'package:jordan/views/saint_screen.dart';
+import 'package:jordan/views/selectWays_screen.dart';
+import 'package:jordan/views/select_screen.dart';
+import 'package:jordan/views/settings_screen.dart';
 import 'package:jordan/services/transMessages.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ import 'package:jordan/models/via_day.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 
-import 'screens/plan_screen.dart';
+import 'views/plan_screen.dart';
 
 void main() async {
   // necessary for hive initialization
