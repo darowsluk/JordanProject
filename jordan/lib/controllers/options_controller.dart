@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/options_storage.dart';
+import 'package:jordan/services/transMessages.dart';
 
 class OptionsController extends GetxController {
   final _options = OptionsStorage.createViaOptions().obs;
@@ -52,17 +53,17 @@ class OptionsController extends GetxController {
     _options.update(
       (val) {
         switch (languageID) {
-          case "en":
-            _options.value.languageCode = "en";
-            _options.value.countryCode = "US";
+          case TrSupportedLanguage.englishLang:
+            _options.value.languageCode = TrSupportedLanguage.englishLang;
+            _options.value.countryCode = TrSupportedLanguage.polishCountry;
             break;
-          case "pl":
-            _options.value.languageCode = "pl";
-            _options.value.countryCode = "PL";
+          case TrSupportedLanguage.polishLang:
+            _options.value.languageCode = TrSupportedLanguage.polishLang;
+            _options.value.countryCode = TrSupportedLanguage.polishCountry;
             break;
           default:
-            _options.value.languageCode = "en";
-            _options.value.countryCode = "US";
+            _options.value.languageCode = TrSupportedLanguage.defaultLang;
+            _options.value.countryCode = TrSupportedLanguage.defaultCountry;
         }
         OptionsStorage.saveViaOptions();
         if (update) {
