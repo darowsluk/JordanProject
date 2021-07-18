@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jordan/models/options_storage.dart';
 import 'package:jordan/views/plugins/pluginContainer_screen.dart';
 import 'package:jordan/views/plugins/pluginPrayer_screen.dart';
 import 'package:jordan/views/addProfileTask_screen.dart';
@@ -54,6 +55,9 @@ void main() async {
   // initialize current calendar day from profile (if necessary)
   ViaStorage.createDayFromProfile();
 
+  // initialize default options (if necessary)
+  OptionsStorage.initializeViaOptions(initLocale: Get.deviceLocale);
+
   runApp(JordanApp());
 }
 
@@ -63,8 +67,12 @@ class JordanApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       translations: TransMessages(),
-      locale: Get.deviceLocale, // Locale("pl", "PL"),
-      fallbackLocale: Locale("en", "US"),
+      locale: Locale(
+        OptionsStorage.getLanguageCode(),
+        OptionsStorage.getCountryCode(),
+      ),
+      fallbackLocale: Locale(
+          TrSupportedLanguage.defaultLang, TrSupportedLanguage.defaultCountry),
       title: TrStrings.trAppName.tr,
       theme: ThemeData(
         // This is the theme of your application.

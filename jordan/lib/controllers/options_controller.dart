@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jordan/extras/statics.dart';
@@ -46,16 +47,16 @@ class OptionsController extends GetxController {
     return _options.value.safetyCheck;
   }
 
-  /// 0 = "en_US"; 1 = "pl_PL"
-  void setLanguage({required int languageID}) {
+  /// "en" = "en_US"; "pl" = "pl_PL"
+  void setLanguage({required String? languageID, bool update = false}) {
     _options.update(
       (val) {
         switch (languageID) {
-          case 0:
+          case "en":
             _options.value.languageCode = "en";
             _options.value.countryCode = "US";
             break;
-          case 1:
+          case "pl":
             _options.value.languageCode = "pl";
             _options.value.countryCode = "PL";
             break;
@@ -64,6 +65,10 @@ class OptionsController extends GetxController {
             _options.value.countryCode = "US";
         }
         OptionsStorage.saveViaOptions();
+        if (update) {
+          Get.updateLocale(
+              Locale(_options.value.languageCode, _options.value.countryCode));
+        }
       },
     );
   }

@@ -32,8 +32,31 @@ class SettingsPage extends StatelessWidget {
               SizedBox(height: AppMargins.separation),
               Obx(
                 () => ListTile(
-                  title: Text("Safety switch"),
-                  subtitle: Text("ask before deleting data"),
+                  title: Text(TrStrings.trLanguageTitle.tr),
+                  trailing: DropdownButton<String>(
+                    underline: Text(""),
+                    icon: Icon(Icons.arrow_drop_down),
+                    value: _optionsController.getLanguageCode(),
+                    items: [
+                      DropdownMenuItem<String>(
+                        child: Text(TrStrings.trLanguagePolish.tr),
+                        value: TrSupportedLanguage.polishLang,
+                      ),
+                      DropdownMenuItem<String>(
+                          child: Text(TrStrings.trLanguageDefault.tr),
+                          value: TrSupportedLanguage.englishLang)
+                    ],
+                    onChanged: (String? value) {
+                      _optionsController.setLanguage(
+                          languageID: value, update: true);
+                    },
+                  ),
+                ),
+              ),
+              Obx(
+                () => ListTile(
+                  title: Text(TrStrings.trSettingsSafetySwitchTitle.tr),
+                  subtitle: Text(TrStrings.trSettingsSafetySwitchSubtitle.tr),
                   trailing: Switch(
                       value: _optionsController.getSafetySwitch(),
                       onChanged: (bool newValue) => {

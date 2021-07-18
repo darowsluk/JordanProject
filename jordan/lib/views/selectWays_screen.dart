@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jordan/models/data/selectWays_list.dart';
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/services/transMessages.dart';
 
 class SelectWaysPage extends StatelessWidget {
   SelectWaysPage({Key? key}) : super(key: key);

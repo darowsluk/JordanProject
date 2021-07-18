@@ -1,5 +1,14 @@
 import 'package:get/get.dart';
 
+class TrSupportedLanguage {
+  static const String defaultLang = "en";
+  static const String defaultCountry = "US";
+  static const String englishLang = "en";
+  static const String usCountry = "US";
+  static const String polishLang = "pl";
+  static const String polishCountry = "PL";
+}
+
 class TrStrings {
   // General
   static const String trCaution = "Caution";
@@ -11,7 +20,12 @@ class TrStrings {
   static const String trUnderstand = "Understand";
   static const String trSubmit = "Submit";
 
-  /// HomePage
+  //Language
+  static const String trLanguageTitle = "LanguageTitle";
+  static const String trLanguageDefault = "LanguageDefault";
+  static const String trLanguagePolish = "LanguagePolish";
+
+  // HomePage
   static const String trAppName = "Via Sancti";
 
   // ProfilePage
@@ -20,6 +34,8 @@ class TrStrings {
   static const String trSettingsTitle = "Settings";
   static const String trSettingsDeveloperTitle = "DeveloperOptions";
   static const String trSettingsDeleteAll = "DeleteAll";
+  static const String trSettingsSafetySwitchTitle = 'SafetySwitchTitle';
+  static const String trSettingsSafetySwitchSubtitle = 'SafetySwitchSibtitle';
 
   // SelectPage
   static const String trSelectTitle = "Select";
@@ -43,6 +59,9 @@ class TransMessages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
+          TrStrings.trLanguageTitle: "Language",
+          TrStrings.trLanguageDefault: "English",
+          TrStrings.trLanguagePolish: "Polish",
           TrStrings.trAppName: 'Via Sancti',
           TrStrings.trCaution: 'Caution!',
           TrStrings.trDeleteCautionNote:
@@ -58,6 +77,8 @@ class TransMessages extends Translations {
           TrStrings.trSettingsTitle: 'Settings',
           TrStrings.trSettingsDeveloperTitle: 'Developer options (ALPHA):',
           TrStrings.trSettingsDeleteAll: 'Delete all data',
+          TrStrings.trSettingsSafetySwitchTitle: 'Safety switch',
+          TrStrings.trSettingsSafetySwitchSubtitle: 'ask before deleting data',
           TrStrings.trSelectTitle: 'Select',
           TrStrings.trSaintTitle: 'Saint Card',
           TrStrings.trPlanTitle: 'Spiritual Plan',
@@ -67,6 +88,9 @@ class TransMessages extends Translations {
           TrStrings.trPluginPrayersTitle: "Prayers",
         },
         'pl_PL': {
+          TrStrings.trLanguageTitle: "Język",
+          TrStrings.trLanguageDefault: "Angielski",
+          TrStrings.trLanguagePolish: "Polski",
           TrStrings.trAppName: 'Via Sancti',
           TrStrings.trCaution: 'Uwaga!',
           TrStrings.trDeleteCautionNote:
@@ -82,6 +106,9 @@ class TransMessages extends Translations {
           TrStrings.trSettingsTitle: 'Ustawienia',
           TrStrings.trSettingsDeveloperTitle: 'Opcje programistów (ALPHA):',
           TrStrings.trSettingsDeleteAll: 'Usuń wszystkie dane',
+          TrStrings.trSettingsSafetySwitchTitle: 'Zawór bezpieczeństwa',
+          TrStrings.trSettingsSafetySwitchSubtitle:
+              'zapytaj przed usunięciem danych',
           TrStrings.trSelectTitle: 'Wybierz',
           TrStrings.trSaintTitle: 'Święty Obrazek',
           TrStrings.trPlanTitle: 'Plan Świętości',

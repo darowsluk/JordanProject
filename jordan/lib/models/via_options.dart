@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:jordan/services/transMessages.dart';
 
 // To generate automatic TypeAdapter for HIVE
 // run: flutter packages pub run build_runner build
@@ -42,8 +43,8 @@ class ViaOptions extends HiveObject {
     this.endOfDay =
         endOfDay ?? DateTime(2000, 01, 01, 23, 59); // almost midnight
     this.historySize = historySize ?? 10;
-    this.languageCode = languageCode ?? "en";
-    this.countryCode = countryCode ?? "US";
+    this.languageCode = languageCode ?? TrSupportedLanguage.englishLang;
+    this.countryCode = countryCode ?? TrSupportedLanguage.usCountry;
     this.safetyCheck = safetyCheck ?? true;
   }
 }
