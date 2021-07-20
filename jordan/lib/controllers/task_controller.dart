@@ -1,23 +1,24 @@
 import 'package:get/get.dart';
+import 'package:jordan/models/storage.dart';
+import 'package:jordan/models/via_task.dart';
 
 class TasksController extends GetxController {
-  var _toggleTask = false.obs;
+  final _viaDay = ViaStorage.readViaDay().obs;
 
-  void toggleTask() {
-    _toggleTask.value = !_toggleTask.value;
+  void toggleTask({required int taskIndex}) {
+    _viaDay.update((val) {
+      _viaDay.value.viaDay[taskIndex].done =
+          !_viaDay.value.viaDay[taskIndex].done;
+    });
+    // update HIVE
+    ViaStorage.saveCurrentDay();
   }
 
-  bool getToggleTask() {
-    return _toggleTask.value;
+  bool getToggleTask({required int taskIndex}) {
+    return _viaDay.value.viaDay[taskIndex].done;
   }
 
-  void addTask({required String name}) {}
-
-  void delTask({required String uid}) {}
-
-  void editTask({required String uid}) {}
-
-  List<String> getTaskList() {
-    return [];
+  List<ViaTask> getTaskList() {
+    return _viaDay.value.viaDay;
   }
 }

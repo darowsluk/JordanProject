@@ -3,31 +3,11 @@ import 'package:get/get.dart';
 import 'package:jordan/controllers/task_controller.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/models/storage.dart';
-import 'package:jordan/models/via_task.dart';
 
-class TaskViewWidget extends StatefulWidget {
-  const TaskViewWidget({Key? key}) : super(key: key);
+class TaskViewWidget extends StatelessWidget {
+  TaskViewWidget({Key? key}) : super(key: key);
 
-  @override
-  _TaskViewWidgetState createState() => _TaskViewWidgetState();
-}
-
-class _TaskViewWidgetState extends State<TaskViewWidget> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _toggleDone(String uid) {
-    // use Rx function to update toggle change. This should automatically update widget that uses it in progress.
-    Get.find<TasksController>().toggleTask();
-
-    setState(() {
-      // forces widget to update - hopefully? :)
-      ViaStorage.toggleDoneViaTask(uid: uid);
-    });
-  }
+  final TasksController _tasksController = Get.put(TasksController());
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +49,7 @@ class _TaskViewWidgetState extends State<TaskViewWidget> {
 //           ],
 
   Widget generateItemsList() {
-    if (_getViaTasks().isEmpty) {
+    if (_tasksController.getTaskList().isEmpty) {
       return Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,54 +76,55 @@ class _TaskViewWidgetState extends State<TaskViewWidget> {
         ),
       );
     } else {
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: _getViaTasks().length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            child: ListTile(
-              enableFeedback: true,
-              title: Text(
-                '${_getViaTasks()[index].name}',
-                style: TextStyle(
-                    color: _getViaTasks()[index].link.isNotEmpty
-                        ? AppColors.highlightText
-                        : AppColors.normalText),
+      return Obx(
+        () => ListView.builder(
+          shrinkWrap: true,
+          itemCount: _tasksController.getTaskList().length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              child: ListTile(
+                enableFeedback: true,
+                title: Text(
+                  '${_tasksController.getTaskList()[index].name}',
+                  style: TextStyle(
+                      color:
+                          _tasksController.getTaskList()[index].link.isNotEmpty
+                              ? AppColors.highlightText
+                              : AppColors.normalText),
+                ),
+                //subtitle: Text('daily'), // TODO: do proper parsing
+                leading: Icon(Icons.circle, size: 8, color: Colors.green),
+                trailing: IconButton(
+                  icon: _tasksController.getTaskList()[index].done
+                      ? (Icon(Icons.check_circle_outline_outlined))
+                      : (Icon(Icons.circle_outlined)),
+                  color: Colors.greenAccent,
+                  onPressed: () =>
+                      _tasksController.toggleTask(taskIndex: index),
+                ),
+                visualDensity:
+                    VisualDensity(vertical: VisualDensity.minimumDensity),
+                //dense: true,
+                horizontalTitleGap: 0,
               ),
-              //subtitle: Text('daily'), // TODO: do proper parsing
-              leading: Icon(Icons.circle, size: 8, color: Colors.green),
-              trailing: IconButton(
-                icon: _getViaTasks()[index].done
-                    ? (Icon(Icons.check_circle_outline_outlined))
-                    : (Icon(Icons.circle_outlined)),
-                color: Colors.greenAccent,
-                onPressed: () => _toggleDone(_getViaTasks()[index].uid),
-              ),
-              visualDensity:
-                  VisualDensity(vertical: VisualDensity.minimumDensity),
-              //dense: true,
-              horizontalTitleGap: 0,
-            ),
-            onTap: () {
-              String tempLink = _getViaTasks()[index].link;
-              // open on link if available
-              if (tempLink.isNotEmpty) {
-                Get.toNamed(AppRoutes.pluginPrayer,
-                    arguments: Arguments(tempLink, false));
-                // no data returned
-              } else {
-                print("${_getViaTasks()[index].name} clicked");
-              }
-            },
-          );
-        },
+              onTap: () {
+                String tempLink = _tasksController.getTaskList()[index].link;
+                // open on link if available
+                if (tempLink.isNotEmpty) {
+                  Get.toNamed(AppRoutes.pluginPrayer,
+                      arguments: Arguments(tempLink, false));
+                  // no data returned
+                } else {
+                  print(
+                      "${_tasksController.getTaskList()[index].name} clicked");
+                }
+              },
+            );
+          },
+        ),
       );
     }
   }
-}
-
-List<ViaTask> _getViaTasks() {
-  return ViaStorage.readViaDay().viaDay;
 }
 
 /// Arguments(String link, bool show)

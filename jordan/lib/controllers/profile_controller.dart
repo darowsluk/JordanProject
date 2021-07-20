@@ -5,16 +5,6 @@ import 'package:nanoid/nanoid.dart';
 
 class ProfileController extends GetxController {
   final _profile = ViaStorage.createViaProfile().obs;
-  var _toggleTask = false.obs;
-
-// Public Methods: toggle task
-  void toggleTask() {
-    _toggleTask.value = !_toggleTask.value;
-  }
-
-  bool getToggleTask() {
-    return _toggleTask.value;
-  }
 
 // Public Methods: add, edit, delete ProfileTask
   void addTaskToProfile({
