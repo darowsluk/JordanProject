@@ -127,8 +127,9 @@ class ViaStorage {
 
   /// Reorder List<ViaTask> based on Profile tasks swapped indexes
   static bool reorderViaTasksOnProfile(
-      {required int oldProfileIndex, required int newProfileIndex}) {
-    ViaProfile profile = createViaProfile();
+      {required ViaProfile profile,
+      required int oldProfileIndex,
+      required int newProfileIndex}) {
     ViaDay day = createViaDay();
     String oldProfileUID, newProfileUID;
     int oldViaIndex;
@@ -265,65 +266,6 @@ class ViaStorage {
     }
   }
 
-  /// Find profile task and return its index
-  static int findProfileTaskIndex({
-    required String uid,
-  }) {
-    ViaProfile profile = createViaProfile();
-    return profile.profileTasks
-        .indexWhere((element) => element.uid.compareTo(uid) == 0);
-  }
-
-  /// Return Profile Task at index
-  static ViaProfileTask getProfileTask({required int index}) {
-    ViaProfile profile = createViaProfile();
-    return profile.profileTasks.elementAt(index);
-  }
-
-  /// Check duplicate
-  static bool isProfileTask({required String name}) {
-    ViaProfile profile = createViaProfile();
-    if (profile.profileTasks
-            .indexWhere((element) => element.name.compareTo(name) == 0) ==
-        -1)
-      return false;
-    else
-      return true;
-  }
-
-  /// Create a new profile task and save to profile
-  static bool createProfileTask({
-    required String uid,
-    String name = "",
-    String link = "",
-    int frequency = 1,
-  }) {
-    ViaProfile profile = createViaProfile();
-    ViaProfileTask task;
-
-    // check for duplicate profile task name and uid
-    var index = profile.profileTasks
-        .indexWhere((element) => element.uid.compareTo(uid) == 0);
-    if (index != -1) {
-      // duplicate profile task uid
-      throw ArgumentError("ArgumentError: duplicate profile task uid ($uid)");
-    } else {
-      // check if there are no duplicate names
-      var index2 = profile.profileTasks
-          .indexWhere((element) => element.name.compareTo(name) == 0);
-      if (index2 != -1) {
-        // duplicate name found
-        throw FormatException("FormatException: duplicate name ($name)");
-      } else {
-        // everything ok, create new profile task
-        task = ViaProfileTask(uid: uid, name: name, link: link);
-        profile.profileTasks.add(task);
-        profile.save();
-        return true;
-      }
-    }
-  }
-
   static List<ViaProfileTask> readProfileTasks() {
     ViaProfile profile = createViaProfile();
     return profile.profileTasks;
@@ -362,11 +304,6 @@ class ViaStorage {
     profile.profileTasks
         .removeWhere((element) => element.uid.compareTo(uid) == 0);
     profile.save();
-  }
-
-  static deleteAllBoxes() {
-    getViaCalendarBox().deleteFromDisk();
-    getViaProfileBox().deleteFromDisk();
   }
 
   static toggleDoneViaTask({required String uid}) {
