@@ -1,11 +1,15 @@
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/models/options_storage.dart';
 import 'package:jordan/models/via_calendar.dart';
+import 'package:jordan/models/via_options.dart';
 import 'package:jordan/models/via_profile.dart';
 import 'package:jordan/models/via_profileTask.dart';
 import 'package:jordan/models/via_task.dart';
 import 'package:jordan/models/via_day.dart';
 import 'package:jordan/services/timeManager.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// Exposes storage global functions
 class ViaStorage {
@@ -13,6 +17,36 @@ class ViaStorage {
       Hive.box<ViaCalendar>(AppHiveStorage.boxViaCalendar);
   static Box<ViaProfile> getViaProfileBox() =>
       Hive.box<ViaProfile>(AppHiveStorage.boxViaProfile);
+
+  /// Call from main() to initialize HIVE storage
+  static Future initializeStorage() async {
+    if (GetPlatform.isWeb) {
+      //Hive.init();
+    } else {
+      var dir = await getApplicationDocumentsDirectory();
+      Hive..init(dir.path);
+    }
+    Hive
+      ..registerAdapter(ViaTaskAdapter())
+      ..registerAdapter(ViaDayAdapter())
+      ..registerAdapter(ViaCalendarAdapter());
+    await Hive.openBox<ViaCalendar>(AppHiveStorage.boxViaCalendar);
+
+    Hive
+      ..registerAdapter(ViaProfileTaskAdapter())
+      ..registerAdapter(ViaProfileAdapter());
+    await Hive.openBox<ViaProfile>(AppHiveStorage.boxViaProfile);
+
+    Hive.registerAdapter(ViaOptionsAdapter());
+    await Hive.openBox<ViaOptions>(AppHiveStorage.boxViaOptions);
+
+    // initialize current calendar day from profile (if necessary)
+    ViaStorage.createDayFromProfile();
+
+    // initialize default options (if necessary)
+    OptionsStorage.initializeViaOptions(initLocale: Get.deviceLocale);
+    return true;
+  }
 
   /// Populate new day with tasks based on current profile
   static void createDayFromProfile() {
