@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Data
-import 'package:jordan/data/prayer_list.dart';
+import 'package:jordan/models/data/prayer_list.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/plugins/pluginPrayer_screen.dart';
-import 'package:jordan/widgets/taskView_widget.dart';
+import 'package:jordan/views/widgets/taskView_widget.dart';
 
 /// Defines data structure for prayer list items
 class PrayerTreeStatefulWidget extends StatefulWidget {

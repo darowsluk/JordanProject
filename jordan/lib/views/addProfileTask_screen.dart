@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jordan/controllers/profile_controller.dart';
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/models/storage.dart';
-import 'package:jordan/models/via_profile.dart';
-import 'package:jordan/models/via_profileTask.dart';
-import 'package:jordan/plugins/pluginContainer_screen.dart';
 import 'package:jordan/services/transMessages.dart';
-import 'package:jordan/widgets/taskView_widget.dart';
-import 'package:nanoid/nanoid.dart';
+import 'package:jordan/views/widgets/taskView_widget.dart';
 
 class AddProfileTaskPage extends StatefulWidget {
   const AddProfileTaskPage({Key? key}) : super(key: key);
@@ -19,12 +15,20 @@ class AddProfileTaskPage extends StatefulWidget {
 class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _controller = TextEditingController();
+  var _profileControllerTemp = Get.find<ProfileController>();
   late bool _edit; // false=add new; true=edit
   late String _uid; // Profile Task uid in "edit" mode
-  // temporary form structure to be saved to profile task
+  // temporary form structure to be saved to profile task (copy of ViaProfileTask)
+  // used because local variables are copied by value and we want the form to save only on pressing the button
   late String _formName;
   late String _formLink;
+  late int _formPriority;
+  late bool _formUntilDone;
   late int _formFrequency;
+  late int _formRepeatWeekday;
+  late int _formRepeatDayOfMonth;
+  late int _formRepeatDateDay;
+  late int _formRepeatDateMonth;
 
   @override
   void initState() {
@@ -36,23 +40,44 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
     _uid = Get.arguments ?? "";
     // 2. Find Profile Task
     if (_uid.isNotEmpty) {
-      index = ViaStorage.findProfileTaskIndex(uid: _uid);
+      index = _profileControllerTemp.findProfileTaskIndex(uid: _uid);
       if (index != -1) {
         _edit = true;
       }
     }
     // 3. Initialize form fields
+    // TODO: think about creating a new empty profile task to save only on button press instead of local variables
     if (_edit) {
       // "Edit" mode: copy to form fields from Profile Task at index
-      _formName = ViaStorage.getProfileTask(index: index).name;
+      _formName = _profileControllerTemp.getProfileTask(index: index).name;
       _controller.text = _formName; // update form field
-      _formLink = ViaStorage.getProfileTask(index: index).link;
-      _formFrequency = ViaStorage.getProfileTask(index: index).frequency;
+      _formLink = _profileControllerTemp.getProfileTask(index: index).link;
+      _formPriority =
+          _profileControllerTemp.getProfileTask(index: index).priority;
+      _formUntilDone =
+          _profileControllerTemp.getProfileTask(index: index).untilDone;
+      _formFrequency =
+          _profileControllerTemp.getProfileTask(index: index).frequency;
+      _formRepeatWeekday =
+          _profileControllerTemp.getProfileTask(index: index).repeatWeekday;
+      _formRepeatDayOfMonth =
+          _profileControllerTemp.getProfileTask(index: index).repeatDayOfMonth;
+      _formRepeatDateDay =
+          _profileControllerTemp.getProfileTask(index: index).repeatDateDay;
+      _formRepeatDateMonth =
+          _profileControllerTemp.getProfileTask(index: index).repeatDateMonth;
     } else {
       // "Add new" mode: initialize form fields to defaults
+      // TODO: make these static constants
       _formName = "";
       _formLink = "";
+      _formPriority = 0;
+      _formUntilDone = false;
       _formFrequency = 1; // daily
+      _formRepeatWeekday = 0;
+      _formRepeatDayOfMonth = 0;
+      _formRepeatDateDay = 0;
+      _formRepeatDateMonth = 0;
     }
   }
 
@@ -62,31 +87,42 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
     super.dispose();
   }
 
+  // helper function
   _saveForm() {
     var form = _formKey.currentState;
     if (form != null) {
       if (form.validate()) {
         form.save();
-        setState(() {
-          if (_edit) {
-            // "Edit" mode: copy form fields to existing Profile Task and save
-            _editTaskToProfile(
-              uid: _uid,
-              name: _formName,
-              link: _formLink,
-              frequency: _formFrequency,
-            );
-          } else {
-            // "Add new" mode: create a new Profile Task and copy form fields to it for save
-            _addTaskToProfile(
-              name: _formName,
-              link: _formLink,
-              frequency: _formFrequency,
-            ); // TODO: add all form fields
-          }
-          _saveProfile();
-          ViaStorage.updateCalendarFromProfile();
-        });
+        if (_edit) {
+          // "Edit" mode: copy form fields to existing Profile Task and save
+          // updates all observers automatically
+          _profileControllerTemp.editProfileTask(
+            uid: _uid,
+            name: _formName,
+            link: _formLink,
+            priority: _formPriority,
+            untilDone: _formUntilDone,
+            frequency: _formFrequency,
+            repeatWeekday: _formRepeatWeekday,
+            repeatDayOfMonth: _formRepeatDayOfMonth,
+            repeatDateDay: _formRepeatDateDay,
+            repeatDateMonth: _formRepeatDateMonth,
+          );
+        } else {
+          // "Add new" mode: create a new Profile Task and copy form fields to it for save
+          // updates all observers automatically
+          _profileControllerTemp.addTaskToProfile(
+            name: _formName,
+            link: _formLink,
+            priority: _formPriority,
+            untilDone: _formUntilDone,
+            frequency: _formFrequency,
+            repeatWeekday: _formRepeatWeekday,
+            repeatDayOfMonth: _formRepeatDayOfMonth,
+            repeatDateDay: _formRepeatDateDay,
+            repeatDateMonth: _formRepeatDateMonth,
+          );
+        }
       }
       Get.back(result: true); // refresh upon return
     } else {
@@ -112,6 +148,7 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
                   IconButton(
                     // Close form without saving
                     onPressed: () => {
+                      // TODO: result for refreshing should be obsolete since obx handles automatic refresh
                       Get.back(result: false) // no need to refresh
                     },
                     icon: Icon(Icons.close_rounded),
@@ -178,66 +215,6 @@ class _AddProfileTaskPageState extends State<AddProfileTaskPage> {
   }
 
   // Helper functions
-  void _addTaskToProfile({
-    required String name,
-    required String link,
-    required int frequency,
-  }) {
-    String uid = nanoid();
-    String appendedName = name;
-    int appendIndex = 1;
-    bool finished = false;
-    while (!finished) {
-      try {
-        ViaStorage.createProfileTask(
-            uid: uid, name: appendedName, link: link, frequency: frequency);
-        finished = true;
-      } on FormatException {
-        // append number to the name and try again
-        appendedName = name + " ($appendIndex)";
-        appendIndex++;
-      } on ArgumentError {
-        rethrow; // bad error
-      }
-    }
-  }
-
-  void _editTaskToProfile({
-    required String uid,
-    required String name,
-    required String link,
-    required int frequency,
-  }) {
-    ViaProfileTask profileTask;
-    String appendedName = name;
-    int appendIndex = 1;
-    bool finished = false;
-
-    int index = ViaStorage.findProfileTaskIndex(uid: uid);
-    if (index != -1) {
-      profileTask = ViaStorage.getProfileTask(index: index);
-      while (!finished) {
-        if (ViaStorage.isProfileTask(name: appendedName)) {
-          appendedName = name + " ($appendIndex)";
-          appendIndex++;
-        } else {
-          finished = true;
-        }
-      }
-      // copy form fields to Profile Task
-      profileTask.name = appendedName;
-      profileTask.link = _formLink;
-      profileTask.frequency = _formFrequency;
-    } else {
-      assert(
-          true, "_editTaskToProfile(): profile task not found with uid: $uid");
-    }
-  }
-
-  void _saveProfile() {
-    ViaProfile profile = ViaStorage.createViaProfile();
-    profile.save();
-  }
 
   _getLinkDisplay(String formLink) {
     if (formLink.isEmpty) {

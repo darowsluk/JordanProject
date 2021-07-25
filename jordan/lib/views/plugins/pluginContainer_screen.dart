@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jordan/services/transMessages.dart';
 // Custom widgets
-import 'package:jordan/widgets/prayerTree_widget.dart';
+import 'package:jordan/views/widgets/prayerTree_widget.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 

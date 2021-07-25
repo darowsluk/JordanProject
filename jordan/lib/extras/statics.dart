@@ -67,7 +67,7 @@ class AppHiveStorage {
 }
 
 class AppOptions {
-  static const bool confirmDelete = true;
+  static const int maxHistorySize = 31; // TODO: think about changing it
 }
 
 class AppRoutes {

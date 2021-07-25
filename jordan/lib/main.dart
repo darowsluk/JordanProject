@@ -1,58 +1,27 @@
 import 'package:get/get.dart';
-import 'package:jordan/plugins/pluginContainer_screen.dart';
-import 'package:jordan/plugins/pluginPrayer_screen.dart';
-import 'package:jordan/screens/addProfileTask_screen.dart';
-import 'package:jordan/screens/home.dart';
-import 'package:jordan/screens/saint_screen.dart';
-import 'package:jordan/screens/selectWays_screen.dart';
-import 'package:jordan/screens/select_screen.dart';
-import 'package:jordan/screens/settings_screen.dart';
+import 'package:jordan/models/options_storage.dart';
+import 'package:jordan/views/plugins/pluginContainer_screen.dart';
+import 'package:jordan/views/plugins/pluginPrayer_screen.dart';
+import 'package:jordan/views/addProfileTask_screen.dart';
+import 'package:jordan/views/home.dart';
+import 'package:jordan/views/saint_screen.dart';
+import 'package:jordan/views/selectWays_screen.dart';
+import 'package:jordan/views/select_screen.dart';
+import 'package:jordan/views/settings_screen.dart';
 import 'package:jordan/services/transMessages.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:jordan/models/storage.dart';
-import 'package:jordan/models/via_calendar.dart';
-import 'package:jordan/models/via_profile.dart';
-import 'package:jordan/models/via_profileTask.dart';
-
-// Hive
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:jordan/models/via_task.dart';
-import 'package:jordan/models/via_options.dart';
-import 'package:jordan/models/via_day.dart';
 
 // Extras
 import 'package:jordan/extras/statics.dart';
 
-import 'screens/plan_screen.dart';
+import 'views/plan_screen.dart';
 
 void main() async {
   // necessary for hive initialization
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (GetPlatform.isWeb) {
-    //Hive.init();
-  } else {
-    var dir = await getApplicationDocumentsDirectory();
-    Hive..init(dir.path);
-  }
-  Hive
-    ..registerAdapter(ViaTaskAdapter())
-    ..registerAdapter(ViaDayAdapter())
-    ..registerAdapter(ViaCalendarAdapter());
-  await Hive.openBox<ViaCalendar>(AppHiveStorage.boxViaCalendar);
-
-  Hive
-    ..registerAdapter(ViaProfileTaskAdapter())
-    ..registerAdapter(ViaProfileAdapter());
-  await Hive.openBox<ViaProfile>(AppHiveStorage.boxViaProfile);
-
-  Hive.registerAdapter(ViaOptionsAdapter());
-  await Hive.openBox<ViaOptions>(AppHiveStorage.boxViaOptions);
-
-  // initialize current calendar day from profile (if necessary)
-  ViaStorage.createDayFromProfile();
+  await ViaStorage.initializeStorage();
 
   runApp(JordanApp());
 }
@@ -63,8 +32,12 @@ class JordanApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       translations: TransMessages(),
-      locale: Get.deviceLocale, // Locale("pl", "PL"),
-      fallbackLocale: Locale("en", "US"),
+      locale: Locale(
+        OptionsStorage.getLanguageCode(),
+        OptionsStorage.getCountryCode(),
+      ),
+      fallbackLocale: Locale(
+          TrSupportedLanguage.defaultLang, TrSupportedLanguage.defaultCountry),
       title: TrStrings.trAppName.tr,
       theme: ThemeData(
         // This is the theme of your application.

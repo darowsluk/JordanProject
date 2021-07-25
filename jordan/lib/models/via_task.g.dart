@@ -19,10 +19,9 @@ class ViaTaskAdapter extends TypeAdapter<ViaTask> {
     return ViaTask(
       uid: fields[0] as String,
       name: fields[1] as String?,
-    )
-      ..done = fields[2] as bool
-      ..link = fields[3] as String
-      ..repeat = fields[4] as String;
+      link: fields[3] as String?,
+      repeat: fields[4] as String?,
+    )..done = fields[2] as bool;
   }
 
   @override

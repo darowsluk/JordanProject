@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
-import 'package:jordan/screens/settings_screen.dart';
 import 'package:jordan/services/transMessages.dart';
 
 class DrawerWidget extends StatefulWidget {

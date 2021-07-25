@@ -1,11 +1,15 @@
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jordan/extras/statics.dart';
+import 'package:jordan/models/options_storage.dart';
 import 'package:jordan/models/via_calendar.dart';
+import 'package:jordan/models/via_options.dart';
 import 'package:jordan/models/via_profile.dart';
 import 'package:jordan/models/via_profileTask.dart';
 import 'package:jordan/models/via_task.dart';
 import 'package:jordan/models/via_day.dart';
 import 'package:jordan/services/timeManager.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// Exposes storage global functions
 class ViaStorage {
@@ -14,11 +18,41 @@ class ViaStorage {
   static Box<ViaProfile> getViaProfileBox() =>
       Hive.box<ViaProfile>(AppHiveStorage.boxViaProfile);
 
+  /// Call from main() to initialize HIVE storage
+  static Future initializeStorage() async {
+    if (GetPlatform.isWeb) {
+      //Hive.init();
+    } else {
+      var dir = await getApplicationDocumentsDirectory();
+      Hive..init(dir.path);
+    }
+    Hive
+      ..registerAdapter(ViaTaskAdapter())
+      ..registerAdapter(ViaDayAdapter())
+      ..registerAdapter(ViaCalendarAdapter());
+    await Hive.openBox<ViaCalendar>(AppHiveStorage.boxViaCalendar);
+
+    Hive
+      ..registerAdapter(ViaProfileTaskAdapter())
+      ..registerAdapter(ViaProfileAdapter());
+    await Hive.openBox<ViaProfile>(AppHiveStorage.boxViaProfile);
+
+    Hive.registerAdapter(ViaOptionsAdapter());
+    await Hive.openBox<ViaOptions>(AppHiveStorage.boxViaOptions);
+
+    // initialize current calendar day from profile (if necessary)
+    ViaStorage.createDayFromProfile();
+
+    // initialize default options (if necessary)
+    OptionsStorage.initializeViaOptions(initLocale: Get.deviceLocale);
+    return true;
+  }
+
   /// Populate new day with tasks based on current profile
   static void createDayFromProfile() {
     // currently only single profile and calendar may exist
     ViaProfile? profile = createViaProfile();
-    ViaCalendar? calendar = createViaCalendar();
+    ViaCalendar calendar = _createViaCalendar();
 
     if (profile.profileTasks.isEmpty) {
       return;
@@ -65,7 +99,7 @@ class ViaStorage {
     ViaProfile profile = createViaProfile();
 
     for (var task in profile.profileTasks) {
-      createViaTask(
+      _createViaTask(
           uid: task.uid, name: task.name, link: task.link, repeat: "daily");
       //         uid: task.uid, name: task.name, link: task.link, repeat: "daily");
       // switch (Frequency.values[task.frequency]) {
@@ -113,9 +147,9 @@ class ViaStorage {
     return true;
   }
 
-  static bool reorderViaTasks({required int oldIndex, required int newIndex}) {
-    ViaCalendar calendar = createViaCalendar();
-    ViaDay day = createViaDay();
+  static bool _reorderViaTasks({required int oldIndex, required int newIndex}) {
+    ViaCalendar calendar = _createViaCalendar();
+    ViaDay day = _createViaDay();
     ViaTask temp;
 
     temp = day.viaDay.removeAt(oldIndex);
@@ -127,9 +161,10 @@ class ViaStorage {
 
   /// Reorder List<ViaTask> based on Profile tasks swapped indexes
   static bool reorderViaTasksOnProfile(
-      {required int oldProfileIndex, required int newProfileIndex}) {
-    ViaProfile profile = createViaProfile();
-    ViaDay day = createViaDay();
+      {required ViaProfile profile,
+      required int oldProfileIndex,
+      required int newProfileIndex}) {
+    ViaDay day = _createViaDay();
     String oldProfileUID, newProfileUID;
     int oldViaIndex;
     int newViaIndex;
@@ -150,13 +185,13 @@ class ViaStorage {
     if (oldViaIndex == -1 || newViaIndex == -1) {
       return false;
     } else {
-      return reorderViaTasks(oldIndex: oldViaIndex, newIndex: newViaIndex);
+      return _reorderViaTasks(oldIndex: oldViaIndex, newIndex: newViaIndex);
     }
   }
 
   /// CRUD interface for via storage:
   /// (true = success and false = failure)
-  static ViaCalendar createViaCalendar() {
+  static ViaCalendar _createViaCalendar() {
     final calendarBox = ViaStorage.getViaCalendarBox();
     ViaCalendar calendar;
 
@@ -170,9 +205,9 @@ class ViaStorage {
     return calendar;
   }
 
-  static ViaDay createViaDay({DateTime? date}) {
+  static ViaDay _createViaDay({DateTime? date}) {
     // first get or create calendar
-    ViaCalendar calendar = createViaCalendar();
+    ViaCalendar calendar = _createViaCalendar();
     DateTime temp;
 
     if (date == null) {
@@ -208,14 +243,14 @@ class ViaStorage {
   }
 
   /// Create a new via task and save to calendar
-  static bool createViaTask({
+  static bool _createViaTask({
     required String uid,
     required String name,
     DateTime? date,
     String link = "",
     String repeat = "daily",
   }) {
-    ViaCalendar calendar = createViaCalendar();
+    ViaCalendar calendar = _createViaCalendar();
     ViaDay day;
     ViaTask task;
     DateTime currentDate;
@@ -227,7 +262,7 @@ class ViaStorage {
     }
 
     // create a new ViaDay or get existing with the current date
-    day = createViaDay(date: currentDate);
+    day = _createViaDay(date: currentDate);
 
     // check for existing task name and uid
     var index =
@@ -265,72 +300,8 @@ class ViaStorage {
     }
   }
 
-  /// Find profile task and return its index
-  static int findProfileTaskIndex({
-    required String uid,
-  }) {
-    ViaProfile profile = createViaProfile();
-    return profile.profileTasks
-        .indexWhere((element) => element.uid.compareTo(uid) == 0);
-  }
-
-  /// Return Profile Task at index
-  static ViaProfileTask getProfileTask({required int index}) {
-    ViaProfile profile = createViaProfile();
-    return profile.profileTasks.elementAt(index);
-  }
-
-  /// Check duplicate
-  static bool isProfileTask({required String name}) {
-    ViaProfile profile = createViaProfile();
-    if (profile.profileTasks
-            .indexWhere((element) => element.name.compareTo(name) == 0) ==
-        -1)
-      return false;
-    else
-      return true;
-  }
-
-  /// Create a new profile task and save to profile
-  static bool createProfileTask({
-    required String uid,
-    String name = "",
-    String link = "",
-    int frequency = 1,
-  }) {
-    ViaProfile profile = createViaProfile();
-    ViaProfileTask task;
-
-    // check for duplicate profile task name and uid
-    var index = profile.profileTasks
-        .indexWhere((element) => element.uid.compareTo(uid) == 0);
-    if (index != -1) {
-      // duplicate profile task uid
-      throw ArgumentError("ArgumentError: duplicate profile task uid ($uid)");
-    } else {
-      // check if there are no duplicate names
-      var index2 = profile.profileTasks
-          .indexWhere((element) => element.name.compareTo(name) == 0);
-      if (index2 != -1) {
-        // duplicate name found
-        throw FormatException("FormatException: duplicate name ($name)");
-      } else {
-        // everything ok, create new profile task
-        task = ViaProfileTask(uid: uid, name: name, link: link);
-        profile.profileTasks.add(task);
-        profile.save();
-        return true;
-      }
-    }
-  }
-
-  static List<ViaProfileTask> readProfileTasks() {
-    ViaProfile profile = createViaProfile();
-    return profile.profileTasks;
-  }
-
   static ViaDay readViaDay({DateTime? date}) {
-    ViaCalendar calendar = createViaCalendar();
+    ViaCalendar calendar = _createViaCalendar();
     DateTime tempDate;
 
     if (date == null) {
@@ -342,16 +313,19 @@ class ViaStorage {
         .indexWhere((element) => element.date.isSameDate(tempDate));
     if (index == -1) {
       // no ViaDay found at provided date
-      return createViaDay();
+      return _createViaDay();
     } else {
       return calendar.viaCalendar.elementAt(index);
     }
   }
 
-  static updateViaTask({required String name}) {}
+  static saveCurrentDay() {
+    ViaCalendar calendar = _createViaCalendar();
+    calendar.save();
+  }
 
   static deleteViaTask({required String uid}) {
-    ViaCalendar calendar = createViaCalendar();
+    ViaCalendar calendar = _createViaCalendar();
     ViaDay day = readViaDay();
     day.viaDay.removeWhere((element) => element.uid.compareTo(uid) == 0);
     calendar.save();
@@ -364,13 +338,8 @@ class ViaStorage {
     profile.save();
   }
 
-  static deleteAllBoxes() {
-    getViaCalendarBox().deleteFromDisk();
-    getViaProfileBox().deleteFromDisk();
-  }
-
   static toggleDoneViaTask({required String uid}) {
-    ViaCalendar calendar = createViaCalendar();
+    ViaCalendar calendar = _createViaCalendar();
     ViaDay day = readViaDay();
     var index =
         day.viaDay.indexWhere((element) => element.uid.compareTo(uid) == 0);

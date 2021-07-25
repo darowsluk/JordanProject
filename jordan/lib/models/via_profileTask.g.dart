@@ -19,8 +19,8 @@ class ViaProfileTaskAdapter extends TypeAdapter<ViaProfileTask> {
     return ViaProfileTask(
       uid: fields[0] as String,
       name: fields[1] as String?,
+      link: fields[2] as String?,
     )
-      ..link = fields[2] as String
       ..priority = fields[3] as int
       ..untilDone = fields[4] as bool
       ..frequency = fields[5] as int
