@@ -32,6 +32,11 @@ class ViaOptions extends HiveObject {
   /// Switch for poping dialog boxes when taking dangerous actions (ex. deleting data)
   late bool safetyCheck;
 
+  @HiveField(5)
+
+  /// Switch for poping dialog boxes when taking dangerous actions (ex. deleting data)
+  late int currentView;
+
   /// Default Constructor
   ViaOptions({
     DateTime? endOfDay,
@@ -39,6 +44,7 @@ class ViaOptions extends HiveObject {
     String? languageCode,
     String? countryCode,
     bool? safetyCheck,
+    int? currentView,
   }) {
     this.endOfDay =
         endOfDay ?? DateTime(2000, 01, 01, 23, 59); // almost midnight
@@ -46,5 +52,6 @@ class ViaOptions extends HiveObject {
     this.languageCode = languageCode ?? TrSupportedLanguage.englishLang;
     this.countryCode = countryCode ?? TrSupportedLanguage.usCountry;
     this.safetyCheck = safetyCheck ?? true;
+    this.currentView = currentView ?? 1;
   }
 }

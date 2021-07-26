@@ -7,12 +7,45 @@ import 'package:jordan/controllers/task_controller.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/services/transMessages.dart';
 
-class TabViewWidget extends StatelessWidget {
+class TabViewWidget extends StatefulWidget {
   TabViewWidget({Key? key}) : super(key: key);
 
+  @override
+  _TabViewWidgetState createState() => _TabViewWidgetState();
+}
+
+class _TabViewWidgetState extends State<TabViewWidget>
+    with SingleTickerProviderStateMixin {
   final ProfileController _profileController = Get.find<ProfileController>();
   final TasksController _tasksController = Get.find<TasksController>();
   final OptionsController _optionsController = Get.find<OptionsController>();
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+        vsync: this,
+        length: 3,
+        initialIndex: _optionsController.obs.value.getCurrentView());
+    _tabController.addListener(_handleTabSelection);
+  }
+
+  void _handleTabSelection() {
+    setState(() {
+      print(
+          "Changed tab to: ${_tabController.index.toString().split('.').last} , index: ${_tabController.index}");
+    });
+  }
+
+  @override
+  void dispose() {
+    _optionsController.obs.value
+        .setCurrentView(viewIndex: _tabController.index);
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,45 +67,48 @@ class TabViewWidget extends StatelessWidget {
           color: AppColors.foreground,
         ),
         child: DefaultTabController(
-          initialIndex: 1,
           length: 3,
           child: Scaffold(
             backgroundColor: AppColors.foreground,
-            extendBody: false,
             appBar: AppBar(
               backgroundColor: AppColors.foreground,
               elevation: 0,
               flexibleSpace: SafeArea(
-                child: TabBar(indicatorSize: TabBarIndicatorSize.label, tabs: [
-                  Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text("ZADANIA"),
-                    ),
-                  ),
-                  Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text("PLAN"),
-                    ),
-                  ),
-                  Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text("HISTORIA"),
-                    ),
-                  ),
-                ]),
+                child: TabBar(
+                    controller: _tabController,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    tabs: [
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("ZADANIA"),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("PLAN"),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("HISTORIA"),
+                        ),
+                      ),
+                    ]),
               ),
             ),
-            body:
-                TabBarView(physics: NeverScrollableScrollPhysics(), children: [
-              generateTaskList(),
-              generatePlanList(),
-              Icon(Icons.history_outlined),
-            ]),
+            body: TabBarView(
+                controller: _tabController,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  generateTaskList(),
+                  generatePlanList(),
+                  Icon(Icons.history_outlined),
+                ]),
             floatingActionButton: Visibility(
-              visible: true,
+              visible: showFAB(_tabController.index),
               child: FloatingActionButton(
                 // add new profile task
                 onPressed: () {
@@ -91,19 +127,63 @@ class TabViewWidget extends StatelessWidget {
     );
   }
 
-//        child: Column(
-// children: <Widget>[
-//             Text(
-//               // show current day as title
-//               DateFormat("EEEE - MMMM d, ''yy")
-//                   .format(ViaStorage.createViaDay().date),
-//               textAlign: TextAlign.start,
-//               style: TextStyle(color: AppColors.highlightText),
-//             ),
-//             generateItemsList(),
-//           ],
+  /// Show Floating Action Button when view is on PLAN
+  bool showFAB(int tabIndex) {
+    //if (_optionsController.obs.value.getCurrentView() == 1)
+    if (tabIndex == 1)
+      return true;
+    else
+      return false;
+  }
 
   Widget generateTaskList() {
+    return Obx(
+      () => ListView.builder(
+        shrinkWrap: true,
+        itemCount: _tasksController.getTaskList().length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            child: ListTile(
+              enableFeedback: true,
+              title: Text(
+                '${_tasksController.getTaskList()[index].name}',
+                style: TextStyle(
+                    color: _tasksController.getTaskList()[index].link.isNotEmpty
+                        ? AppColors.highlightText
+                        : AppColors.normalText),
+              ),
+              //subtitle: Text('daily'), // TODO: do proper parsing
+              leading: Icon(Icons.circle, size: 8, color: Colors.green),
+              trailing: IconButton(
+                icon: _tasksController.getTaskList()[index].done
+                    ? (Icon(Icons.check_circle_outline_outlined))
+                    : (Icon(Icons.circle_outlined)),
+                color: Colors.greenAccent,
+                onPressed: () => _tasksController.toggleTask(taskIndex: index),
+              ),
+              visualDensity:
+                  VisualDensity(vertical: VisualDensity.minimumDensity),
+              //dense: true,
+              horizontalTitleGap: 0,
+            ),
+            onTap: () {
+              String tempLink = _tasksController.getTaskList()[index].link;
+              // open on link if available
+              if (tempLink.isNotEmpty) {
+                Get.toNamed(AppRoutes.pluginPrayer,
+                    arguments: Arguments(tempLink, false));
+                // no data returned
+              } else {
+                print("${_tasksController.getTaskList()[index].name} clicked");
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget generatePlanList() {
     if (_tasksController.getTaskList().isEmpty) {
       return Center(
         child: Column(
@@ -134,139 +214,90 @@ class TabViewWidget extends StatelessWidget {
       );
     } else {
       return Obx(
-        () => ListView.builder(
+        () => ReorderableListView.builder(
+          // header: Text(
+          //   TrStrings.trPlanSubtitle.tr,
+          //   textAlign: TextAlign.start,
+          //   style: TextStyle(color: AppColors.highlightText),
+          // ),
+          onReorder: (int oldIndex, int newIndex) => {
+            _profileController.reorderProfileTask(
+                oldIndex: oldIndex, newIndex: newIndex)
+          },
           shrinkWrap: true,
-          itemCount: _tasksController.getTaskList().length,
+          itemCount: _profileController.getProfileTasks().length,
           itemBuilder: (context, index) {
-            return InkWell(
-              child: ListTile(
-                enableFeedback: true,
-                title: Text(
-                  '${_tasksController.getTaskList()[index].name}',
-                  style: TextStyle(
-                      color:
-                          _tasksController.getTaskList()[index].link.isNotEmpty
-                              ? AppColors.highlightText
-                              : AppColors.normalText),
-                ),
-                //subtitle: Text('daily'), // TODO: do proper parsing
-                leading: Icon(Icons.circle, size: 8, color: Colors.green),
-                trailing: IconButton(
-                  icon: _tasksController.getTaskList()[index].done
-                      ? (Icon(Icons.check_circle_outline_outlined))
-                      : (Icon(Icons.circle_outlined)),
-                  color: Colors.greenAccent,
-                  onPressed: () =>
-                      _tasksController.toggleTask(taskIndex: index),
-                ),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                //dense: true,
-                horizontalTitleGap: 0,
-              ),
-              onTap: () {
-                String tempLink = _tasksController.getTaskList()[index].link;
-                // open on link if available
-                if (tempLink.isNotEmpty) {
-                  Get.toNamed(AppRoutes.pluginPrayer,
-                      arguments: Arguments(tempLink, false));
-                  // no data returned
+            return Dismissible(
+              key: Key(_profileController.getProfileTasks()[index].uid),
+              background: slideRightBackground(),
+              secondaryBackground: slideLeftBackground(),
+              direction: DismissDirection.endToStart,
+              confirmDismiss: (DismissDirection direction) async {
+                if (_optionsController.getSafetySwitch()) {
+                  return await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(TrStrings.trDeleteConfirmation.tr),
+                        content: Text(TrStrings.trDeleteConfirmationNote.tr),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(TrStrings.trCancel.tr),
+                            onPressed: () {
+                              Get.back(result: false);
+                            },
+                          ),
+                          TextButton(
+                            child: Text(TrStrings.trDelete.tr),
+                            onPressed: () {
+                              // delete the current profile task
+                              Get.back(result: true);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 } else {
-                  print(
-                      "${_tasksController.getTaskList()[index].name} clicked");
+                  return true;
                 }
               },
+              onDismissed: (DismissDirection direction) {
+                if (direction == DismissDirection.startToEnd) {
+                  print("Add to favorite");
+                } else {
+                  print(
+                      'Removing task ${_profileController.getProfileTasks()[index].name}');
+                  // delete the current profile task
+                  _profileController
+                      .delTask(_profileController.getProfileTasks()[index].uid);
+                }
+              },
+              child: InkWell(
+                child: ListTile(
+                  enableFeedback: true,
+                  title: Text(
+                      '${_profileController.getProfileTasks()[index].name}'),
+                  subtitle: Text('daily'), // TODO: do proper parsing
+                  leading: Icon(Icons.circle, size: 8, color: Colors.green),
+                  //trailing: Icon(Icons.minimize_rounded, color: AppColors.primary),
+                  visualDensity:
+                      VisualDensity(vertical: VisualDensity.minimumDensity),
+                  //dense: true,
+                  horizontalTitleGap: 0,
+                ),
+                onTap: () {
+                  // pass profile task uid to edit
+                  Get.toNamed(AppRoutes.addProfileTask,
+                      arguments:
+                          _profileController.getProfileTasks()[index].uid);
+                },
+              ),
             );
           },
         ),
       );
     }
-  }
-
-  Widget generatePlanList() {
-    return Obx(
-      () => ReorderableListView.builder(
-        // header: Text(
-        //   TrStrings.trPlanSubtitle.tr,
-        //   textAlign: TextAlign.start,
-        //   style: TextStyle(color: AppColors.highlightText),
-        // ),
-        onReorder: (int oldIndex, int newIndex) => {
-          _profileController.reorderProfileTask(
-              oldIndex: oldIndex, newIndex: newIndex)
-        },
-        shrinkWrap: true,
-        itemCount: _profileController.getProfileTasks().length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            key: Key(_profileController.getProfileTasks()[index].uid),
-            background: slideRightBackground(),
-            secondaryBackground: slideLeftBackground(),
-            direction: DismissDirection.endToStart,
-            confirmDismiss: (DismissDirection direction) async {
-              if (_optionsController.getSafetySwitch()) {
-                return await showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text(TrStrings.trDeleteConfirmation.tr),
-                      content: Text(TrStrings.trDeleteConfirmationNote.tr),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text(TrStrings.trCancel.tr),
-                          onPressed: () {
-                            Get.back(result: false);
-                          },
-                        ),
-                        TextButton(
-                          child: Text(TrStrings.trDelete.tr),
-                          onPressed: () {
-                            // delete the current profile task
-                            Get.back(result: true);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              } else {
-                return true;
-              }
-            },
-            onDismissed: (DismissDirection direction) {
-              if (direction == DismissDirection.startToEnd) {
-                print("Add to favorite");
-              } else {
-                print(
-                    'Removing task ${_profileController.getProfileTasks()[index].name}');
-                // delete the current profile task
-                _profileController
-                    .delTask(_profileController.getProfileTasks()[index].uid);
-              }
-            },
-            child: InkWell(
-              child: ListTile(
-                enableFeedback: true,
-                title:
-                    Text('${_profileController.getProfileTasks()[index].name}'),
-                subtitle: Text('daily'), // TODO: do proper parsing
-                leading: Icon(Icons.circle, size: 8, color: Colors.green),
-                //trailing: Icon(Icons.minimize_rounded, color: AppColors.primary),
-                visualDensity:
-                    VisualDensity(vertical: VisualDensity.minimumDensity),
-                //dense: true,
-                horizontalTitleGap: 0,
-              ),
-              onTap: () {
-                // pass profile task uid to edit
-                Get.toNamed(AppRoutes.addProfileTask,
-                    arguments: _profileController.getProfileTasks()[index].uid);
-              },
-            ),
-          );
-        },
-      ),
-    );
   }
 
   Widget slideRightBackground() {
