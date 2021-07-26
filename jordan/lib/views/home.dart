@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:jordan/controllers/options_controller.dart';
+import 'package:jordan/controllers/profile_controller.dart';
 import 'package:jordan/controllers/task_controller.dart';
 import 'package:jordan/services/transMessages.dart';
 
@@ -26,7 +28,9 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   // Create instance of Controller
-  TasksController _homeController = Get.put(TasksController());
+  final TasksController _homeController = Get.put(TasksController());
+  final OptionsController _optionsController = Get.put(OptionsController());
+  final ProfileController _profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () async {
                           // todo
                           await Get.toNamed(AppRoutes.plan);
+                          //TODO: fix the update
                           setState(() {});
                         }),
                   ),
@@ -67,6 +72,16 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        // add new profile task
+        onPressed: () {
+          Get.toNamed(AppRoutes.addProfileTask, arguments: "");
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: AppColors.primary,
+        elevation: 8,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 

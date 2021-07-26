@@ -14,25 +14,58 @@ class TaskViewWidget extends StatelessWidget {
     return Expanded(
       flex: 2,
       child: Container(
-        constraints: BoxConstraints.expand(),
-        alignment: Alignment.topCenter,
-        padding: EdgeInsets.all(AppMargins.edgeInsets),
-        margin: EdgeInsets.fromLTRB(
-            AppMargins.edgeInsets,
-            0,
-            AppMargins.edgeInsets,
-            AppMargins
-                .edgeInsets), // make space even between top and bottom row
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
-          color: AppColors.foreground,
-        ),
-        child: DefaultTabController(
-          length: 1,
-          child: generateItemsList(),
-        ),
-      ),
+          constraints: BoxConstraints.expand(),
+          alignment: Alignment.topCenter,
+          //padding: EdgeInsets.all(AppMargins.edgeInsets),
+          margin: EdgeInsets.fromLTRB(
+              AppMargins.edgeInsets,
+              0,
+              AppMargins.edgeInsets,
+              AppMargins
+                  .edgeInsets), // make space even between top and bottom row
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
+            color: AppColors.foreground,
+          ),
+          child: DefaultTabController(
+              length: 3,
+              child: Scaffold(
+                backgroundColor: AppColors.foreground,
+                extendBody: false,
+                appBar: AppBar(
+                  backgroundColor: AppColors.foreground,
+                  elevation: 0,
+                  flexibleSpace: SafeArea(
+                    child:
+                        TabBar(indicatorSize: TabBarIndicatorSize.label, tabs: [
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("ZADANIA"),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("PLAN"),
+                        ),
+                      ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("HISTORIA"),
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
+                body: TabBarView(children: [
+                  generateItemsList(),
+                  Icon(Icons.movie),
+                  Icon(Icons.games),
+                ]),
+              ))),
     );
   }
 

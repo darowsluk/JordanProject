@@ -82,6 +82,7 @@ class JordanApp extends StatelessWidget {
         GetPage(
             name: AppRoutes.pluginContainer, page: () => PluginContainerPage()),
         GetPage(name: AppRoutes.pluginPrayer, page: () => PluginPrayerPage()),
+        GetPage(name: AppRoutes.saint, page: () => SaintPage()),
       ],
     );
   }
