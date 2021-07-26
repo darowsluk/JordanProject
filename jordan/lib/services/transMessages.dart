@@ -27,6 +27,9 @@ class TrStrings {
 
   // HomePage
   static const String trAppName = "Via Sancti";
+  static const String trTabView1 = "TabView1";
+  static const String trTabView2 = "TabView2";
+  static const String trTabView3 = "TabView3";
 
   // ProfilePage
   static const String trProfileTitle = "Profile";
@@ -63,6 +66,9 @@ class TransMessages extends Translations {
           TrStrings.trLanguageDefault: "English",
           TrStrings.trLanguagePolish: "Polish",
           TrStrings.trAppName: 'Via Sancti',
+          TrStrings.trTabView1: "TASKS",
+          TrStrings.trTabView2: "PLAN",
+          TrStrings.trTabView3: "HISTORY",
           TrStrings.trCaution: 'Caution!',
           TrStrings.trDeleteCautionNote:
               'All saved data will be deleted.\nApp will exit!',
@@ -92,6 +98,9 @@ class TransMessages extends Translations {
           TrStrings.trLanguageDefault: "Angielski",
           TrStrings.trLanguagePolish: "Polski",
           TrStrings.trAppName: 'Via Sancti',
+          TrStrings.trTabView1: "ZADANIA",
+          TrStrings.trTabView2: "PLAN",
+          TrStrings.trTabView3: "HISTORIA",
           TrStrings.trCaution: 'Uwaga!',
           TrStrings.trDeleteCautionNote:
               'Wszystkie dane zostaną usunięte, a apka zamknięta!',

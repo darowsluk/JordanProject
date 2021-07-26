@@ -81,19 +81,19 @@ class _TabViewWidgetState extends State<TabViewWidget>
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("ZADANIA"),
+                          child: Text(TrStrings.trTabView1.tr),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("PLAN"),
+                          child: Text(TrStrings.trTabView2.tr),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("HISTORIA"),
+                          child: Text(TrStrings.trTabView3.tr),
                         ),
                       ),
                     ]),
