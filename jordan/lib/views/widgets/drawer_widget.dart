@@ -38,6 +38,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ListTile(
             leading: Icon(Icons.account_circle),
             title: Text(TrStrings.trProfileTitle.tr),
+            onTap: () {
+              Get.toNamed(AppRoutes.select);
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings),

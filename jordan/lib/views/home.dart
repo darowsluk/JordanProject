@@ -55,16 +55,7 @@ class _HomePageState extends State<HomePage> {
                   // Saint Prayer Card
                   SaintCardWidget(),
                   // Progress display
-                  Expanded(
-                    child: InkWell(
-                        child: ProgressWidget(),
-                        onTap: () async {
-                          // todo
-                          await Get.toNamed(AppRoutes.plan);
-                          //TODO: fix the update
-                          setState(() {});
-                        }),
-                  ),
+                  Expanded(child: ProgressWidget()),
                 ],
               ),
             ),
