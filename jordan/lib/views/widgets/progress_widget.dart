@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jordan/controllers/task_controller.dart';
+import 'package:audioplayers/audioplayers.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/via_task.dart';
@@ -52,7 +53,9 @@ class ProgressWidget extends StatelessWidget {
               ),
               RawMaterialButton(
                 constraints: BoxConstraints.tight(Size(30, 30)),
-                onPressed: () {},
+                onPressed: () async {
+                  playAudio();
+                },
                 fillColor: AppColors.icon2,
                 child: Icon(
                   Icons.audiotrack_outlined,
@@ -88,6 +91,17 @@ class ProgressWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // helper function
+  void playAudio() async {
+    String url =
+        "http://www.totu.sds.pl/jordan_przemowienia/przemowienie_01.mp3";
+    AudioPlayer audioPlayer = AudioPlayer();
+    int result = await audioPlayer.play(url);
+    if (result == 1) {
+      // success
+    }
   }
 }
 
