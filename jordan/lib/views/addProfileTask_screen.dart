@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:jordan/controllers/profile_controller.dart';
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/services/transMessages.dart';
-import 'package:jordan/views/widgets/taskView_widget.dart';
+import 'package:jordan/views/widgets/tabView_widget.dart';
 
 class AddProfileTaskPage extends StatefulWidget {
   const AddProfileTaskPage({Key? key}) : super(key: key);

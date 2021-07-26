@@ -12,7 +12,7 @@ import 'package:jordan/services/transMessages.dart';
 import 'package:jordan/views/widgets/saintcard_widget.dart';
 import 'package:jordan/views/widgets/drawer_widget.dart';
 import 'package:jordan/views/widgets/progress_widget.dart';
-import 'package:jordan/views/widgets/taskView_widget.dart';
+import 'package:jordan/views/widgets/tabView_widget.dart';
 
 // Extras
 import 'package:jordan/extras/statics.dart';
@@ -28,9 +28,9 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   // Create instance of Controller
-  final TasksController _homeController = Get.put(TasksController());
-  final OptionsController _optionsController = Get.put(OptionsController());
-  final ProfileController _profileController = Get.put(ProfileController());
+  final TasksController _initHomeController = Get.put(TasksController());
+  final OptionsController _initOptionsController = Get.put(OptionsController());
+  final ProfileController _initProfileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +68,10 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            TaskViewWidget(),
+            TabViewWidget(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        // add new profile task
-        onPressed: () {
-          Get.toNamed(AppRoutes.addProfileTask, arguments: "");
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: AppColors.primary,
-        elevation: 8,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
   }
 
