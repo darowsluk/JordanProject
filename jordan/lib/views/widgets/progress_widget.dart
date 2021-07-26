@@ -25,13 +25,67 @@ class ProgressWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppMargins.cornerRadius),
         color: AppColors.foreground,
       ),
-      child: Center(
-        child: Obx(
-          () => CustomPaint(
-            size: Size(3000, 2000), // overkill just to be safe: TODO: fix later
-            painter: LinePainter().obs.value,
+
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // create custom circle buttons
+              RawMaterialButton(
+                constraints: BoxConstraints.tight(Size(30, 30)),
+                // Prayer texts
+                onPressed: () {
+                  Get.toNamed(AppRoutes.pluginContainer, arguments: "");
+                },
+                fillColor: AppColors.icon1,
+                child: Icon(
+                  Icons.playlist_play_outlined,
+                  color: AppColors.darkText,
+                  size: 20,
+                ),
+                //padding: EdgeInsets.all(AppMargins.edgeInsets),
+                shape: CircleBorder(),
+              ),
+              RawMaterialButton(
+                constraints: BoxConstraints.tight(Size(30, 30)),
+                onPressed: () {},
+                fillColor: AppColors.icon2,
+                child: Icon(
+                  Icons.audiotrack_outlined,
+                  color: AppColors.darkText,
+                  size: 20,
+                ),
+                //padding: EdgeInsets.all(AppMargins.edgeInsets),
+                shape: CircleBorder(),
+              ),
+              RawMaterialButton(
+                constraints: BoxConstraints.tight(Size(30, 30)),
+                onPressed: () {},
+                fillColor: AppColors.icon3,
+                child: Icon(
+                  Icons.video_library_outlined,
+                  color: AppColors.darkText,
+                  size: 20,
+                ),
+                //padding: EdgeInsets.all(AppMargins.edgeInsets),
+                shape: CircleBorder(),
+              ),
+            ],
           ),
-        ),
+          Center(
+            child: Obx(
+              () => CustomPaint(
+                size:
+                    Size(3000, 50), // overkill just to be safe: TODO: fix later
+                painter: LinePainter().obs.value,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

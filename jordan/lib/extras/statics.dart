@@ -13,6 +13,9 @@ class AppColors {
   static const Color secondary = Colors.green;
   static const Color disabled = Colors.blueGrey;
   static const Color graphPrimary = const Color.fromRGBO(27, 170, 246, 1.0);
+  static const Color icon1 = const Color.fromRGBO(232, 80, 192, 1.0);
+  static const Color icon2 = const Color.fromRGBO(117, 110, 232, 1.0);
+  static const Color icon3 = const Color.fromRGBO(25, 152, 246, 1.0);
 }
 
 class AppTextStyle {

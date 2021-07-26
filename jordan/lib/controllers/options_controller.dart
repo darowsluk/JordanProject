@@ -83,4 +83,16 @@ class OptionsController extends GetxController {
   String getCountryCode() {
     return _options.value.countryCode;
   }
+
+  /// Returns tab index for the current view (0-2)
+  int getCurrentView() {
+    return _options.value.currentView;
+  }
+
+  void setCurrentView({required int viewIndex}) {
+    _options.update((val) {
+      _options.value.currentView = viewIndex;
+    });
+    OptionsStorage.saveViaOptions();
+  }
 }

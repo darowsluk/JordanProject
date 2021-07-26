@@ -43,7 +43,7 @@ class OptionsStorage {
       optionsBox.add(options);
       options.save();
     } else {
-      // use data from HIVE
+      // TODO: use data from HIVE
     }
   }
 
@@ -57,6 +57,12 @@ class OptionsStorage {
   static String getLanguageCode() {
     ViaOptions options = createViaOptions();
     return options.languageCode;
+  }
+
+  /// Get current view
+  static int getCurrentView() {
+    ViaOptions options = createViaOptions();
+    return options.currentView;
   }
 
   /// Save options to HIVE
