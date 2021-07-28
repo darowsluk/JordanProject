@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jordan/controllers/task_controller.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:url_launcher/link.dart';
 // Extras
 import 'package:jordan/extras/statics.dart';
 import 'package:jordan/models/via_task.dart';
@@ -42,7 +42,7 @@ class ProgressWidget extends StatelessWidget {
                 onPressed: () {
                   Get.toNamed(AppRoutes.pluginContainer, arguments: "");
                 },
-                fillColor: AppColors.icon1,
+                fillColor: AppColors.icon2,
                 child: Icon(
                   Icons.playlist_play_outlined,
                   color: AppColors.darkText,
@@ -51,18 +51,25 @@ class ProgressWidget extends StatelessWidget {
                 //padding: EdgeInsets.all(AppMargins.edgeInsets),
                 shape: CircleBorder(),
               ),
-              RawMaterialButton(
-                constraints: BoxConstraints.tight(Size(30, 30)),
-                onPressed: () {},
-                fillColor: AppColors.icon2,
-                child: Icon(
-                  Icons.audiotrack_outlined,
-                  color: AppColors.darkText,
-                  size: 20,
-                ),
-                //padding: EdgeInsets.all(AppMargins.edgeInsets),
-                shape: CircleBorder(),
+              Link(
+                uri: Uri.parse('https://franciszekjordan.podbean.com'),
+                target: LinkTarget.blank,
+                builder: (ctx, openLink) {
+                  return RawMaterialButton(
+                    constraints: BoxConstraints.tight(Size(30, 30)),
+                    onPressed: openLink,
+                    fillColor: AppColors.icon1,
+                    child: Icon(
+                      Icons.audiotrack_outlined,
+                      color: AppColors.darkText,
+                      size: 20,
+                    ),
+                    //padding: EdgeInsets.all(AppMargins.edgeInsets),
+                    shape: CircleBorder(),
+                  );
+                },
               ),
+
               RawMaterialButton(
                 constraints: BoxConstraints.tight(Size(30, 30)),
                 onPressed: () {},
